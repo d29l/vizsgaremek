@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Parkinsans:wght@300..800&display=swap');
+
+.searchBackground {
+    background-color: #F5F5F5;
+    border: 0.2rem solid #229799;
+    border-radius: 0.5rem;
+    width: 25rem;
+    max-height: 1rem;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.searchField {
+    width: 100%;
+    max-width: 90%;
+    border: 0;
+    outline: 0;
+    background-color: #F5F5F5;
+    font-family: 'Parkinsans';
+    font-weight: 500;
+}
+
+.searchIcon {
+    width: 2rem;
+    height: 1.5rem;
+    border: 0;
+    padding: 0;
+    margin-left: 0.5rem;
+}
