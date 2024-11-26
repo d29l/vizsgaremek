@@ -6,10 +6,10 @@ import searchIcon from '../Icons/Search.svg'
 export default function SearchBar() {
   return (
     <div>
-        <div className='container'>
+        <div className='searchContainer'>
             <div className='searchBackground'>
                 <input placeholder='Search for a job' className='searchField' type='text'/>
-                <img className='searchIcon' src={searchIcon}></img>
+                <img className='searchIcon' src={searchIcon} alt='search icon'></img>
             </div>
         </div>
     </div>
