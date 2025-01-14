@@ -27,7 +27,6 @@ public partial class ProjektContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Connection>(entity =>
@@ -152,13 +151,10 @@ public partial class ProjektContext : DbContext
             entity.Property(e => e.Likes)
                 .HasDefaultValueSql("'0'")
                 .HasColumnType("int(11)");
+            entity.Property(e => e.Title).HasColumnType("text");
             entity.Property(e => e.UserId)
                 .HasColumnType("int(11)")
                 .HasColumnName("UserID");
-
-            entity.HasOne(d => d.User).WithMany(p => p.Posts)
-                .HasForeignKey(d => d.UserId)
-                .HasConstraintName("posts_ibfk_1");
         });
 
         modelBuilder.Entity<Profile>(entity =>

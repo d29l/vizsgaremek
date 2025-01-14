@@ -1,1 +1,22 @@
-[]
+[
+  {
+    "ContainingType": "ProjektBackend.Controllers.PostController",
+    "Method": "fetchPosts",
+    "RelativePath": "api/posts/fetchPosts",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "ProjektBackend.Models.Post",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  }
+]

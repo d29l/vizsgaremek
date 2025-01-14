@@ -27,7 +27,5 @@ public partial class User
 
     public virtual ICollection<Message> MessageSenders { get; set; } = new List<Message>();
 
-    public virtual ICollection<Post> Posts { get; set; } = new List<Post>();
-
     public virtual ICollection<Profile> Profiles { get; set; } = new List<Profile>();
 }
