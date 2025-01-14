@@ -2,6 +2,9 @@ import React from 'react'
 import '../Styles/Card.css';
 
 export default function Card() {
+
+  
+
   return (
     <div className='cardContainer'>
         <div className='cardBackground'>
