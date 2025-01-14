@@ -1,6 +1,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using ProjektBackend.Models;
+using System.Text.Json.Serialization;
 
 namespace ProjektBackend
 {
@@ -18,6 +19,10 @@ namespace ProjektBackend
 
             // Add services to the container.
 
+            builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
+            builder.Services.AddCors(c => { c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()); });
+
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -31,6 +36,8 @@ namespace ProjektBackend
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.UseHttpsRedirection();
 
