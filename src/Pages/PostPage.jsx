@@ -32,9 +32,7 @@ export default function PostPage() {
 
       <div class="text-gray-600 mb-4">
         <span class="font-semibold">Job Description:</span>
-        <p class="text-wrap max-w-4xl">
-          {post?.content}
-        </p>
+        <p class="text-wrap max-w-4xl">{post?.content}</p>
       </div>
 
       <div class="text-gray-600 mb-4">
