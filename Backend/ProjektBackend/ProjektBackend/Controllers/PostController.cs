@@ -27,5 +27,16 @@ namespace ProjektBackend.Controllers
             }
             return BadRequest();
         }
+
+        [HttpGet("fetchPost/{postid}")]
+        public async Task<ActionResult<Post>> fetchPost(int postid)
+        {
+            var post = await _context.Posts.FirstOrDefaultAsync(p => p.PostId == postid);
+            if (post != null)
+            {
+                return Ok(post);
+            }
+            return NotFound();
+        }
     }
 }
