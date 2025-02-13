@@ -17,6 +17,8 @@ namespace ProjektBackend.Controllers
             _context = context;
         }
 
+        // Get All
+
         [HttpGet("fetchPosts")]
         public async Task<ActionResult<Post>> fetchPosts()
         {
@@ -28,6 +30,8 @@ namespace ProjektBackend.Controllers
             return BadRequest();
         }
 
+        // Get Id
+
         [HttpGet("fetchPost/{postid}")]
         public async Task<ActionResult<Post>> fetchPost(int postid)
         {
@@ -35,6 +39,65 @@ namespace ProjektBackend.Controllers
             if (post != null)
             {
                 return Ok(post);
+            }
+            return NotFound();
+        }
+
+        // Post
+
+        [HttpPost("newPost")]
+        public async Task<ActionResult<Post>> newPost(int UserId, CreatePostDto createPostDto)
+        {
+            var Post = new Post()
+            {
+                UserId = UserId,
+                Title = createPostDto.Title,
+                Content = createPostDto.Content,
+                CreatedAt = DateTime.Now,
+                Likes = 0
+
+            };
+
+            if (Post != null)
+            {
+                _context.Add(Post);
+                _context.SaveChanges();
+                return StatusCode(201, Post);
+            }
+            return BadRequest();
+
+        }
+
+        // Put
+
+        [HttpPut("editPost")]
+
+        public async Task<ActionResult<Post>> editPost(int PostId, int UserId, UpdatePostDto updatePostDto)
+        {
+            var existingPost = await _context.Posts.FirstOrDefaultAsync(x => x.PostId == PostId && x.UserId == UserId);
+            if (existingPost != null)
+            {
+                existingPost.Title = updatePostDto.Title;
+                existingPost.Content = updatePostDto.Content;
+                existingPost.CreatedAt = DateTime.Now;
+                _context.SaveChanges();
+                return StatusCode(200, existingPost);
+            }
+            return NotFound();
+        }
+
+        // Delete
+
+        [HttpDelete("deletePost")]
+
+        public async Task<ActionResult> deletePost(int PostId, int UserId) 
+        {
+            var deletePost = await _context.Posts.FirstOrDefaultAsync(x => x.PostId == PostId && x.UserId == UserId);
+            if (deletePost != null)
+            {
+                _context.Remove(deletePost);
+                _context.SaveChanges();
+                return StatusCode(200, "User successfully deleted.");
             }
             return NotFound();
         }

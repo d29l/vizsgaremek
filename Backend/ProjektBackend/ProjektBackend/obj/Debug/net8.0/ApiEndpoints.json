@@ -1,6 +1,63 @@
 [
   {
     "ContainingType": "ProjektBackend.Controllers.PostController",
+    "Method": "deletePost",
+    "RelativePath": "api/posts/deletePost",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "PostId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "UserId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProjektBackend.Controllers.PostController",
+    "Method": "editPost",
+    "RelativePath": "api/posts/editPost",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "PostId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "UserId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "updatePostDto",
+        "Type": "ProjektBackend.Controllers.UpdatePostDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "ProjektBackend.Models.Post",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "ProjektBackend.Controllers.PostController",
     "Method": "fetchPost",
     "RelativePath": "api/posts/fetchPost/{postid}",
     "HttpMethod": "GET",
@@ -33,6 +90,37 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "ProjektBackend.Models.Post",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "ProjektBackend.Controllers.PostController",
+    "Method": "newPost",
+    "RelativePath": "api/posts/newPost",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "UserId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "createPostDto",
+        "Type": "ProjektBackend.Controllers.CreatePostDto",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": [
       {
         "Type": "ProjektBackend.Models.Post",

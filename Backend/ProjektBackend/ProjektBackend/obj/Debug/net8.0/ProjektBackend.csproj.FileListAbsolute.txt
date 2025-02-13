@@ -256,4 +256,7 @@ C:\vizsgaremek\backend\Backend\ProjektBackend\ProjektBackend\obj\Debug\net8.0\Pr
 C:\vizsgaremek\backend\Backend\ProjektBackend\ProjektBackend\obj\Debug\net8.0\ProjektBackend.genruntimeconfig.cache
 C:\vizsgaremek\backend\Backend\ProjektBackend\ProjektBackend\obj\Debug\net8.0\ref\ProjektBackend.dll
 C:\vizsgaremek\backend\Backend\ProjektBackend\ProjektBackend\bin\Debug\net8.0\appsettings.json
-C:\vizsgaremek\backend\Backend\ProjektBackend\ProjektBackend\bin\Debug\net8.0\System.Text.Json.dll
+C:\vizsgaremek\backend\Backend\ProjektBackend\ProjektBackend\bin\Debug\net8.0\ProjektBackend.staticwebassets.endpoints.json
+C:\vizsgaremek\backend\Backend\ProjektBackend\ProjektBackend\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\vizsgaremek\backend\Backend\ProjektBackend\ProjektBackend\obj\Debug\net8.0\staticwebassets\msbuild.ProjektBackend.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+C:\vizsgaremek\backend\Backend\ProjektBackend\ProjektBackend\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
