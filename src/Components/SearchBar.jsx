@@ -4,7 +4,7 @@ export default function Searchbar() {
         <input
           type="text"
           placeholder="Search for a job"
-          class="w-1/2 max-w-lg p-3 shadow-lg border-4 border-blue-500 focus:outline-none rounded-lg"
+          class="text-text placeholder-subtext0 bg-crust w-1/2 max-w-lg p-3 focus:outline-none rounded-lg"
         />
       </div>
     );

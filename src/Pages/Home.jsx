@@ -16,14 +16,14 @@ export default function Home() {
 
   return (
     <div>
-      <div className="w-full bg-white shadow-md min-h-[92vh] transition-all duration-200 ease-in-out focus-within:min-h-1 flex flex-col items-center justify-center space-y-4">
-        <h1 className="font-extrabold text-blue-500 text-xl">Job Platform</h1>
+      <div className="w-full bg-mantle shadow-md shadow-crust min-h-[92vh] transition-all duration-200 ease-in-out focus-within:min-h-1 flex flex-col items-center justify-center space-y-4">
+        {/* <h1 className="font-extrabold text-blue text-xl">Job Platform</h1> */}
         <SearchBar />
-        <button onClick={getPosts}>Fasz</button>
+        <button class="w-12 h-8 bg-crust rounded-lg text-lavender hover:bg-mantle" onClick={getPosts}>Fasz</button>
       </div>
 
-      <div id="cardsContainer" className="flex h-full flex-col">
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-y-0">
+      <div id="cardsContainer" className="mocha flex h-full flex-col">
+        <div class="bg-mantle grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-y-0">
           {database.map((job) => (
             <PostCard
               key={job.postId}
