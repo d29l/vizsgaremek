@@ -1,4 +1,3 @@
-import { use } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function PostCard({ postId, title, description }) {

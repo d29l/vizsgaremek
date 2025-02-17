@@ -1,7 +1,14 @@
+import { useNavigate } from "react-router-dom";
+
 export default function RegisterPage() {
+  const navigate = useNavigate()
+  const handleRedirect = () => {
+    navigate(`/login`);
+  };
+
   return (
     <div class=" min-h-[92vh] flex justify-center items-center">
-      <div class="pt-6 bg-base w-[24rem] rounded-lg py-10">
+      <div class="pt-6 bg-base w-[24rem] rounded-lg py-10 shadow-md shadow-crust">
         <div class="flex  justify-center">
           <h1 class="text-lavender font-extrabold text-2xl">Sign up</h1>
         </div>
@@ -37,7 +44,7 @@ export default function RegisterPage() {
 
             <div class="mt-6 flex flex-row justify-center">
               <p class="text-subtext1">Already have an account?</p>
-              <a class="text-lavender ml-2 hover:underline cursor-pointer">Sign in</a>
+              <a class="text-lavender ml-2 hover:underline cursor-pointer" onClick={handleRedirect}>Sign in</a>
             </div>
 
           </form>
