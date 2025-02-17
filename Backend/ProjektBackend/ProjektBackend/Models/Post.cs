@@ -16,4 +16,6 @@ public partial class Post
     public DateTime? CreatedAt { get; set; }
 
     public int? Likes { get; set; }
+
+    public virtual User User { get; set; } = null!;
 }

@@ -32,10 +32,13 @@ namespace ProjektBackend.Controllers
 
         // Get Id
 
-        [HttpGet("fetchPost/{postid}")]
-        public async Task<ActionResult<Post>> fetchPost(int postid)
+        [HttpGet("fetchPost/{PostId}")]
+        public async Task<ActionResult<Post>> fetchPost(int PostId)
         {
-            var post = await _context.Posts.FirstOrDefaultAsync(p => p.PostId == postid);
+            var post = await _context.Posts
+                        .Include(x => x.User)
+                        .ThenInclude(e => e.Employers)
+                        .FirstOrDefaultAsync(y => y.PostId == PostId);
             if (post != null)
             {
                 return Ok(post);

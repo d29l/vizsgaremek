@@ -59,13 +59,13 @@
   {
     "ContainingType": "ProjektBackend.Controllers.PostController",
     "Method": "fetchPost",
-    "RelativePath": "api/posts/fetchPost/{postid}",
+    "RelativePath": "api/posts/fetchPost/{PostId}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "postid",
+        "Name": "PostId",
         "Type": "System.Int32",
         "IsRequired": true
       }
@@ -124,6 +124,52 @@
     "ReturnTypes": [
       {
         "Type": "ProjektBackend.Models.Post",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "ProjektBackend.Controllers.UserController",
+    "Method": "fetchUser",
+    "RelativePath": "api/users/fetchUser/{UserId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "UserId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "ProjektBackend.Models.User",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "ProjektBackend.Controllers.UserController",
+    "Method": "fetchUsers",
+    "RelativePath": "api/users/fetchUsers",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "ProjektBackend.Models.User",
         "MediaTypes": [
           "text/plain",
           "application/json",
