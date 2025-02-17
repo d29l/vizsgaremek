@@ -1,10 +1,48 @@
 export default function RegisterPage() {
   return (
     <div class=" min-h-[92vh] flex justify-center items-center">
-      <div class="pt-6 flex flex-col items-center bg-base w-[24rem] h-[36rem] rounded-lg">
-        <h1 class="text-lavender font-extrabold text-2xl">Register</h1>
+      <div class="pt-6 bg-base w-[24rem] rounded-lg py-10">
+        <div class="flex  justify-center">
+          <h1 class="text-lavender font-extrabold text-2xl">Sign up</h1>
+        </div>
+        <div class="flex flex-col items-start pt-8 px-8">
+          <form class="flex flex-col w-full">
+            <div class="flex flex-row">
+              <div class="flex flex-col w-1/2">
+                <label class="mb-2 text-text font-bold">First Name</label>
+                <input placeholder="John" class="pl-2 placeholder-surface2 text-subtext0 mb-2 rounded-lg bg-mantle h-8 mr-2 focus:border-2 focus:border-lavender focus:outline-none" />
+              </div>
+
+              <div class="flex flex-col w-1/2">
+                <label class="mb-2 ml-2 text-text font-bold">Last Name</label>
+                <input placeholder="Doe" class="pl-2 placeholder-surface2 text-subtext0 mb-2 rounded-lg bg-mantle h-8 ml-2 focus:border-2 focus:border-lavender focus:outline-none" />
+              </div>
+            </div>
+
+            <label class="mb-2 text-text font-bold">Email</label>
+            <input placeholder="example@mail.com" class="pl-2 placeholder-surface2 text-subtext0 mb-2 rounded-lg bg-mantle h-8 focus:border-2 focus:border-lavender focus:outline-none" />
+            <label class="mb-2 text-text font-bold">Password</label>
+            <input type="password" class="pl-2 text-subtext0 mb-2 rounded-lg bg-mantle h-8 focus:border-2 focus:border-lavender focus:outline-none" />
+            <label class="mb-2 text-text font-bold">Confirm password</label>
+            <input type="password" class="pl-2 text-subtext0 mb-2 rounded-lg bg-mantle h-8 focus:border-2 focus:border-lavender focus:outline-none" />
+
+            <div class="flex items-center mt-2">
+              <input type="checkbox" class="appearance-none w-4 h-4 border-2 rounded border-subtext1 checked:bg-lavender cursor-pointer transition-colors duration-200 focus:outline-none" />
+              <label class="ml-2 text-subtext1 cursor-pointer select-none">Show password</label>
+            </div>
+
+            <div class="flex justify-center mt-6">
+              <button class="p-1 bg-lavender rounded-lg w-1/2 text-mantle font-bold">Sign Up</button>
+            </div>
+
+            <div class="mt-6 flex flex-row justify-center">
+              <p class="text-subtext1">Already have an account?</p>
+              <a class="text-lavender ml-2 hover:underline cursor-pointer">Sign in</a>
+            </div>
+
+          </form>
+        </div>
       </div>
     </div>
-
   )
 }
