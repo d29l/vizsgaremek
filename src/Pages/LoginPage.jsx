@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 export default function LoginPage() {
+
   const navigate = useNavigate()
   const handleRedirect = () => {
     navigate(`/signup`);
@@ -10,7 +12,7 @@ export default function LoginPage() {
     <div class=" min-h-[92vh] flex justify-center items-center">
       <div class="pt-6 bg-base w-[24rem] rounded-lg py-10 shadow-md shadow-crust">
         <div class="flex  justify-center">
-          <h1 class="text-lavender font-extrabold text-2xl">Log in</h1>
+          <h1 class="text-lavender font-extrabold text-2xl">Sign in</h1>
         </div>
         <div class="flex flex-col items-start pt-8 px-8">
           <form class="flex flex-col w-full">
