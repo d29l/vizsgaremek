@@ -9,8 +9,6 @@ public partial class Profile
 
     public int UserId { get; set; }
 
-    public string FullName { get; set; } = null!;
-
     public string? Headline { get; set; }
 
     public string? Bio { get; set; }

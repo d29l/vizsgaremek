@@ -27,6 +27,7 @@ public partial class ProjektContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Connection>(entity =>
@@ -135,15 +136,19 @@ public partial class ProjektContext : DbContext
 
         modelBuilder.Entity<Post>(entity =>
         {
-            entity.HasKey(e => e.PostId).HasName("PRIMARY");
+            entity.HasKey(e => new { e.PostId, e.UserId }).HasName("PRIMARY");
 
             entity.ToTable("posts");
 
             entity.HasIndex(e => e.UserId, "UserID");
 
             entity.Property(e => e.PostId)
+                .ValueGeneratedOnAdd()
                 .HasColumnType("int(11)")
                 .HasColumnName("PostID");
+            entity.Property(e => e.UserId)
+                .HasColumnType("int(11)")
+                .HasColumnName("UserID");
             entity.Property(e => e.Content).HasColumnType("text");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("'current_timestamp()'")
@@ -152,9 +157,6 @@ public partial class ProjektContext : DbContext
                 .HasDefaultValueSql("'0'")
                 .HasColumnType("int(11)");
             entity.Property(e => e.Title).HasColumnType("text");
-            entity.Property(e => e.UserId)
-                .HasColumnType("int(11)")
-                .HasColumnName("UserID");
         });
 
         modelBuilder.Entity<Profile>(entity =>
@@ -171,7 +173,6 @@ public partial class ProjektContext : DbContext
             entity.Property(e => e.Bio)
                 .HasDefaultValueSql("'NULL'")
                 .HasColumnType("text");
-            entity.Property(e => e.FullName).HasMaxLength(255);
             entity.Property(e => e.Headline)
                 .HasMaxLength(255)
                 .HasDefaultValueSql("'NULL'");
@@ -204,7 +205,9 @@ public partial class ProjektContext : DbContext
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("'current_timestamp()'")
                 .HasColumnType("datetime");
+            entity.Property(e => e.FirstName).HasMaxLength(255);
             entity.Property(e => e.IsActive).HasDefaultValueSql("'1'");
+            entity.Property(e => e.LastName).HasMaxLength(255);
             entity.Property(e => e.Password).HasMaxLength(255);
             entity.Property(e => e.Role)
                 .HasDefaultValueSql("'''Employee'''")

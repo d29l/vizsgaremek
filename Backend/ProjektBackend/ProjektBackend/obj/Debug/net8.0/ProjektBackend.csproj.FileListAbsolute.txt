@@ -260,3 +260,12 @@ C:\vizsgaremek\backend\Backend\ProjektBackend\ProjektBackend\bin\Debug\net8.0\Pr
 C:\vizsgaremek\backend\Backend\ProjektBackend\ProjektBackend\obj\Debug\net8.0\staticwebassets.build.endpoints.json
 C:\vizsgaremek\backend\Backend\ProjektBackend\ProjektBackend\obj\Debug\net8.0\staticwebassets\msbuild.ProjektBackend.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
 C:\vizsgaremek\backend\Backend\ProjektBackend\ProjektBackend\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\vizsgaremek\backend\Backend\ProjektBackend\ProjektBackend\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\vizsgaremek\backend\Backend\ProjektBackend\ProjektBackend\bin\Debug\net8.0\Microsoft.Bcl.Memory.dll
+C:\vizsgaremek\backend\Backend\ProjektBackend\ProjektBackend\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+C:\vizsgaremek\backend\Backend\ProjektBackend\ProjektBackend\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\vizsgaremek\backend\Backend\ProjektBackend\ProjektBackend\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+C:\vizsgaremek\backend\Backend\ProjektBackend\ProjektBackend\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+C:\vizsgaremek\backend\Backend\ProjektBackend\ProjektBackend\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\vizsgaremek\backend\Backend\ProjektBackend\ProjektBackend\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+C:\vizsgaremek\backend\Backend\ProjektBackend\ProjektBackend\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
