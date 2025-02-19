@@ -6,6 +6,19 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  function decodeJWT(token) {
+    try {
+      const [header, payload, signature] = token.split('.');
+
+      const decodedPayload = atob(payload.replace(/-/g, '+').replace(/_/g, '/'));
+
+      return JSON.parse(decodedPayload);
+    } catch (error) {
+      console.error('Failed to decode JWT:', error);
+      return null;
+    }
+  }
+
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -23,6 +36,7 @@ export default function LoginPage() {
         console.log(response.data);
         console.log("Successfully signed in");
         localStorage.setItem("token", response.data.token);
+        console.log(decodeJWT(response.data.token));
       } else {
         console.log(response.data.message || "Sign in failed");
       }
@@ -60,6 +74,16 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+
+            <div class="mt-2 flex items-center">
+              <input
+                type="checkbox"
+                class="h-4 w-4 cursor-pointer appearance-none rounded border-2 border-subtext1 transition-colors duration-200 checked:bg-lavender focus:outline-none"
+              />
+              <label class="ml-2 cursor-pointer select-none text-subtext1">
+                Show password
+              </label>
+            </div>
 
             {/* <div class="mt-2 flex items-center">
               <input

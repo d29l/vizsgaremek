@@ -10,7 +10,6 @@ function App() {
   return (
     <div class="mocha">
       <div className="bg-mantle overflow-hidden min-h-screen">
-        <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/posts/:postId" element={<PostPage />} />

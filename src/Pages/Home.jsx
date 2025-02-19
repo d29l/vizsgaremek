@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import SearchBar from "../Components/SearchBar";
 import PostCard from "../Components/PostCard";
 import { fetchPosts } from "../fetchPosts";
+import Navbar from "../Components/Navbar";
 
 export default function Home() {
   const [database, setDatabase] = useState([]);
@@ -12,12 +13,11 @@ export default function Home() {
     setDatabase(data);
   }
 
-  useEffect(() => {}, [database]);
-
+  useEffect(() => { }, [database]);
   return (
     <div>
+      <Navbar />
       <div className="w-full bg-mantle shadow-md shadow-crust min-h-[92vh] transition-all duration-200 ease-in-out focus-within:min-h-1 flex flex-col items-center justify-center space-y-4">
-        {/* <h1 className="font-extrabold text-blue text-xl">Job Platform</h1> */}
         <SearchBar />
         <button class="w-12 h-8 bg-crust rounded-lg text-lavender hover:bg-mantle" onClick={getPosts}>Fasz</button>
       </div>
