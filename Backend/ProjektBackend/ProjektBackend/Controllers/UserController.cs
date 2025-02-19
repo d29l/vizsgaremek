@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -26,7 +27,7 @@ namespace ProjektBackend.Controllers
         }
 
         // Get All
-
+        [Authorize]
         [HttpGet("fetchUsers")]
         public async Task<ActionResult<User>> fetchUsers()
         {
@@ -40,6 +41,7 @@ namespace ProjektBackend.Controllers
 
         // Get Id
 
+        [Authorize]
         [HttpGet("fetchUser/{UserId}")]
         public async Task<ActionResult<User>> fetchUser(int UserId)
         {
@@ -131,6 +133,7 @@ namespace ProjektBackend.Controllers
                 Subject = new ClaimsIdentity(new[]
                 {
                 new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
+                new Claim(ClaimTypes.Role, user.Role),
                 new Claim(ClaimTypes.Email, user.Email)
             }),
                 Expires = DateTime.UtcNow.AddMinutes(Convert.ToDouble(_configuration["Jwt:ExpiryInMinutes"])),

@@ -396,39 +396,6 @@
   },
   "components": {
     "schemas": {
-      "Connection": {
-        "type": "object",
-        "properties": {
-          "connectionId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "requesterId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "receiverId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "status": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "receiver": {
-            "$ref": "#/components/schemas/User"
-          },
-          "requester": {
-            "$ref": "#/components/schemas/User"
-          }
-        },
-        "additionalProperties": false
-      },
       "CreatePostDto": {
         "type": "object",
         "properties": {
@@ -443,48 +410,6 @@
         },
         "additionalProperties": false
       },
-      "Employer": {
-        "type": "object",
-        "properties": {
-          "employerId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "userId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "companyName": {
-            "type": "string",
-            "nullable": true
-          },
-          "companyAddress": {
-            "type": "string",
-            "nullable": true
-          },
-          "industry": {
-            "type": "string",
-            "nullable": true
-          },
-          "companyWebsite": {
-            "type": "string",
-            "nullable": true
-          },
-          "companyDescription": {
-            "type": "string",
-            "nullable": true
-          },
-          "establishedYear": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "user": {
-            "$ref": "#/components/schemas/User"
-          }
-        },
-        "additionalProperties": false
-      },
       "LoginUserDto": {
         "type": "object",
         "properties": {
@@ -495,39 +420,6 @@
           "password": {
             "type": "string",
             "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "Message": {
-        "type": "object",
-        "properties": {
-          "messageId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "senderId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "receiverId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "content": {
-            "type": "string",
-            "nullable": true
-          },
-          "sentAt": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "receiver": {
-            "$ref": "#/components/schemas/User"
-          },
-          "sender": {
-            "$ref": "#/components/schemas/User"
           }
         },
         "additionalProperties": false
@@ -559,39 +451,6 @@
           "likes": {
             "type": "integer",
             "format": "int32",
-            "nullable": true
-          },
-          "user": {
-            "$ref": "#/components/schemas/User"
-          }
-        },
-        "additionalProperties": false
-      },
-      "Profile": {
-        "type": "object",
-        "properties": {
-          "profileId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "userId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "headline": {
-            "type": "string",
-            "nullable": true
-          },
-          "bio": {
-            "type": "string",
-            "nullable": true
-          },
-          "location": {
-            "type": "string",
-            "nullable": true
-          },
-          "profilePicture": {
-            "type": "string",
             "nullable": true
           },
           "user": {
@@ -640,8 +499,7 @@
         "required": [
           "email",
           "firstName",
-          "lastName",
-          "password"
+          "lastName"
         ],
         "type": "object",
         "properties": {
@@ -662,11 +520,6 @@
             "type": "string",
             "format": "email"
           },
-          "password": {
-            "minLength": 1,
-            "type": "string",
-            "format": "password"
-          },
           "role": {
             "type": "string",
             "nullable": true
@@ -678,48 +531,6 @@
           },
           "isActive": {
             "type": "boolean",
-            "nullable": true
-          },
-          "connectionReceivers": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Connection"
-            },
-            "nullable": true
-          },
-          "connectionRequesters": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Connection"
-            },
-            "nullable": true
-          },
-          "employers": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Employer"
-            },
-            "nullable": true
-          },
-          "messageReceivers": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Message"
-            },
-            "nullable": true
-          },
-          "messageSenders": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Message"
-            },
-            "nullable": true
-          },
-          "profiles": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Profile"
-            },
             "nullable": true
           }
         },
