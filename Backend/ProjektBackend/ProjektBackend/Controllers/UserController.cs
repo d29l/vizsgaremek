@@ -147,6 +147,24 @@ namespace ProjektBackend.Controllers
             return Ok(new { Token = tokenString });
         }
 
+
+        // Delete
+        //[Authorize(Roles = "Admin")]
+        [HttpDelete("deleteUser")]
+
+        public async Task<ActionResult> deleteUser(int userId)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.UserId == userId);
+
+            if (user != null) 
+            {
+                _context.Remove(user);
+                await _context.SaveChangesAsync();
+                return StatusCode(200, "Sucessfully deleted.");
+
+            }
+            return StatusCode(418, "Not Found.");
+        }
         
     
     }

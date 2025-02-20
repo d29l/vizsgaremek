@@ -135,6 +135,22 @@
   },
   {
     "ContainingType": "ProjektBackend.Controllers.UserController",
+    "Method": "deleteUser",
+    "RelativePath": "api/users/deleteUser",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProjektBackend.Controllers.UserController",
     "Method": "fetchUser",
     "RelativePath": "api/users/fetchUser/{UserId}",
     "HttpMethod": "GET",

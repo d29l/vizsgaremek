@@ -65,7 +65,7 @@ namespace ProjektBackend.Controllers
             if (Post != null)
             {
                 _context.Add(Post);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 return StatusCode(201, Post);
             }
             return BadRequest();
@@ -100,7 +100,7 @@ namespace ProjektBackend.Controllers
             if (deletePost != null)
             {
                 _context.Remove(deletePost);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 return StatusCode(200, "User successfully deleted.");
             }
             return NotFound();
