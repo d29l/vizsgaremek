@@ -27,7 +27,7 @@ namespace ProjektBackend.Controllers
         }
 
         // Get All
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpGet("fetchUsers")]
         public async Task<ActionResult<User>> fetchUsers()
         {
@@ -146,6 +146,8 @@ namespace ProjektBackend.Controllers
 
             return Ok(new { Token = tokenString });
         }
+
+        
     
     }
 

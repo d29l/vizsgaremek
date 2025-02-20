@@ -39,7 +39,11 @@ namespace ProjektBackend
                 };
             });
 
-            builder.Services.AddAuthorization();
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
+                options.AddPolicy("EmployerOnly", policy => policy.RequireRole("Employer"));
+            });
 
             // Add services to the container.
 
