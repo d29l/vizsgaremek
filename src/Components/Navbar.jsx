@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { getUserId } from "../getUserId";
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -10,11 +10,16 @@ export default function Navbar() {
 
   const handleLogout = () => {
     localStorage.clear();
-    navigate('/login');
+    navigate("/login");
   };
 
   const handleProfileClick = () => {
     setProfileClicked(!profileClicked);
+  };
+
+  const handleProfileLink = () => {
+    const userId = getUserId();
+    navigate(`/profiles/${userId}`)
   };
 
   return (
@@ -32,15 +37,25 @@ export default function Navbar() {
 
         <div className="relative">
           <div
-            className="cursor-pointer mr-4 flex size-10 overflow-hidden rounded-full bg-surface0"
+            className="mr-4 flex size-10 cursor-pointer overflow-hidden rounded-full bg-surface0"
             onClick={handleProfileClick}
           ></div>
 
           {profileClicked && (
-            <div className="absolute right-0 mt-2 w-48 bg-surface0 rounded-lg z-50">
+            <div className="absolute right-0 z-50 mt-2 w-48 rounded-lg bg-surface0">
               <div className="p-4">
-                <div className="cursor-pointer text-text hover:text-lavender">Profile</div>
-                <div onClick={handleLogout} className="cursor-pointer text-text hover:text-lavender">Logout</div>
+                <div
+                  onClick={handleProfileLink}
+                  className="cursor-pointer text-text hover:text-lavender"
+                >
+                  Profile
+                </div>
+                <div
+                  onClick={handleLogout}
+                  className="cursor-pointer text-text hover:text-lavender"
+                >
+                  Logout
+                </div>
               </div>
             </div>
           )}
