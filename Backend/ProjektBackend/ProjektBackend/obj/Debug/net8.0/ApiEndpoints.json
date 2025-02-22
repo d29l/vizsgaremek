@@ -134,6 +134,68 @@
     ]
   },
   {
+    "ContainingType": "ProjektBackend.Controllers.ProfileController",
+    "Method": "postProfile",
+    "RelativePath": "api/profiles",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "UserId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "createProfileDto",
+        "Type": "ProjektBackend.Controllers.CreateProfileDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "ProjektBackend.Models.Profile",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "ProjektBackend.Controllers.ProfileController",
+    "Method": "updateProfile",
+    "RelativePath": "api/profiles/updateProfile/{ProfileId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ProfileId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "updateProfileDto",
+        "Type": "ProjektBackend.Controllers.UpdateProfileDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "ProjektBackend.Models.Profile",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "ProjektBackend.Controllers.UserController",
     "Method": "deleteUser",
     "RelativePath": "api/users/deleteUser",
