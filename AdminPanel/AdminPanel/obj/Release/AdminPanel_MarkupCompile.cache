@@ -4,11 +4,11 @@
 winexe
 C#
 .cs
-C:\Users\Tanulo\Desktop\vizsgaremek\AdminPanel\AdminPanel\obj\Debug\
+C:\Users\Tanulo\Desktop\vizsgaremek\AdminPanel\AdminPanel\obj\Release\
 AdminPanel
 none
 false
-DEBUG;TRACE
+TRACE
 C:\Users\Tanulo\Desktop\vizsgaremek\AdminPanel\AdminPanel\App.xaml
 1219584333
 
