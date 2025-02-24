@@ -24,5 +24,22 @@ namespace AdminPanel
         {
             InitializeComponent();
         }
+        private async void SignIn_Click(object sender, RoutedEventArgs e)
+        {
+            string email = userName.Text;
+            string password = Password.Password;
+
+            string result = await LoginUsers.LoginAsync(email, password);
+
+            
+            if (result == "Login successful")
+            {
+                MessageBox.Show("Login successful", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                MessageBox.Show(result, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
     }
 }

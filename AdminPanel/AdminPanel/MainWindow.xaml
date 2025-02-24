@@ -5,29 +5,44 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AdminPanel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-
+        Title="Login Page" Height="450" Width="800">
 
     <Window.Resources>
         <local:StringToVisibilityConverter x:Key="StringToVisibilityConverter" />
+
+        <Style x:Key="TextBoxPlaceholderStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="Gray"/>
+            <Setter Property="Margin" Value="5,0,0,0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="PasswordBoxPlaceholderStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="Gray"/>
+            <Setter Property="Margin" Value="5,0,0,0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
     </Window.Resources>
 
     <Grid>
-        
-        <Grid HorizontalAlignment="Center" Height="23" Width="300" Margin="0,140,0,0" VerticalAlignment="Top">
-            <TextBox Name="userName" TextWrapping="Wrap" Text="" Background="Transparent" />
-            <TextBlock Text="Enter your username" Foreground="Gray" Margin="5,0,0,0" VerticalAlignment="Center"
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="773*"/>
+            <ColumnDefinition Width="27*"/>
+        </Grid.ColumnDefinitions>
+
+
+        <Grid HorizontalAlignment="Left" Height="23" Width="300" Margin="250,140,0,0" VerticalAlignment="Top">
+            <TextBox Name="userName" TextWrapping="Wrap" Background="Transparent" />
+            <TextBlock Text="Enter your username" Style="{StaticResource TextBoxPlaceholderStyle}" 
                        Visibility="{Binding Text, ElementName=userName, Converter={StaticResource StringToVisibilityConverter}}" />
         </Grid>
 
-        
-        <Grid HorizontalAlignment="Center" Height="23" Margin="0,170,0,0" VerticalAlignment="Top" Width="300">
-            <PasswordBox Name="Password" Password="" Background="Transparent" />
-            <TextBlock Text="Enter your password" Foreground="Gray" Margin="5,0,0,0" VerticalAlignment="Center"
+
+        <Grid HorizontalAlignment="Left" Height="23" Margin="250,170,0,0" VerticalAlignment="Top" Width="300">
+            <PasswordBox Name="Password" Background="Transparent" />
+            <TextBlock Text="Enter your password" Style="{StaticResource PasswordBoxPlaceholderStyle}"
                        Visibility="{Binding Password, ElementName=Password, Converter={StaticResource StringToVisibilityConverter}}" />
         </Grid>
 
-        
-        <Button Name="signIn" Content="Sign in" HorizontalAlignment="Center" Margin="0,210,0,0" VerticalAlignment="Top" Width="75"/>
+
+        <Button Name="signIn" Content="Sign in" HorizontalAlignment="Center" Margin="0,210,0,0" VerticalAlignment="Top" Width="76" Click="SignIn_Click"/>
     </Grid>
 </Window>

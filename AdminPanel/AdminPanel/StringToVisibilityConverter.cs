@@ -3,14 +3,14 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace AdminPanel 
+namespace AdminPanel
 {
     public class StringToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return string.IsNullOrEmpty(value?.ToString()) 
-                ? Visibility.Visible 
+            return string.IsNullOrEmpty(value?.ToString())
+                ? Visibility.Visible
                 : Visibility.Collapsed;
         }
 
