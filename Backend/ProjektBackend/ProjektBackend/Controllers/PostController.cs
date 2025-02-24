@@ -48,7 +48,7 @@ namespace ProjektBackend.Controllers
         }
 
         // Post
-        [Authorize(Roles = "Employer,Admin")]
+        [Authorize(Policy = "EmployerOnly,AdminOnly")]
         [HttpPost("newPost")]
         public async Task<ActionResult<Post>> newPost(int UserId, CreatePostDto createPostDto)
         {
@@ -73,7 +73,7 @@ namespace ProjektBackend.Controllers
         }
 
         // Put
-        [Authorize(Roles = "Employer,Admin")]
+        [Authorize(Policy = "EmployerSelfOnly,AdminOnly")]
         [HttpPut("editPost")]
 
         public async Task<ActionResult<Post>> editPost(int PostId, int UserId, UpdatePostDto updatePostDto)
@@ -91,7 +91,7 @@ namespace ProjektBackend.Controllers
         }
 
         // Delete
-        [Authorize(Roles = "Employer,Admin")]
+        [Authorize(Policy = "EmployerSelfOnly,AdminOnly")]
         [HttpDelete("deletePost")]
 
         public async Task<ActionResult> deletePost(int PostId, int UserId) 

@@ -46,6 +46,19 @@ namespace ProjektBackend
                 options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
                 options.AddPolicy("EmployerOnly", policy => policy.RequireRole("Employer"));
                 options.AddPolicy("SelfOnly", policy => policy.RequireClaim(ClaimTypes.NameIdentifier));
+
+                options.AddPolicy("EmployeeSelfOnly", policy =>
+                {
+                    policy.RequireRole("Employee");
+                    policy.RequireClaim(ClaimTypes.NameIdentifier);
+                });
+
+                options.AddPolicy("EmployerSelfOnly", policy =>
+                {
+                    policy.RequireRole("Employer");
+                    policy.RequireClaim(ClaimTypes.NameIdentifier);
+
+                });
             });
 
             // Add services to the container.
@@ -72,24 +85,23 @@ namespace ProjektBackend
                 });
 
                 options.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
                 {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                }
-            },
-            Array.Empty<string>()
-        }
-    });
+                        {
+                            new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference
+                                {
+                                    Type = ReferenceType.SecurityScheme,
+                                    Id = "Bearer"
+                                }
+                            },
+                            Array.Empty<string>()
+                        }
+                });
             });
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
@@ -103,12 +115,14 @@ namespace ProjektBackend
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
 
             app.MapControllers();
 
             app.Run();
+
         }
     }
 }

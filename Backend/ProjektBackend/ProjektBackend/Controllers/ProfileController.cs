@@ -52,7 +52,7 @@ namespace ProjektBackend.Controllers
 
 
         //Put
-        [Authorize(Roles = "Admin")]
+        [Authorize(Policy = "SelfOnly,AdminOnly")]
         [HttpPut("updateProfile/{ProfileId}")]
         public async Task<ActionResult<Profile>> updateProfile(int ProfileId, UpdateProfileDto updateProfileDto)
         {

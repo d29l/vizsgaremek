@@ -27,10 +27,17 @@ namespace ProjektBackend.Controllers
         }
 
         // Get All
-        [Authorize(Roles = "Admin")]
+        [Authorize(Policy = "AdminOnly")]
         [HttpGet("fetchUsers")]
         public async Task<ActionResult<User>> fetchUsers()
         {
+            var claims = User.Claims;
+            foreach (var claim in claims)
+            {
+                Console.WriteLine($"{claim.Type}: {claim.Value}");
+            }
+
+
             var users = await _context.Users.ToListAsync();
             if (users != null)
             {
@@ -41,7 +48,7 @@ namespace ProjektBackend.Controllers
 
         // Get Id
 
-        [Authorize(Policy = "SelfOnly", Roles = "Admin")]
+        [Authorize(Policy = "SelfOnly,AdminOnly")]
         [HttpGet("fetchUser/{UserId}")]
         public async Task<ActionResult<User>> fetchUser(int UserId)
         {
@@ -149,7 +156,7 @@ namespace ProjektBackend.Controllers
 
 
         // Delete
-        [Authorize(Roles = "Admin")]
+        [Authorize(Policy = "AdminOnly")]
         [HttpDelete("deleteUser")]
 
         public async Task<ActionResult> deleteUser(int userId)

@@ -374,6 +374,18 @@
         }
       }
     },
+    "/api/users/test": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/users/fetchUser/{UserId}": {
       "get": {
         "tags": [
