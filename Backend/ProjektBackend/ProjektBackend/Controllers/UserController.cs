@@ -52,12 +52,11 @@ namespace ProjektBackend.Controllers
         [HttpGet("fetchUser/{UserId}")]
         public async Task<ActionResult<User>> fetchUser(int UserId)
         {
-            var user = await _context.Users.Include(p => p.Employers).FirstOrDefaultAsync(p => p.UserId == UserId);
-            if (user != null)
-            {
-                return Ok(user);
-            }
-            return NotFound();
+            var user = await _context.Users
+            .Include(p => p.Employers)
+            .FirstOrDefaultAsync(p => p.UserId == UserId);
+
+            return user != null ? Ok(user) : NotFound();
         }
 
         // Register

@@ -37,6 +37,7 @@ namespace ProjektBackend
                     IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuer = false,
                     ValidateAudience = false,
+                    RoleClaimType = ClaimTypes.Role,
                     ValidateLifetime = true,
                     ClockSkew = TimeSpan.Zero
                 };

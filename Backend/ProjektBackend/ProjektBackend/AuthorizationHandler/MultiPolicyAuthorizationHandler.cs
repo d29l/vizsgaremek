@@ -93,26 +93,37 @@ public class MultiPolicyAuthorizationHandler : IAuthorizationHandler
             return;
         }
 
-        var resourceId = GetResourceId(context, "id");
-        var userId = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        var resourceUserId = GetResourceId(context, "UserId");
+        var currentUserId = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-        if (context.User.IsInRole("Admin") || userId == resourceId)
-        {
-            context.Succeed(requirement);
-        }
-        else
+        if (string.IsNullOrEmpty(resourceUserId) || string.IsNullOrEmpty(currentUserId))
         {
             context.Fail();
+            return;
         }
+
+        if (int.TryParse(resourceUserId, out int resourceId) &&
+            int.TryParse(currentUserId, out int userId))
+        {
+            if (context.User.IsInRole("Admin") || userId == resourceId)
+            {
+                context.Succeed(requirement);
+                return;
+            }
+        }
+
+        context.Fail();
     }
+
 
     private string GetResourceId(AuthorizationHandlerContext context, string paramName)
     {
         if (context.Resource is HttpContext httpContext)
-        {
-            return httpContext.GetRouteValue(paramName)?.ToString()
-                ?? httpContext.Request.Query[paramName].ToString();
-        }
-        return null;
+    {
+        var value = httpContext.GetRouteValue(paramName)?.ToString();
+        
+        return value ?? httpContext.Request.Query[paramName].ToString();
+    }
+    return null;
     }
 }

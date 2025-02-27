@@ -96,22 +96,14 @@ namespace ProjektBackend.Controllers
         [HttpDelete("deletePost/{PostId}")]
         public async Task<ActionResult> DeletePost(int PostId, int UserId)
         {
-            var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-
-            if (UserId != currentUserId)
-            {
-                return Forbid();
-            }
-
-
             var deletePost = await _context.Posts
-                .FirstOrDefaultAsync(x => x.PostId == PostId && x.UserId == UserId);
+        .FirstOrDefaultAsync(x => x.PostId == PostId && x.UserId == UserId);
 
             if (deletePost != null)
             {
                 _context.Remove(deletePost);
                 await _context.SaveChangesAsync();
-                return Ok("User successfully deleted");
+                return Ok("Post successfully deleted");
             }
 
             return NotFound();
