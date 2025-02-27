@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjektBackend.Models;
 using System.Configuration;
+using System.Security.Claims;
 
 namespace ProjektBackend.Controllers
 {
@@ -48,8 +49,8 @@ namespace ProjektBackend.Controllers
         }
 
         // Post
-        [Authorize(Policy = "EmployerOnly,AdminOnly")]
-        [HttpPost("newPost")]
+        [Authorize(Policy = "EmployerSelfOrAdmin")]
+        [HttpPost("newPost/{UserId}")]
         public async Task<ActionResult<Post>> newPost(int UserId, CreatePostDto createPostDto)
         {
             var Post = new Post()
@@ -73,8 +74,8 @@ namespace ProjektBackend.Controllers
         }
 
         // Put
-        [Authorize(Policy = "EmployerSelfOnly,AdminOnly")]
-        [HttpPut("editPost")]
+        [Authorize(Policy = "EmployerSelfOrAdmin")]
+        [HttpPut("editPost/{PostId}")]
 
         public async Task<ActionResult<Post>> editPost(int PostId, int UserId, UpdatePostDto updatePostDto)
         {
@@ -91,18 +92,28 @@ namespace ProjektBackend.Controllers
         }
 
         // Delete
-        [Authorize(Policy = "EmployerSelfOnly,AdminOnly")]
-        [HttpDelete("deletePost")]
-
-        public async Task<ActionResult> deletePost(int PostId, int UserId) 
+        [Authorize(Policy = "EmployerSelfOrAdmin")]
+        [HttpDelete("deletePost/{PostId}")]
+        public async Task<ActionResult> DeletePost(int PostId, int UserId)
         {
-            var deletePost = await _context.Posts.FirstOrDefaultAsync(x => x.PostId == PostId && x.UserId == UserId);
+            var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+            if (UserId != currentUserId)
+            {
+                return Forbid();
+            }
+
+
+            var deletePost = await _context.Posts
+                .FirstOrDefaultAsync(x => x.PostId == PostId && x.UserId == UserId);
+
             if (deletePost != null)
             {
                 _context.Remove(deletePost);
                 await _context.SaveChangesAsync();
-                return StatusCode(200, "User successfully deleted.");
+                return Ok("User successfully deleted");
             }
+
             return NotFound();
         }
     }

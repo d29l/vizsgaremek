@@ -1,5 +1,6 @@
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -43,28 +44,71 @@ namespace ProjektBackend
 
             builder.Services.AddAuthorization(options =>
             {
-                options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
-                options.AddPolicy("EmployerOnly", policy => policy.RequireRole("Employer"));
-                options.AddPolicy("SelfOnly", policy => policy.RequireClaim(ClaimTypes.NameIdentifier));
+                options.AddPolicy("AdminOnly", policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                    policy.RequireRole("Admin");
+                });
+                
+                options.AddPolicy("EmployerOnly", policy => 
+                { 
+                    policy.RequireAuthenticatedUser(); 
+                    policy.RequireRole("Employer"); 
+                });
+                options.AddPolicy("SelfOnly", policy => 
+                { 
+                    policy.RequireAuthenticatedUser(); 
+                    policy.RequireClaim(ClaimTypes.NameIdentifier); 
+                });
 
                 options.AddPolicy("EmployeeSelfOnly", policy =>
                 {
+                    policy.RequireAuthenticatedUser();
                     policy.RequireRole("Employee");
                     policy.RequireClaim(ClaimTypes.NameIdentifier);
                 });
 
                 options.AddPolicy("EmployerSelfOnly", policy =>
                 {
+                    policy.RequireAuthenticatedUser();
                     policy.RequireRole("Employer");
                     policy.RequireClaim(ClaimTypes.NameIdentifier);
 
                 });
-            });
 
+            options.AddPolicy("EmployeeSelfOrAdmin", policy =>
+            {
+                policy.RequireAuthenticatedUser();
+                policy.Requirements.Add(new EmployeeSelfOnlyOrAdminRequirement());
+            });
+                
+
+            options.AddPolicy("EmployerSelfOrAdmin", policy =>
+            {
+                policy.RequireAuthenticatedUser();
+                policy.Requirements.Add(new EmployerSelfOnlyOrAdminRequirement());
+            });
+                    
+
+            options.AddPolicy("EmployerOrAdmin", policy =>
+            {
+                policy.RequireAuthenticatedUser();
+                policy.Requirements.Add(new EmployerOnlyOrAdminRequirement());
+            });
+                    
+
+                options.AddPolicy("SelfOrAdmin", policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                    policy.Requirements.Add(new SelfOnlyOrAdminRequirement());
+                });
+                    
+            });
+            builder.Services.AddSingleton<IAuthorizationHandler, MultiPolicyAuthorizationHandler>();
             // Add services to the container.
 
             builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
-
+            
             builder.Services.AddCors(c => { c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()); });
 
             builder.Services.AddControllers();
@@ -115,11 +159,12 @@ namespace ProjektBackend
 
             app.UseHttpsRedirection();
 
+            app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-
-
             app.MapControllers();
+
+
 
             app.Run();
 

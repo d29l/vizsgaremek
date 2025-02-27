@@ -1,8 +1,8 @@
 [
   {
     "ContainingType": "ProjektBackend.Controllers.PostController",
-    "Method": "deletePost",
-    "RelativePath": "api/posts/deletePost",
+    "Method": "DeletePost",
+    "RelativePath": "api/posts/deletePost/{PostId}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -10,7 +10,7 @@
       {
         "Name": "PostId",
         "Type": "System.Int32",
-        "IsRequired": false
+        "IsRequired": true
       },
       {
         "Name": "UserId",
@@ -23,7 +23,7 @@
   {
     "ContainingType": "ProjektBackend.Controllers.PostController",
     "Method": "editPost",
-    "RelativePath": "api/posts/editPost",
+    "RelativePath": "api/posts/editPost/{PostId}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -31,7 +31,7 @@
       {
         "Name": "PostId",
         "Type": "System.Int32",
-        "IsRequired": false
+        "IsRequired": true
       },
       {
         "Name": "UserId",
@@ -105,7 +105,7 @@
   {
     "ContainingType": "ProjektBackend.Controllers.PostController",
     "Method": "newPost",
-    "RelativePath": "api/posts/newPost",
+    "RelativePath": "api/posts/newPost/{UserId}",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -113,7 +113,7 @@
       {
         "Name": "UserId",
         "Type": "System.Int32",
-        "IsRequired": false
+        "IsRequired": true
       },
       {
         "Name": "createPostDto",
@@ -308,15 +308,5 @@
         "StatusCode": 200
       }
     ]
-  },
-  {
-    "ContainingType": "ProjektBackend.Controllers.UserController",
-    "Method": "Test",
-    "RelativePath": "api/users/test",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
   }
 ]

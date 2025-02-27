@@ -48,7 +48,7 @@ namespace ProjektBackend.Controllers
 
         // Get Id
 
-        [Authorize(Policy = "SelfOnly,AdminOnly")]
+        [Authorize(Policy = "SelfOrAdmin")]
         [HttpGet("fetchUser/{UserId}")]
         public async Task<ActionResult<User>> fetchUser(int UserId)
         {
@@ -156,7 +156,7 @@ namespace ProjektBackend.Controllers
 
 
         // Delete
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Policy = "SelfOrAdmin")]
         [HttpDelete("deleteUser")]
 
         public async Task<ActionResult> deleteUser(int userId)
