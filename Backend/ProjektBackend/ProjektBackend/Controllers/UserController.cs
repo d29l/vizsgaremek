@@ -31,11 +31,6 @@ namespace ProjektBackend.Controllers
         [HttpGet("fetchUsers")]
         public async Task<ActionResult<User>> fetchUsers()
         {
-            var claims = User.Claims;
-            foreach (var claim in claims)
-            {
-                Console.WriteLine($"{claim.Type}: {claim.Value}");
-            }
 
 
             var users = await _context.Users.ToListAsync();

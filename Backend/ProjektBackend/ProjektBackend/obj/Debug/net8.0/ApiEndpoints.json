@@ -1,5 +1,88 @@
 [
   {
+    "ContainingType": "ProjektBackend.Controllers.EmployerController",
+    "Method": "editEmployer",
+    "RelativePath": "api/employers/editEmployer{EmployerId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "EmployerId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "updateEmployerDto",
+        "Type": "ProjektBackend.Controllers.UpdateEmployerDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProjektBackend.Controllers.EmployerController",
+    "Method": "fetchEmployers",
+    "RelativePath": "api/employers/fetchEmployer{EmployerId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "EmployerId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "ProjektBackend.Models.Employer",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "ProjektBackend.Controllers.EmployerController",
+    "Method": "fetchEmployers",
+    "RelativePath": "api/employers/fetchEmployers",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "ProjektBackend.Models.Employer",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "ProjektBackend.Controllers.EmployerController",
+    "Method": "postEmployer",
+    "RelativePath": "api/employers/postEmployer",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "createEmployerDto",
+        "Type": "ProjektBackend.Controllers.CreateEmployerDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "ProjektBackend.Controllers.PostController",
     "Method": "DeletePost",
     "RelativePath": "api/posts/deletePost/{PostId}",

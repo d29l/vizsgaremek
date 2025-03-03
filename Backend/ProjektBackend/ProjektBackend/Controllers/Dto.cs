@@ -13,4 +13,7 @@
 
     public record CreateProfileDto(string Headline, string Bio, string Location, string ProfilePicture);
     public record UpdateProfileDto(string Headline, string Bio, string Location, string ProfilePicture);
+
+    public record CreateEmployerDto(string CompanyName, string CompanyAddress, string Industry, string CompanyWebsite, string CompanyDescription, int EstabilishedYear);
+    public record UpdateEmployerDto(string CompanyName, string CompanyAddress, string Industry, string CompanyWebsite, string CompanyDescription, int EstabilishedYear);
 }
