@@ -4,6 +4,26 @@
              xmlns:local="clr-namespace:AdminPanel"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <DropShadowEffect x:Key="ShadowEffect" 
+                    BlurRadius="20" 
+                    ShadowDepth="5" 
+                    Opacity="0.3" 
+                    Color="#6C7086"/>
+
+        <local:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
+
+        <Style x:Key="TextBoxPlaceholderStyle" TargetType="TextBlock">
+            <Setter Property="Margin" Value="12,0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontStyle" Value="Italic"/>
+        </Style>
+
+        <Style x:Key="PasswordBoxPlaceholderStyle" TargetType="TextBlock">
+            <Setter Property="Margin" Value="12,0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontStyle" Value="Italic"/>
+        </Style>
     </Application.Resources>
 </Application>

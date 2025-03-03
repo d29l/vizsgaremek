@@ -1,0 +1,147 @@
+﻿<Page x:Class="AdminPanel.LoginPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:local="clr-namespace:AdminPanel"
+      mc:Ignorable="d"
+      Title="LoginPage" 
+      Height="450" 
+      Width="800"
+      Background="#1E1E2E">
+
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#1E1E2E" Offset="0"/>
+                <GradientStop Color="#11111B" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+
+        <Border Background="#313244" 
+                CornerRadius="15"
+                Width="350"
+                Height="400"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                BorderBrush="#585B70"
+                BorderThickness="1"
+                Effect="{StaticResource ShadowEffect}">
+
+            <Grid Margin="30">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Header -->
+                <StackPanel Grid.Row="0" HorizontalAlignment="Center" Margin="0,0,0,30">
+                    <TextBlock Text="Welcome Back" 
+                               FontSize="24" 
+                               Foreground="#CDD6F4"
+                               FontWeight="SemiBold"
+                               FontFamily="Segoe UI Semibold"/>
+                    <TextBlock Text="Please sign in to continue"
+                               Foreground="#BAC2DE"
+                               HorizontalAlignment="Center"
+                               Margin="0,5,0,0"/>
+                </StackPanel>
+
+                <!-- Username Field -->
+                <Border Grid.Row="1" 
+                        CornerRadius="8" 
+                        Background="#45475A"
+                        Margin="0,0,0,15">
+                    <Grid>
+                        <TextBox Name="userName" 
+                                 TextWrapping="Wrap" 
+                                 Background="Transparent"
+                                 Foreground="#CDD6F4"
+                                 BorderThickness="0"
+                                 Padding="12,10"
+                                 FontSize="14"
+                                 CaretBrush="#CDD6F4"/>
+                        <TextBlock Text="Enter your username" 
+                                   Foreground="#7F849C"
+                                   Style="{StaticResource TextBoxPlaceholderStyle}"
+                                   Visibility="{Binding Text, ElementName=userName, Converter={StaticResource StringToVisibilityConverter}}"
+                                   Margin="12,0" 
+                                   VerticalAlignment="Center"/>
+                    </Grid>
+                </Border>
+
+                <!-- Password Field -->
+                <Border Grid.Row="2" 
+                        CornerRadius="8" 
+                        Background="#45475A"
+                        Margin="0,0,0,25">
+                    <Grid>
+                        <PasswordBox Name="Password" 
+                                     Background="Transparent"
+                                     Foreground="#CDD6F4"
+                                     BorderThickness="0"
+                                     Padding="12,10"
+                                     FontSize="14"
+                                     CaretBrush="#CDD6F4"
+                                     PasswordChanged="Password_PasswordChanged"/>
+                        <TextBlock x:Name="PasswordPlaceholder" 
+                                   Text="Enter your password" 
+                                   Foreground="#7F849C"
+                                   Style="{StaticResource PasswordBoxPlaceholderStyle}"
+                                   Visibility="Visible"
+                                   Margin="12,0" 
+                                   VerticalAlignment="Center"/>
+                    </Grid>
+                </Border>
+
+                <!-- Login Button -->
+                <Button Grid.Row="3" 
+                        Content="Sign In" 
+                        Click="SignIn_Click"
+                        Background="#CBA6F7"
+                        Foreground="#1E1E2E"
+                        BorderThickness="0"
+                        Padding="20,12"
+                        FontSize="14"
+                        FontWeight="SemiBold"
+                        Cursor="Hand">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="8"
+                                    Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="#CBA6F7"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#B493F4"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="Background" Value="#9D7BEF"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+                <!-- Loading Indicator -->
+                <ProgressBar Grid.Row="4" 
+                             Height="4"
+                             Margin="0,15,0,0"
+                             IsIndeterminate="True"
+                             Visibility="Collapsed"
+                             x:Name="LoadingIndicator"
+                             Foreground="#89DCEB"
+                             Background="Transparent"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Page>

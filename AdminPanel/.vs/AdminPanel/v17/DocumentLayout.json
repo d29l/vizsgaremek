@@ -1,18 +1,41 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Gibau\\vizsgaremek\\desktop\\AdminPanel\\",
+  "WorkspaceRootPath": "C:\\Users\\Tanulo\\Desktop\\vizsgaremek\\desktop\\AdminPanel\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{46F0E081-A9A6-4112-ABC1-F5FDA48E94E7}|AdminPanel\\AdminPanel.csproj|c:\\users\\gibau\\vizsgaremek\\desktop\\adminpanel\\adminpanel\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{46F0E081-A9A6-4112-ABC1-F5FDA48E94E7}|AdminPanel\\AdminPanel.csproj|solutionrelative:adminpanel\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{46F0E081-A9A6-4112-ABC1-F5FDA48E94E7}|AdminPanel\\AdminPanel.csproj|C:\\Users\\Tanulo\\Desktop\\vizsgaremek\\desktop\\AdminPanel\\adminpanel\\loginpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{46F0E081-A9A6-4112-ABC1-F5FDA48E94E7}|AdminPanel\\AdminPanel.csproj|solutionrelative:adminpanel\\loginpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{46F0E081-A9A6-4112-ABC1-F5FDA48E94E7}|AdminPanel\\AdminPanel.csproj|c:\\users\\gibau\\vizsgaremek\\desktop\\adminpanel\\adminpanel\\stringtovisibilityconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{46F0E081-A9A6-4112-ABC1-F5FDA48E94E7}|AdminPanel\\AdminPanel.csproj|c:\\users\\tanulo\\desktop\\vizsgaremek\\desktop\\adminpanel\\adminpanel\\loginpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{46F0E081-A9A6-4112-ABC1-F5FDA48E94E7}|AdminPanel\\AdminPanel.csproj|solutionrelative:adminpanel\\loginpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{46F0E081-A9A6-4112-ABC1-F5FDA48E94E7}|AdminPanel\\AdminPanel.csproj|C:\\Users\\Tanulo\\Desktop\\vizsgaremek\\desktop\\AdminPanel\\adminpanel\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{46F0E081-A9A6-4112-ABC1-F5FDA48E94E7}|AdminPanel\\AdminPanel.csproj|solutionrelative:adminpanel\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{46F0E081-A9A6-4112-ABC1-F5FDA48E94E7}|AdminPanel\\AdminPanel.csproj|C:\\Users\\Tanulo\\Desktop\\vizsgaremek\\desktop\\AdminPanel\\adminpanel\\stringtovisibilityconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{46F0E081-A9A6-4112-ABC1-F5FDA48E94E7}|AdminPanel\\AdminPanel.csproj|solutionrelative:adminpanel\\stringtovisibilityconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{46F0E081-A9A6-4112-ABC1-F5FDA48E94E7}|AdminPanel\\AdminPanel.csproj|C:\\Users\\Gibau\\vizsgaremek\\desktop\\AdminPanel\\adminpanel\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{46F0E081-A9A6-4112-ABC1-F5FDA48E94E7}|AdminPanel\\AdminPanel.csproj|C:\\Users\\Tanulo\\Desktop\\vizsgaremek\\desktop\\AdminPanel\\adminpanel\\dashboard.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{46F0E081-A9A6-4112-ABC1-F5FDA48E94E7}|AdminPanel\\AdminPanel.csproj|solutionrelative:adminpanel\\dashboard.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{46F0E081-A9A6-4112-ABC1-F5FDA48E94E7}|AdminPanel\\AdminPanel.csproj|C:\\Users\\Tanulo\\Desktop\\vizsgaremek\\desktop\\AdminPanel\\adminpanel\\dashboard.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{46F0E081-A9A6-4112-ABC1-F5FDA48E94E7}|AdminPanel\\AdminPanel.csproj|solutionrelative:adminpanel\\dashboard.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{46F0E081-A9A6-4112-ABC1-F5FDA48E94E7}|AdminPanel\\AdminPanel.csproj|C:\\Users\\Tanulo\\Desktop\\vizsgaremek\\desktop\\AdminPanel\\adminpanel\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{46F0E081-A9A6-4112-ABC1-F5FDA48E94E7}|AdminPanel\\AdminPanel.csproj|solutionrelative:adminpanel\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{46F0E081-A9A6-4112-ABC1-F5FDA48E94E7}|AdminPanel\\AdminPanel.csproj|C:\\Users\\Tanulo\\Desktop\\vizsgaremek\\desktop\\AdminPanel\\adminpanel\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{46F0E081-A9A6-4112-ABC1-F5FDA48E94E7}|AdminPanel\\AdminPanel.csproj|solutionrelative:adminpanel\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Tanulo\\AppData\\Local\\Temp\\.vsdbgsrc\\2b0ec97cbc55040d747972dd9d1d06414ec5c3f9b730fc9979aa47e4498a1c0b\\NavigationService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,45 +45,158 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 12,
           "Children": [
             {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{e8b06f52-6d01-11d2-aa7d-00c04f990343}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:2:0:{e8b06f52-6d01-11d2-aa7d-00c04f990343}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{25f7e850-ffa1-11d0-b63f-00a0c922e851}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e1b7d1f8-9b3c-49b1-8f4f-bfc63a88835d}"
+            },
+            {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "StringToVisibilityConverter.cs",
-              "DocumentMoniker": "C:\\Users\\Gibau\\vizsgaremek\\desktop\\AdminPanel\\AdminPanel\\StringToVisibilityConverter.cs",
-              "RelativeDocumentMoniker": "AdminPanel\\StringToVisibilityConverter.cs",
-              "ToolTip": "C:\\Users\\Gibau\\vizsgaremek\\desktop\\AdminPanel\\AdminPanel\\StringToVisibilityConverter.cs",
-              "RelativeToolTip": "AdminPanel\\StringToVisibilityConverter.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAVAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-19T18:28:47.698Z",
+              "DocumentIndex": 2,
+              "Title": "App.xaml",
+              "DocumentMoniker": "C:\\Users\\Tanulo\\Desktop\\vizsgaremek\\desktop\\AdminPanel\\AdminPanel\\App.xaml",
+              "RelativeDocumentMoniker": "AdminPanel\\App.xaml",
+              "ToolTip": "C:\\Users\\Tanulo\\Desktop\\vizsgaremek\\desktop\\AdminPanel\\AdminPanel\\App.xaml",
+              "RelativeToolTip": "AdminPanel\\App.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-03-03T09:47:22.874Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "MainWindow.xaml",
-              "DocumentMoniker": "C:\\Users\\Gibau\\vizsgaremek\\desktop\\AdminPanel\\AdminPanel\\MainWindow.xaml",
-              "RelativeDocumentMoniker": "AdminPanel\\MainWindow.xaml",
-              "ToolTip": "C:\\Users\\Gibau\\vizsgaremek\\desktop\\AdminPanel\\AdminPanel\\MainWindow.xaml",
-              "RelativeToolTip": "AdminPanel\\MainWindow.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-02-19T18:04:15.078Z",
+              "Title": "LoginPage.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\Tanulo\\Desktop\\vizsgaremek\\desktop\\AdminPanel\\AdminPanel\\LoginPage.xaml.cs",
+              "RelativeDocumentMoniker": "AdminPanel\\LoginPage.xaml.cs",
+              "ToolTip": "C:\\Users\\Tanulo\\Desktop\\vizsgaremek\\desktop\\AdminPanel\\AdminPanel\\LoginPage.xaml.cs",
+              "RelativeToolTip": "AdminPanel\\LoginPage.xaml.cs",
+              "ViewState": "AgIAABsAAAAAAAAAAAAYwCcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-03T09:44:36.588Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "MainWindow.xaml.cs",
-              "DocumentMoniker": "C:\\Users\\Gibau\\vizsgaremek\\desktop\\AdminPanel\\AdminPanel\\MainWindow.xaml.cs",
-              "RelativeDocumentMoniker": "AdminPanel\\MainWindow.xaml.cs",
-              "ToolTip": "C:\\Users\\Gibau\\vizsgaremek\\desktop\\AdminPanel\\AdminPanel\\MainWindow.xaml.cs",
-              "RelativeToolTip": "AdminPanel\\MainWindow.xaml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-19T18:04:14.975Z",
+              "DocumentIndex": 1,
+              "Title": "LoginPage.xaml",
+              "DocumentMoniker": "C:\\Users\\Tanulo\\Desktop\\vizsgaremek\\desktop\\AdminPanel\\AdminPanel\\LoginPage.xaml",
+              "RelativeDocumentMoniker": "AdminPanel\\LoginPage.xaml",
+              "ToolTip": "C:\\Users\\Tanulo\\Desktop\\vizsgaremek\\desktop\\AdminPanel\\AdminPanel\\LoginPage.xaml",
+              "RelativeToolTip": "AdminPanel\\LoginPage.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-03-03T09:43:59.671Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Dashboard.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\Tanulo\\Desktop\\vizsgaremek\\desktop\\AdminPanel\\AdminPanel\\Dashboard.xaml.cs",
+              "RelativeDocumentMoniker": "AdminPanel\\Dashboard.xaml.cs",
+              "ToolTip": "C:\\Users\\Tanulo\\Desktop\\vizsgaremek\\desktop\\AdminPanel\\AdminPanel\\Dashboard.xaml.cs",
+              "RelativeToolTip": "AdminPanel\\Dashboard.xaml.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAAABAAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-03T08:35:44.323Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Dashboard.xaml",
+              "DocumentMoniker": "C:\\Users\\Tanulo\\Desktop\\vizsgaremek\\desktop\\AdminPanel\\AdminPanel\\Dashboard.xaml",
+              "RelativeDocumentMoniker": "AdminPanel\\Dashboard.xaml",
+              "ToolTip": "C:\\Users\\Tanulo\\Desktop\\vizsgaremek\\desktop\\AdminPanel\\AdminPanel\\Dashboard.xaml",
+              "RelativeToolTip": "AdminPanel\\Dashboard.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-03-03T08:35:26.026Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "StringToVisibilityConverter.cs",
+              "DocumentMoniker": "C:\\Users\\Tanulo\\Desktop\\vizsgaremek\\desktop\\AdminPanel\\AdminPanel\\StringToVisibilityConverter.cs",
+              "RelativeDocumentMoniker": "AdminPanel\\StringToVisibilityConverter.cs",
+              "ToolTip": "C:\\Users\\Tanulo\\Desktop\\vizsgaremek\\desktop\\AdminPanel\\AdminPanel\\StringToVisibilityConverter.cs",
+              "RelativeToolTip": "AdminPanel\\StringToVisibilityConverter.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAkwBMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-19T18:28:47.698Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\Tanulo\\Desktop\\vizsgaremek\\desktop\\AdminPanel\\AdminPanel\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "AdminPanel\\MainWindow.xaml.cs",
+              "ToolTip": "C:\\Users\\Tanulo\\Desktop\\vizsgaremek\\desktop\\AdminPanel\\AdminPanel\\MainWindow.xaml.cs",
+              "RelativeToolTip": "AdminPanel\\MainWindow.xaml.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAAAAwAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-19T18:04:14.975Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\Tanulo\\Desktop\\vizsgaremek\\desktop\\AdminPanel\\AdminPanel\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "AdminPanel\\MainWindow.xaml",
+              "ToolTip": "C:\\Users\\Tanulo\\Desktop\\vizsgaremek\\desktop\\AdminPanel\\AdminPanel\\MainWindow.xaml",
+              "RelativeToolTip": "AdminPanel\\MainWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-02-19T18:04:15.078Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "NavigationService.cs",
+              "DocumentMoniker": "C:\\Users\\Tanulo\\AppData\\Local\\Temp\\.vsdbgsrc\\2b0ec97cbc55040d747972dd9d1d06414ec5c3f9b730fc9979aa47e4498a1c0b\\NavigationService.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\AppData\\Local\\Temp\\.vsdbgsrc\\2b0ec97cbc55040d747972dd9d1d06414ec5c3f9b730fc9979aa47e4498a1c0b\\NavigationService.cs",
+              "ToolTip": "C:\\Users\\Tanulo\\AppData\\Local\\Temp\\.vsdbgsrc\\2b0ec97cbc55040d747972dd9d1d06414ec5c3f9b730fc9979aa47e4498a1c0b\\NavigationService.cs",
+              "RelativeToolTip": "..\\..\\..\\..\\AppData\\Local\\Temp\\.vsdbgsrc\\2b0ec97cbc55040d747972dd9d1d06414ec5c3f9b730fc9979aa47e4498a1c0b\\NavigationService.cs",
+              "ViewState": "AgIAAFMEAAAAAAAAAAAAwF8EAAACAAAAAQAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-03T08:22:47.219Z"
             }
           ]
         }
