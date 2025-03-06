@@ -25,5 +25,6 @@
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontStyle" Value="Italic"/>
         </Style>
+        
     </Application.Resources>
 </Application>

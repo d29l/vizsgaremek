@@ -23,6 +23,12 @@ namespace AdminPanel
         public Dashboard()
         {
             InitializeComponent();
+
+        }
+        private void ViewUsers_Click(object sender, RoutedEventArgs e)
+        {
+            
+            NavigationService.Navigate(new UsersPage());
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -8,49 +10,28 @@ namespace AdminPanel
 {
     internal class LoginUsers
     {
-        private static readonly HttpClient httpClient = new HttpClient
-        {
-            BaseAddress = new Uri("https://localhost:7077/api/users/loginUser")
-        };
+        
 
         public static async Task<string> LoginAsync(string email, string password)
         {
             try
             {
                 var loginUser = new { Email = email, Password = password };
-                string json = JsonSerializer.Serialize(loginUser);
+                var response = await ApiClient.httpClient.PostAsJsonAsync("users/loginUser", loginUser);
 
-                var request = new StringContent(json, Encoding.UTF8, "application/json");
-                var response = await httpClient.PostAsync("loginUser", request);
-
-
-                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                if (response.IsSuccessStatusCode)
                 {
-                    var result = await response.Content.ReadAsStringAsync();
-
-
-                    using (JsonDocument doc = JsonDocument.Parse(result))
+                    var result = await response.Content.ReadFromJsonAsync<Dictionary<string, string>>();
+                    if (result.TryGetValue("token", out var token))
                     {
-                        JsonElement root = doc.RootElement;
-
-                        if (root.TryGetProperty("token", out JsonElement tokenElement))
-                        {
-                            string token = tokenElement.GetString();
-
-
-                            httpClient.DefaultRequestHeaders.Authorization =
-                                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-
-                            return "Login successful";
-                        }
+                        // Set the Authorization header
+                        ApiClient.httpClient.DefaultRequestHeaders.Authorization =
+                            new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+                        return "Login successful";
                     }
-
                     return "Unexpected response format";
                 }
-                else
-                {
-                    return $"Error: {response.StatusCode.ToString()}";
-                }
+                return $"Error: {response.StatusCode}";
             }
             catch (Exception ex)
             {
