@@ -28,13 +28,13 @@ namespace ProjektBackend.Controllers
             {
                 return Ok(employers);
             }
-            return BadRequest();
+            return NotFound();
         }
 
         [Authorize(Policy = "EmployerSelfOrAdmin")]
-        [HttpGet("fetchEmployer{EmployerId}")]
+        [HttpGet("fetchEmployer/{EmployerId}")]
 
-        public async Task<ActionResult<Employer>> fetchEmployers(int EmployerId)
+        public async Task<ActionResult<Employer>> fetchEmployer(int EmployerId)
         {
             var employer = await _context.Employers.FirstOrDefaultAsync(x => x.EmployerId == EmployerId);
 
@@ -70,7 +70,7 @@ namespace ProjektBackend.Controllers
         }
 
         [Authorize(Policy = "EmployerSelfOrAdmin")]
-        [HttpPut("editEmployer{EmployerId}")]
+        [HttpPut("editEmployer/{EmployerId}")]
 
         public async Task<ActionResult> editEmployer(int EmployerId, UpdateEmployerDto updateEmployerDto)
         {
@@ -92,6 +92,23 @@ namespace ProjektBackend.Controllers
 
             
         }
+
+        [Authorize(Policy = "AdminOnly")]
+        [HttpDelete("deleteEmployer/{EmployerId}")]
+
+        public async Task<ActionResult> deleteEmployer(int EmployerId)
+        {
+            var employer = await _context.Employers.FirstOrDefaultAsync(x => x.EmployerId == EmployerId);
+
+            if (employer != null)
+            {
+                _context.Remove(employer);
+                await _context.SaveChangesAsync();
+                return Ok("User successfully deleted.");
+            }
+            return BadRequest();
+        }
+
 
     }
 }

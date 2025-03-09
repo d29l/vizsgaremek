@@ -147,6 +147,98 @@
         }
       }
     },
+    "/api/employers/deleteEmployer{EmployerId}": {
+      "delete": {
+        "tags": [
+          "Employer"
+        ],
+        "parameters": [
+          {
+            "name": "EmployerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/employerrequests/fetchRequests": {
+      "get": {
+        "tags": [
+          "EmployerRequest"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Employerrequest"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Employerrequest"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Employerrequest"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/employerrequests/fetchRequest{ApplicantId}": {
+      "get": {
+        "tags": [
+          "EmployerRequest"
+        ],
+        "parameters": [
+          {
+            "name": "ApplicantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Employerrequest"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Employerrequest"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Employerrequest"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/posts/fetchPosts": {
       "get": {
         "tags": [
@@ -680,6 +772,39 @@
   },
   "components": {
     "schemas": {
+      "Connection": {
+        "type": "object",
+        "properties": {
+          "connectionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "requesterId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "receiverId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "receiver": {
+            "$ref": "#/components/schemas/User"
+          },
+          "requester": {
+            "$ref": "#/components/schemas/User"
+          }
+        },
+        "additionalProperties": false
+      },
       "CreateEmployerDto": {
         "type": "object",
         "properties": {
@@ -788,6 +913,47 @@
         },
         "additionalProperties": false
       },
+      "Employerrequest": {
+        "type": "object",
+        "properties": {
+          "applicantId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "companyName": {
+            "type": "string",
+            "nullable": true
+          },
+          "companyAddress": {
+            "type": "string",
+            "nullable": true
+          },
+          "industry": {
+            "type": "string",
+            "nullable": true
+          },
+          "companyWebsite": {
+            "type": "string",
+            "nullable": true
+          },
+          "companyDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "estabilishedYear": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          }
+        },
+        "additionalProperties": false
+      },
       "LoginUserDto": {
         "type": "object",
         "properties": {
@@ -798,6 +964,39 @@
           "password": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Message": {
+        "type": "object",
+        "properties": {
+          "messageId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "senderId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "receiverId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "content": {
+            "type": "string",
+            "nullable": true
+          },
+          "sentAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "receiver": {
+            "$ref": "#/components/schemas/User"
+          },
+          "sender": {
+            "$ref": "#/components/schemas/User"
           }
         },
         "additionalProperties": false
@@ -959,11 +1158,6 @@
         "additionalProperties": false
       },
       "User": {
-        "required": [
-          "email",
-          "firstName",
-          "lastName"
-        ],
         "type": "object",
         "properties": {
           "userId": {
@@ -971,17 +1165,20 @@
             "format": "int32"
           },
           "firstName": {
-            "minLength": 1,
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "lastName": {
-            "minLength": 1,
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "email": {
-            "minLength": 1,
             "type": "string",
-            "format": "email"
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
           },
           "role": {
             "type": "string",
@@ -994,6 +1191,55 @@
           },
           "isActive": {
             "type": "boolean",
+            "nullable": true
+          },
+          "connectionReceivers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Connection"
+            },
+            "nullable": true
+          },
+          "connectionRequesters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Connection"
+            },
+            "nullable": true
+          },
+          "employerrequests": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Employerrequest"
+            },
+            "nullable": true
+          },
+          "employers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Employer"
+            },
+            "nullable": true
+          },
+          "messageReceivers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Message"
+            },
+            "nullable": true
+          },
+          "messageSenders": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Message"
+            },
+            "nullable": true
+          },
+          "profiles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Profile"
+            },
             "nullable": true
           }
         },

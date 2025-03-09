@@ -16,4 +16,7 @@
 
     public record CreateEmployerDto(string CompanyName, string CompanyAddress, string Industry, string CompanyWebsite, string CompanyDescription, int EstabilishedYear);
     public record UpdateEmployerDto(string CompanyName, string CompanyAddress, string Industry, string CompanyWebsite, string CompanyDescription, int EstabilishedYear);
+
+    public record CreateRequestDto(string CompanyName, string CompanyAddress, string Industry, string CompanyWebsite, string CompanyDescription, int EstabilishedYear);
+    public record UpdateRequestDto(string CompanyName, string CompanyAddress, string Industry, string CompanyWebsite, string CompanyDescription, int EstabilishedYear);
 }

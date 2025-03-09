@@ -56,6 +56,11 @@ namespace ProjektBackend
                     policy.RequireAuthenticatedUser(); 
                     policy.RequireRole("Employer"); 
                 });
+                options.AddPolicy("EmployeeOnly", policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                    policy.RequireRole("Employee");
+                });
                 options.AddPolicy("SelfOnly", policy => 
                 { 
                     policy.RequireAuthenticatedUser(); 

@@ -19,6 +19,8 @@ public partial class ProjektContext : DbContext
 
     public virtual DbSet<Employer> Employers { get; set; }
 
+    public virtual DbSet<Employerrequest> Employerrequests { get; set; }
+
     public virtual DbSet<Message> Messages { get; set; }
 
     public virtual DbSet<Post> Posts { get; set; }
@@ -26,8 +28,6 @@ public partial class ProjektContext : DbContext
     public virtual DbSet<Profile> Profiles { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
-
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Connection>(entity =>
@@ -67,15 +67,19 @@ public partial class ProjektContext : DbContext
 
         modelBuilder.Entity<Employer>(entity =>
         {
-            entity.HasKey(e => e.EmployerId).HasName("PRIMARY");
+            entity.HasKey(e => new { e.EmployerId, e.UserId }).HasName("PRIMARY");
 
             entity.ToTable("employers");
 
             entity.HasIndex(e => e.UserId, "UserID");
 
             entity.Property(e => e.EmployerId)
+                .ValueGeneratedOnAdd()
                 .HasColumnType("int(11)")
                 .HasColumnName("EmployerID");
+            entity.Property(e => e.UserId)
+                .HasColumnType("int(11)")
+                .HasColumnName("UserID");
             entity.Property(e => e.CompanyAddress)
                 .HasMaxLength(255)
                 .HasDefaultValueSql("'NULL'");
@@ -92,13 +96,36 @@ public partial class ProjektContext : DbContext
             entity.Property(e => e.Industry)
                 .HasMaxLength(255)
                 .HasDefaultValueSql("'NULL'");
-            entity.Property(e => e.UserId)
-                .HasColumnType("int(11)")
-                .HasColumnName("UserID");
 
             entity.HasOne(d => d.User).WithMany(p => p.Employers)
                 .HasForeignKey(d => d.UserId)
                 .HasConstraintName("employers_ibfk_1");
+        });
+
+        modelBuilder.Entity<Employerrequest>(entity =>
+        {
+            entity.HasKey(e => e.ApplicantId).HasName("PRIMARY");
+
+            entity.ToTable("employerrequest");
+
+            entity.HasIndex(e => e.UserId, "UserID");
+
+            entity.Property(e => e.ApplicantId)
+                .HasColumnType("int(11)")
+                .HasColumnName("ApplicantID");
+            entity.Property(e => e.CompanyAddress).HasMaxLength(255);
+            entity.Property(e => e.CompanyDescription).HasColumnType("text");
+            entity.Property(e => e.CompanyName).HasMaxLength(255);
+            entity.Property(e => e.CompanyWebsite).HasMaxLength(255);
+            entity.Property(e => e.EstabilishedYear).HasColumnType("year(4)");
+            entity.Property(e => e.Industry).HasMaxLength(255);
+            entity.Property(e => e.UserId)
+                .HasColumnType("int(11)")
+                .HasColumnName("UserID");
+
+            entity.HasOne(d => d.User).WithMany(p => p.Employerrequests)
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("employerrequest_ibfk_1");
         });
 
         modelBuilder.Entity<Message>(entity =>

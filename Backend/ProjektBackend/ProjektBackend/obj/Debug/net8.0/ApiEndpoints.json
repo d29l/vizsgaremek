@@ -1,5 +1,67 @@
 [
   {
+    "ContainingType": "ProjektBackend.Controllers.EmployerRequestController",
+    "Method": "fetchRequest",
+    "RelativePath": "api/employerrequests/fetchRequest{ApplicantId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ApplicantId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "ProjektBackend.Models.Employerrequest",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "ProjektBackend.Controllers.EmployerRequestController",
+    "Method": "fetchRequests",
+    "RelativePath": "api/employerrequests/fetchRequests",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "ProjektBackend.Models.Employerrequest",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "ProjektBackend.Controllers.EmployerController",
+    "Method": "deleteEmployer",
+    "RelativePath": "api/employers/deleteEmployer{EmployerId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "EmployerId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "ProjektBackend.Controllers.EmployerController",
     "Method": "editEmployer",
     "RelativePath": "api/employers/editEmployer{EmployerId}",
@@ -22,7 +84,7 @@
   },
   {
     "ContainingType": "ProjektBackend.Controllers.EmployerController",
-    "Method": "fetchEmployers",
+    "Method": "fetchEmployer",
     "RelativePath": "api/employers/fetchEmployer{EmployerId}",
     "HttpMethod": "GET",
     "IsController": true,
