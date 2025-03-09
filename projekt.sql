@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Feb 18. 21:47
+-- Létrehozás ideje: 2025. Már 09. 17:14
 -- Kiszolgáló verziója: 10.4.25-MariaDB
 -- PHP verzió: 8.1.10
 
@@ -35,6 +35,23 @@ CREATE TABLE `connections` (
   `ReceiverID` int(11) NOT NULL,
   `Status` enum('Pending','Accepted','Declined') COLLATE utf8_hungarian_ci DEFAULT 'Pending',
   `CreatedAt` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `employerrequest`
+--
+
+CREATE TABLE `employerrequest` (
+  `ApplicantID` int(11) NOT NULL,
+  `UserID` int(11) NOT NULL,
+  `CompanyName` varchar(255) COLLATE utf8_hungarian_ci NOT NULL,
+  `CompanyAddress` varchar(255) COLLATE utf8_hungarian_ci NOT NULL,
+  `Industry` varchar(255) COLLATE utf8_hungarian_ci NOT NULL,
+  `CompanyWebsite` varchar(255) COLLATE utf8_hungarian_ci NOT NULL,
+  `CompanyDescription` text COLLATE utf8_hungarian_ci NOT NULL,
+  `EstabilishedYear` year(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 -- --------------------------------------------------------
@@ -121,6 +138,13 @@ CREATE TABLE `profiles` (
   `ProfilePicture` varchar(255) COLLATE utf8_hungarian_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
+--
+-- A tábla adatainak kiíratása `profiles`
+--
+
+INSERT INTO `profiles` (`ProfileID`, `UserID`, `Headline`, `Bio`, `Location`, `ProfilePicture`) VALUES
+(1, 10, 'John Admin', 'Lorem Ipsum', 'Miskolc', 'n/a');
+
 -- --------------------------------------------------------
 
 --
@@ -150,7 +174,9 @@ INSERT INTO `users` (`UserID`, `FirstName`, `LastName`, `Email`, `Password`, `Ro
 (5, '', '', 'iferbrache4@china.com.cn', 'QCMhWNTszTuPsiK8FEZqi3EBU/o1gnwq6e0h89Z8VQu/Id6N6kLtbmPyXp1+WXrx', 'Employee', '2023-05-12 11:46:26', 1),
 (6, '', '', 'torol@gmail.com', 'QCMhWNTszTuPsiK8FEZqi3EBU/o1gnwq6e0h89Z8VQu/Id6N6kLtbmPyXp1+WXrx', 'Employer', '2024-12-01 12:10:40', 1),
 (8, 'Bodi', 'Gusztika', 'utalomazadofizetest@gmail.com', 'QCMhWNTszTuPsiK8FEZqi3EBU/o1gnwq6e0h89Z8VQu/Id6N6kLtbmPyXp1+WXrx', 'Employee', '2025-02-18 21:04:44', 1),
-(9, 'john', 'admin', 'admin@gmail.com', 'q9qtFdV/f+/NeRpkJBAz5BV3WcEAdTi1dH11SS/BNjK5rxkQlqEWJkWLpRqyblaW', 'Employee', '2025-02-18 21:12:02', 1);
+(9, 'john', 'admin', 'admin@gmail.com', 'q9qtFdV/f+/NeRpkJBAz5BV3WcEAdTi1dH11SS/BNjK5rxkQlqEWJkWLpRqyblaW', 'Employee', '2025-02-18 21:12:02', 1),
+(10, 'admin', 'admin', 'admin', 'UMpb+AnYxJl3A22rnZE3nvomoYp1Khg3FwAjGAu31GaSxkoT5J5+k6fc0FEun/AX', 'Admin', '2025-02-19 23:00:08', 1),
+(11, 'admin', 'admin', 'admin2', 'X0bSYAMcD5utwSGpSYTLXiTz5INqbVFoDUpmVicNktqAkOuOjSbGdjNcoQ0lo/wI', 'Admin', '2025-02-19 23:02:26', 1);
 
 --
 -- Indexek a kiírt táblákhoz
@@ -163,6 +189,13 @@ ALTER TABLE `connections`
   ADD PRIMARY KEY (`ConnectionID`),
   ADD UNIQUE KEY `idx_unique_connection` (`RequesterID`,`ReceiverID`),
   ADD KEY `ReceiverID` (`ReceiverID`);
+
+--
+-- A tábla indexei `employerrequest`
+--
+ALTER TABLE `employerrequest`
+  ADD PRIMARY KEY (`ApplicantID`),
+  ADD KEY `UserID` (`UserID`);
 
 --
 -- A tábla indexei `employers`
@@ -232,13 +265,13 @@ ALTER TABLE `posts`
 -- AUTO_INCREMENT a táblához `profiles`
 --
 ALTER TABLE `profiles`
-  MODIFY `ProfileID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ProfileID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT a táblához `users`
 --
 ALTER TABLE `users`
-  MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Megkötések a kiírt táblákhoz
@@ -250,6 +283,12 @@ ALTER TABLE `users`
 ALTER TABLE `connections`
   ADD CONSTRAINT `connections_ibfk_1` FOREIGN KEY (`RequesterID`) REFERENCES `users` (`UserID`) ON DELETE CASCADE,
   ADD CONSTRAINT `connections_ibfk_2` FOREIGN KEY (`ReceiverID`) REFERENCES `users` (`UserID`) ON DELETE CASCADE;
+
+--
+-- Megkötések a táblához `employerrequest`
+--
+ALTER TABLE `employerrequest`
+  ADD CONSTRAINT `employerrequest_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `users` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Megkötések a táblához `employers`
