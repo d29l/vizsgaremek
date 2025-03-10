@@ -6,10 +6,11 @@ import Navbar from "./Components/Navbar";
 import RegisterPage from "./Pages/RegisterPage";
 import LoginPage from "./Pages/LoginPage";
 import ProfilePage from "./Pages/ProfilePage";
+import CreatePost from "./Pages/CreatePost";
 
 function App() {
   return (
-    <div class="mocha">
+    <div class="frappe">
       <div className="bg-mantle overflow-hidden min-h-screen">
         <Routes>
           <Route path="/" element={<Home />} />
@@ -17,6 +18,7 @@ function App() {
           <Route path="/signup" element={<RegisterPage/>} />
           <Route path="/login" element={<LoginPage/>} />
           <Route path="/profiles/:userId" element={<ProfilePage/>} />
+          <Route path="/create-post" element={<CreatePost/>} />
         </Routes>
       </div>
     </div>
