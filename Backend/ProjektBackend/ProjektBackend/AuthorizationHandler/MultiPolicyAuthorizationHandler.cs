@@ -44,7 +44,7 @@ public class MultiPolicyAuthorizationHandler : IAuthorizationHandler
     {
         if (context.User.IsInRole("Admin") ||
             (context.User.IsInRole("Employee") &&
-             context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value == GetResourceId(context, "UserId")))
+             context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value == GetResourceId(context, "UserID")))
         {
             context.Succeed(requirement);
         }

@@ -38,8 +38,7 @@ namespace ProjektBackend.Controllers
         public async Task<ActionResult<Post>> fetchPost(int PostId)
         {
             var post = await _context.Posts
-                        .Include(x => x.User)
-                        .ThenInclude(e => e.Employers)
+                        .Include(x => x.Employer)
                         .FirstOrDefaultAsync(y => y.PostId == PostId);
             if (post != null)
             {
@@ -50,11 +49,12 @@ namespace ProjektBackend.Controllers
 
         // Post
         [Authorize(Policy = "EmployerSelfOrAdmin")]
-        [HttpPost("newPost/{UserId}")]
-        public async Task<ActionResult<Post>> newPost(int UserId, CreatePostDto createPostDto)
+        [HttpPost("newPost")]
+        public async Task<ActionResult<Post>> newPost(int EmployerId, int UserId, CreatePostDto createPostDto)
         {
             var Post = new Post()
             {
+                EmployerId = EmployerId,
                 UserId = UserId,
                 Title = createPostDto.Title,
                 Content = createPostDto.Content,
@@ -77,9 +77,9 @@ namespace ProjektBackend.Controllers
         [Authorize(Policy = "EmployerSelfOrAdmin")]
         [HttpPut("editPost/{PostId}")]
 
-        public async Task<ActionResult<Post>> editPost(int PostId, int UserId, UpdatePostDto updatePostDto)
+        public async Task<ActionResult<Post>> editPost(int PostId, int EmployerId, UpdatePostDto updatePostDto)
         {
-            var existingPost = await _context.Posts.FirstOrDefaultAsync(x => x.PostId == PostId && x.UserId == UserId);
+            var existingPost = await _context.Posts.FirstOrDefaultAsync(x => x.PostId == PostId && x.EmployerId == EmployerId);
             if (existingPost != null)
             {
                 existingPost.Title = updatePostDto.Title;
@@ -94,10 +94,10 @@ namespace ProjektBackend.Controllers
         // Delete
         [Authorize(Policy = "EmployerSelfOrAdmin")]
         [HttpDelete("deletePost/{PostId}")]
-        public async Task<ActionResult> DeletePost(int PostId, int UserId)
+        public async Task<ActionResult> DeletePost(int PostId, int EmployerId)
         {
             var deletePost = await _context.Posts
-        .FirstOrDefaultAsync(x => x.PostId == PostId && x.UserId == UserId);
+        .FirstOrDefaultAsync(x => x.PostId == PostId && x.EmployerId == EmployerId);
 
             if (deletePost != null)
             {

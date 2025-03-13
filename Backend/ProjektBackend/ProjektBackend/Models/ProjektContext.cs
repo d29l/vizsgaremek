@@ -28,6 +28,7 @@ public partial class ProjektContext : DbContext
     public virtual DbSet<Profile> Profiles { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Connection>(entity =>
@@ -67,19 +68,15 @@ public partial class ProjektContext : DbContext
 
         modelBuilder.Entity<Employer>(entity =>
         {
-            entity.HasKey(e => new { e.EmployerId, e.UserId }).HasName("PRIMARY");
+            entity.HasKey(e => e.EmployerId).HasName("PRIMARY");
 
             entity.ToTable("employers");
 
             entity.HasIndex(e => e.UserId, "UserID");
 
             entity.Property(e => e.EmployerId)
-                .ValueGeneratedOnAdd()
                 .HasColumnType("int(11)")
                 .HasColumnName("EmployerID");
-            entity.Property(e => e.UserId)
-                .HasColumnType("int(11)")
-                .HasColumnName("UserID");
             entity.Property(e => e.CompanyAddress)
                 .HasMaxLength(255)
                 .HasDefaultValueSql("'NULL'");
@@ -96,6 +93,9 @@ public partial class ProjektContext : DbContext
             entity.Property(e => e.Industry)
                 .HasMaxLength(255)
                 .HasDefaultValueSql("'NULL'");
+            entity.Property(e => e.UserId)
+                .HasColumnType("int(11)")
+                .HasColumnName("UserID");
 
             entity.HasOne(d => d.User).WithMany(p => p.Employers)
                 .HasForeignKey(d => d.UserId)
@@ -163,27 +163,36 @@ public partial class ProjektContext : DbContext
 
         modelBuilder.Entity<Post>(entity =>
         {
-            entity.HasKey(e => new { e.PostId, e.UserId }).HasName("PRIMARY");
+            entity.HasKey(e => e.PostId).HasName("PRIMARY");
 
             entity.ToTable("posts");
 
-            entity.HasIndex(e => e.UserId, "UserID");
+            entity.HasIndex(e => e.EmployerId, "EmployerID");
+
+            entity.HasIndex(e => e.UserId, "UserID").IsUnique();
 
             entity.Property(e => e.PostId)
-                .ValueGeneratedOnAdd()
                 .HasColumnType("int(11)")
                 .HasColumnName("PostID");
-            entity.Property(e => e.UserId)
-                .HasColumnType("int(11)")
-                .HasColumnName("UserID");
             entity.Property(e => e.Content).HasColumnType("text");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("'current_timestamp()'")
                 .HasColumnType("datetime");
+            entity.Property(e => e.EmployerId)
+                .HasColumnType("int(11)")
+                .HasColumnName("EmployerID");
             entity.Property(e => e.Likes)
                 .HasDefaultValueSql("'0'")
                 .HasColumnType("int(11)");
             entity.Property(e => e.Title).HasColumnType("text");
+            entity.Property(e => e.UserId)
+                .HasColumnType("int(11)")
+                .HasColumnName("UserID");
+
+            entity.HasOne(d => d.Employer).WithMany(p => p.Posts)
+                .HasForeignKey(d => d.EmployerId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("FK_Posts_Employers");
         });
 
         modelBuilder.Entity<Profile>(entity =>

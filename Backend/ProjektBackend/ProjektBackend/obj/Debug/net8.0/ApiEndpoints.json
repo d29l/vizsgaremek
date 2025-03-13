@@ -1,8 +1,24 @@
 [
   {
     "ContainingType": "ProjektBackend.Controllers.EmployerRequestController",
+    "Method": "deleteRequest",
+    "RelativePath": "api/employerrequests/deleteRequest/{ApplicantId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ApplicantId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProjektBackend.Controllers.EmployerRequestController",
     "Method": "fetchRequest",
-    "RelativePath": "api/employerrequests/fetchRequest{ApplicantId}",
+    "RelativePath": "api/employerrequests/fetchRequest/{ApplicantId}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -46,9 +62,25 @@
     ]
   },
   {
+    "ContainingType": "ProjektBackend.Controllers.EmployerRequestController",
+    "Method": "postRequest",
+    "RelativePath": "api/employerrequests/postRequest",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "createRequestDto",
+        "Type": "ProjektBackend.Controllers.CreateRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "ProjektBackend.Controllers.EmployerController",
     "Method": "deleteEmployer",
-    "RelativePath": "api/employers/deleteEmployer{EmployerId}",
+    "RelativePath": "api/employers/deleteEmployer/{EmployerId}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -64,7 +96,7 @@
   {
     "ContainingType": "ProjektBackend.Controllers.EmployerController",
     "Method": "editEmployer",
-    "RelativePath": "api/employers/editEmployer{EmployerId}",
+    "RelativePath": "api/employers/editEmployer/{EmployerId}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -85,7 +117,7 @@
   {
     "ContainingType": "ProjektBackend.Controllers.EmployerController",
     "Method": "fetchEmployer",
-    "RelativePath": "api/employers/fetchEmployer{EmployerId}",
+    "RelativePath": "api/employers/fetchEmployer/{EmployerId}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -158,7 +190,7 @@
         "IsRequired": true
       },
       {
-        "Name": "UserId",
+        "Name": "EmployerId",
         "Type": "System.Int32",
         "IsRequired": false
       }
@@ -179,7 +211,7 @@
         "IsRequired": true
       },
       {
-        "Name": "UserId",
+        "Name": "EmployerId",
         "Type": "System.Int32",
         "IsRequired": false
       },
@@ -250,15 +282,20 @@
   {
     "ContainingType": "ProjektBackend.Controllers.PostController",
     "Method": "newPost",
-    "RelativePath": "api/posts/newPost/{UserId}",
+    "RelativePath": "api/posts/newPost",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
+        "Name": "EmployerId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
         "Name": "UserId",
         "Type": "System.Int32",
-        "IsRequired": true
+        "IsRequired": false
       },
       {
         "Name": "createPostDto",

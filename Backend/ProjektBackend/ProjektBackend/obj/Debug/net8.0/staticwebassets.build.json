@@ -1,12 +1,11 @@
 {
   "Version": 1,
-  "Hash": "NdJK+3IZL5UKIEZYNG8ARF0bVghYgyzouNbJeOE8a8Y=",
+  "Hash": "hzh6ItXujDPVJhiPWNTiGONvM57aJP4Tdvq+8iARWEQ=",
   "Source": "ProjektBackend",
   "BasePath": "_content/ProjektBackend",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [],
-  "Assets": [],
-  "Endpoints": []
+  "Assets": []
 }

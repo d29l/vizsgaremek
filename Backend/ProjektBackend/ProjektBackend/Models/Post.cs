@@ -7,6 +7,8 @@ public partial class Post
 {
     public int PostId { get; set; }
 
+    public int EmployerId { get; set; }
+
     public int UserId { get; set; }
 
     public string Title { get; set; } = null!;
@@ -17,5 +19,5 @@ public partial class Post
 
     public int? Likes { get; set; }
 
-    public virtual User User { get; set; } = null!;
+    public virtual Employer Employer { get; set; } = null!;
 }
