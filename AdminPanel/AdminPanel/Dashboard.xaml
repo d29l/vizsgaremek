@@ -7,7 +7,7 @@
       Title="Dashboard" Height="450" Width="800">
 
     <Grid Background="#1E1E2E">
-
+        <!-- Header -->
         <TextBlock Text="Welcome to the Dashboard!" 
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Top"
@@ -15,7 +15,7 @@
                    FontSize="24"
                    Foreground="#CDD6F4"/>
 
-
+        <!-- View Users Button -->
         <Button Content="View Users"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Top"
@@ -26,7 +26,36 @@
                 Foreground="#1E1E2E"
                 BorderThickness="0"
                 Cursor="Hand"
-                Click="ViewUsers_Click" Margin="0,87,0,0">
+                Click="ViewUsers_Click"
+                Margin="0,100,0,0">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Background" Value="#CBA6F7"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#B493F4"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="#9D7BEF"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+
+        <!-- Manage Employer Requests Button -->
+        <Button Content="Manage Employer Requests"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Padding="20,12"
+                FontSize="14"
+                FontWeight="SemiBold"
+                Background="#CBA6F7"
+                Foreground="#1E1E2E"
+                BorderThickness="0"
+                Cursor="Hand"
+                Click="ManageRequests_Click"
+                Margin="0,170,0,0">
             <Button.Style>
                 <Style TargetType="Button">
                     <Setter Property="Background" Value="#CBA6F7"/>

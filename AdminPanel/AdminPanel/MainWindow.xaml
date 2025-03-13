@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AdminPanel"
         mc:Ignorable="d"
+        Background="#1E1E2E"
         Title="Login Page" Height="450" Width="800">
 
     <Grid>

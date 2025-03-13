@@ -7,16 +7,11 @@
       mc:Ignorable="d"
       Title="LoginPage" 
       Height="450" 
-      Width="800"
-      Background="#1E1E2E">
+      Width="800">
+
 
     <Grid>
-        <Grid.Background>
-            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                <GradientStop Color="#1E1E2E" Offset="0"/>
-                <GradientStop Color="#11111B" Offset="1"/>
-            </LinearGradientBrush>
-        </Grid.Background>
+        
 
         <Border Background="#313244" 
                 CornerRadius="15"

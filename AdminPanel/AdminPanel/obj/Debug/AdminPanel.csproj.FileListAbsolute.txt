@@ -123,3 +123,5 @@ C:\Users\ablonczya\Desktop\vizsgaremek\vizsgaremek\desktop\AdminPanel\AdminPanel
 C:\Users\ablonczya\Desktop\vizsgaremek\vizsgaremek\desktop\AdminPanel\AdminPanel\obj\Debug\UsersPage.g.cs
 C:\Users\ablonczya\Desktop\vizsgaremek\vizsgaremek\desktop\AdminPanel\AdminPanel\bin\Debug\System.Net.Http.Json.dll
 C:\Users\ablonczya\Desktop\vizsgaremek\vizsgaremek\desktop\AdminPanel\AdminPanel\bin\Debug\System.Net.Http.Json.xml
+C:\Users\ablonczya\Desktop\vizsgaremek\vizsgaremek\desktop\AdminPanel\AdminPanel\obj\Debug\EmployerRequestsPage.baml
+C:\Users\ablonczya\Desktop\vizsgaremek\vizsgaremek\desktop\AdminPanel\AdminPanel\obj\Debug\EmployerRequestsPage.g.cs

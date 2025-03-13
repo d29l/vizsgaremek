@@ -93,6 +93,9 @@
     <Compile Include="Dashboard.xaml.cs">
       <DependentUpon>Dashboard.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EmployerRequestsPage.xaml.cs">
+      <DependentUpon>EmployerRequestsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
@@ -103,6 +106,10 @@
       <DependentUpon>UsersPage.xaml</DependentUpon>
     </Compile>
     <Page Include="Dashboard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EmployerRequestsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
