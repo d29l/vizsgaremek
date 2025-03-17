@@ -26,6 +26,44 @@ namespace ProjektBackend.Controllers
             _configuration = configuration;
         }
 
+        char[] specialCharsAndNumbers =
+        {
+            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+
+            '!', '"', '#', '$', '%', '&', '\'', '(', ')', '*', '+',
+            ',', '-', '.', '/', ':', ';', '<', '=', '>', '?', '@',
+            '[', '\\', ']', '^', '_', '`', '{', '|', '}', '~',
+
+            '¡', '¿', '¢', '£', '¤', '¥', '§', '©', '®', '°', '±', '×', '÷', 'µ', '¶', '·',
+            '•', '∞', '≈', '√', '∑', '∏', '≠', '≤', '≥', '∂', '∫', '∩', '∪',
+
+            '(', ')', '[', ']', '{', '}', '<', '>', '⌈', '⌉', '⌊', '⌋', '⟨', '⟩',
+
+            '$', '€', '£', '¥', '₣', '₤', '₹', '₱', '₿', '₲', '₴', '₽',
+
+            '⁰', '¹', '²', '³', '⁴', '⁵', '⁶', '⁷', '⁸', '⁹', '⁺', '−', '÷', '≡', '∼', '≈',
+            '≠', '≡', '∀', '∃', '⊂', '⊆', '⊇', '⊕', '⊗', '⊥', '∠', '∇',
+
+            'α', 'β', 'γ', 'δ', 'ε', 'ζ', 'η', 'θ', 'ι', 'κ', 'λ', 'μ', 'ν', 'ξ', 'ο', 'π',
+            'ρ', 'σ', 'τ', 'υ', 'φ', 'χ', 'ψ', 'ω', 'Α', 'Β', 'Γ', 'Δ', 'Ε', 'Ζ', 'Η', 'Θ',
+            'Ι', 'Κ', 'Λ', 'Μ', 'Ν', 'Ξ', 'Ο', 'Π', 'Ρ', 'Σ', 'Τ', 'Υ', 'Φ', 'Χ', 'Ψ', 'Ω',
+
+            '∫', '∑', '∏', '∞', '⊂', '⊆', '⊇', '⊕', '⊗', '≠', '≡', '≅', '∼', '≈',
+
+            '♥', '♦', '♣', '♠', '♪', '♫', '☀', '☂', '☃', '☠', '✈', '✉', '☃', '⚡', '☻',
+
+            '←', '↑', '→', '↓', '↔', '↕', '↗', '↖', '⇐', '⇑', '⇒', '⇓', '⇔',
+
+            '∀', '∃', '∧', '∨', '∩', '∪', '∈', '∉', '⊂', '⊄', '⊆', '⊇', '⊕', '⊗', '⊥',
+            '≠', '≡', '≤', '≥',
+
+            ' ', '\t', '\n', '\r', '\b', '\f', '\v', '\a',
+
+            '─', '┄', '┅', '┈', '┉', '━', '┛', '┓', '┃', '┏', '┛', '┣', '┫', '┳', '┻', '┳',
+            '┃', '╳', '■', '□', '▣', '▢', '▯', '●', '○'
+        };
+
+
         // Get All
         [Authorize(Policy = "AdminOnly")]
         [HttpGet("fetchUsers")]
@@ -78,7 +116,24 @@ namespace ProjektBackend.Controllers
                 LastName = registerUserDto.LastName,
                 Email = registerUserDto.Email,
                 Password = Convert.ToBase64String(hashBytes)
+
             };
+
+            if (!newUser.Email.Contains("@"))
+            {
+                return StatusCode(418, "Invalid Email address.");
+            }
+            foreach (var item in specialCharsAndNumbers)
+            {
+                if (newUser.FirstName.Contains(item))
+                {
+                    return StatusCode(418, "Invalid First Name.");
+                }
+                if (newUser.LastName.Contains(item))
+                {
+                    return StatusCode(418, "Invalid Last Name.");
+                }
+            }
 
             if (newUser != null)
             {
@@ -147,6 +202,43 @@ namespace ProjektBackend.Controllers
 
             return Ok(new { Token = tokenString });
         }
+
+
+        // Put
+        [Authorize(Policy = "AdminOnly")]
+        [HttpPut("updateUserRole")]
+
+        public async Task<ActionResult> updateUserRole(int UserId, string Role)
+        {
+            var existingUser = await _context.Users.FirstOrDefaultAsync(x => x.UserId == UserId);
+
+            if (existingUser != null)
+            {
+                existingUser.Role = Role;
+                _context.Update(existingUser);
+                await _context.SaveChangesAsync();
+            }
+            return BadRequest();
+        }
+
+        [Authorize(Policy = "SelfOnly")]
+        [HttpPut("updateUserRole")]
+
+        public async Task<ActionResult> updateUser(int UserId, UpdateUserDto updateUserDto)
+        {
+            var existingUser = await _context.Users.FirstOrDefaultAsync(x => x.UserId == UserId);
+
+            if (existingUser != null)
+            {
+                existingUser.FirstName = updateUserDto.FirstName;
+                existingUser.LastName = updateUserDto.LastName;
+                existingUser.Email = updateUserDto.Email;
+                _context.Update(existingUser);
+                await _context.SaveChangesAsync();
+            }
+            return BadRequest();
+        }
+
 
 
         // Delete

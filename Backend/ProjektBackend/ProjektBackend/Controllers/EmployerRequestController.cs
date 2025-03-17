@@ -43,14 +43,15 @@ namespace ProjektBackend.Controllers
             return NotFound();
         }
 
-        [Authorize(Policy = "EmployeeOnly")]
+        [Authorize(Policy = "EmployeeSelfOrAdmin")]
         [HttpPost("postRequest")]
 
-        public async Task<ActionResult> postRequest(CreateRequestDto createRequestDto)
+        public async Task<ActionResult> postRequest(int UserId, CreateRequestDto createRequestDto)
         {
 
             var newRequest = new Employerrequest
             {
+                UserId = UserId,
                 CompanyName = createRequestDto.CompanyName,
                 CompanyAddress = createRequestDto.CompanyAddress,
                 Industry = createRequestDto.Industry,

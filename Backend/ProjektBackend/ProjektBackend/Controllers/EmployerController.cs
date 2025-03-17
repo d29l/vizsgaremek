@@ -48,10 +48,11 @@ namespace ProjektBackend.Controllers
         [Authorize(Policy = "AdminOnly")]
         [HttpPost("postEmployer")]
 
-        public async Task<ActionResult> postEmployer(CreateEmployerDto createEmployerDto)
+        public async Task<ActionResult> postEmployer(int UserId, CreateEmployerDto createEmployerDto)
         {
             var newEmployer = new Employer
             {
+                UserId = UserId,
                 CompanyName = createEmployerDto.CompanyName,
                 CompanyAddress = createEmployerDto.CompanyAddress,
                 Industry = createEmployerDto.Industry,

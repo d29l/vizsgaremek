@@ -34,7 +34,7 @@
         }
       }
     },
-    "/api/employers/fetchEmployer{EmployerId}": {
+    "/api/employers/fetchEmployer/{EmployerId}": {
       "get": {
         "tags": [
           "Employer"
@@ -79,6 +79,16 @@
         "tags": [
           "Employer"
         ],
+        "parameters": [
+          {
+            "name": "UserId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -105,7 +115,7 @@
         }
       }
     },
-    "/api/employers/editEmployer{EmployerId}": {
+    "/api/employers/editEmployer/{EmployerId}": {
       "put": {
         "tags": [
           "Employer"
@@ -147,7 +157,7 @@
         }
       }
     },
-    "/api/employers/deleteEmployer{EmployerId}": {
+    "/api/employers/deleteEmployer/{EmployerId}": {
       "delete": {
         "tags": [
           "Employer"
@@ -199,7 +209,7 @@
         }
       }
     },
-    "/api/employerrequests/fetchRequest{ApplicantId}": {
+    "/api/employerrequests/fetchRequest/{ApplicantId}": {
       "get": {
         "tags": [
           "EmployerRequest"
@@ -235,6 +245,70 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/api/employerrequests/postRequest": {
+      "post": {
+        "tags": [
+          "EmployerRequest"
+        ],
+        "parameters": [
+          {
+            "name": "UserId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/employerrequests/deleteRequest/{ApplicantId}": {
+      "delete": {
+        "tags": [
+          "EmployerRequest"
+        ],
+        "parameters": [
+          {
+            "name": "ApplicantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
           }
         }
       }
@@ -308,16 +382,23 @@
         }
       }
     },
-    "/api/posts/newPost/{UserId}": {
+    "/api/posts/newPost": {
       "post": {
         "tags": [
           "Post"
         ],
         "parameters": [
           {
+            "name": "EmployerId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
             "name": "UserId",
-            "in": "path",
-            "required": true,
+            "in": "query",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -383,7 +464,7 @@
             }
           },
           {
-            "name": "UserId",
+            "name": "EmployerId",
             "in": "query",
             "schema": {
               "type": "integer",
@@ -450,7 +531,7 @@
             }
           },
           {
-            "name": "UserId",
+            "name": "EmployerId",
             "in": "query",
             "schema": {
               "type": "integer",
@@ -871,6 +952,36 @@
         },
         "additionalProperties": false
       },
+      "CreateRequestDto": {
+        "type": "object",
+        "properties": {
+          "companyName": {
+            "type": "string",
+            "nullable": true
+          },
+          "companyAddress": {
+            "type": "string",
+            "nullable": true
+          },
+          "industry": {
+            "type": "string",
+            "nullable": true
+          },
+          "companyWebsite": {
+            "type": "string",
+            "nullable": true
+          },
+          "companyDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "estabilishedYear": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
       "Employer": {
         "type": "object",
         "properties": {
@@ -905,6 +1016,13 @@
           "establishedYear": {
             "type": "integer",
             "format": "int32",
+            "nullable": true
+          },
+          "posts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Post"
+            },
             "nullable": true
           },
           "user": {
@@ -1008,6 +1126,10 @@
             "type": "integer",
             "format": "int32"
           },
+          "employerId": {
+            "type": "integer",
+            "format": "int32"
+          },
           "userId": {
             "type": "integer",
             "format": "int32"
@@ -1030,8 +1152,8 @@
             "format": "int32",
             "nullable": true
           },
-          "user": {
-            "$ref": "#/components/schemas/User"
+          "employer": {
+            "$ref": "#/components/schemas/Employer"
           }
         },
         "additionalProperties": false
@@ -1158,6 +1280,12 @@
         "additionalProperties": false
       },
       "User": {
+        "required": [
+          "email",
+          "firstName",
+          "lastName",
+          "password"
+        ],
         "type": "object",
         "properties": {
           "userId": {
@@ -1165,20 +1293,22 @@
             "format": "int32"
           },
           "firstName": {
-            "type": "string",
-            "nullable": true
+            "minLength": 1,
+            "type": "string"
           },
           "lastName": {
-            "type": "string",
-            "nullable": true
+            "minLength": 1,
+            "type": "string"
           },
           "email": {
+            "minLength": 1,
             "type": "string",
-            "nullable": true
+            "format": "email"
           },
           "password": {
+            "minLength": 1,
             "type": "string",
-            "nullable": true
+            "format": "password"
           },
           "role": {
             "type": "string",

@@ -11,6 +11,8 @@
 
     public record LoginUserDto(string Email, string Password);
 
+    public record UpdateUserDto(string FirstName, string LastName, string Email);
+
     public record CreateProfileDto(string Headline, string Bio, string Location, string ProfilePicture);
     public record UpdateProfileDto(string Headline, string Bio, string Location, string ProfilePicture);
 

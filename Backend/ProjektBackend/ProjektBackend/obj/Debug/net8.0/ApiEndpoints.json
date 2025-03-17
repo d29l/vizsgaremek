@@ -70,6 +70,11 @@
     "Order": 0,
     "Parameters": [
       {
+        "Name": "UserId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
         "Name": "createRequestDto",
         "Type": "ProjektBackend.Controllers.CreateRequestDto",
         "IsRequired": true
@@ -168,6 +173,11 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [
+      {
+        "Name": "UserId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
       {
         "Name": "createEmployerDto",
         "Type": "ProjektBackend.Controllers.CreateEmployerDto",
