@@ -217,12 +217,13 @@ namespace ProjektBackend.Controllers
                 existingUser.Role = Role;
                 _context.Update(existingUser);
                 await _context.SaveChangesAsync();
+                return Ok("User Role updated.");
             }
             return BadRequest();
         }
 
-        [Authorize(Policy = "SelfOnly")]
-        [HttpPut("updateUserRole")]
+        [Authorize(Policy = "SelfOrAdmin")]
+        [HttpPut("updateUser")]
 
         public async Task<ActionResult> updateUser(int UserId, UpdateUserDto updateUserDto)
         {
@@ -233,8 +234,25 @@ namespace ProjektBackend.Controllers
                 existingUser.FirstName = updateUserDto.FirstName;
                 existingUser.LastName = updateUserDto.LastName;
                 existingUser.Email = updateUserDto.Email;
+                if (!updateUserDto.Email.Contains("@"))
+                {
+                    return StatusCode(418, "Invalid Email address.");
+                }
+                foreach (var item in specialCharsAndNumbers)
+                {
+                    if (updateUserDto.FirstName.Contains(item))
+                    {
+                        return StatusCode(418, "Invalid First Name.");
+                    }
+                    if (updateUserDto.LastName.Contains(item))
+                    {
+                        return StatusCode(418, "Invalid Last Name.");
+                    }
+                }
+
                 _context.Update(existingUser);
                 await _context.SaveChangesAsync();
+                return Ok("User updated.");
             }
             return BadRequest();
         }
