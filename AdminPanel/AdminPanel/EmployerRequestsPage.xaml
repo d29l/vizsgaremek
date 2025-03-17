@@ -33,7 +33,7 @@
                                 <TextBlock Text="{Binding CompanyName}" 
                                            Foreground="#CDD6F4" 
                                            FontSize="16"/>
-                                <TextBlock Text="{Binding ApplicationID}" 
+                                <TextBlock Text="{Binding ApplicantId}" 
                                            Foreground="#BAC2DE"/>
                                 <StackPanel Orientation="Horizontal" 
                                             HorizontalAlignment="Right" 
@@ -43,14 +43,15 @@
                                             Foreground="#1E1E2E"
                                             Margin="0,0,10,0"
                                             Click="Accept_Click"
-                                            Tag="{Binding ApplicationID}"/>
+                                            Tag="{Binding ApplicantId}"/>
                                     <Button Content="Delete" 
                                             Background="#F38BA8" 
                                             Foreground="#1E1E2E"
                                             Click="Delete_Click"
-                                            Tag="{Binding ApplicationID}"/>
+                                            Tag="{Binding ApplicantId}"/>
                                 </StackPanel>
                             </StackPanel>
+                            
                         </Border>
                     </DataTemplate>
                 </ListView.ItemTemplate>

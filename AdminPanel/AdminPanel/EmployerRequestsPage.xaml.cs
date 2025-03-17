@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -42,8 +41,6 @@ namespace AdminPanel
         {
             if (sender is Button button && button.Tag is int applicantId)
             {
-                MessageBox.Show($"Accept clicked for ApplicantId: {applicantId}", "Debug", MessageBoxButton.OK, MessageBoxImage.Information); // Debug
-
                 try
                 {
                     
@@ -55,12 +52,18 @@ namespace AdminPanel
                     }
 
                     var request = await requestResponse.Content.ReadFromJsonAsync<EmployerRequest>();
-                    MessageBox.Show($"Fetched request: {request.CompanyName}", "Debug", MessageBoxButton.OK, MessageBoxImage.Information); // Debug
+
+                    
+                    var userResponse = await ApiClient.httpClient.GetAsync($"users/fetchUser/{request.UserID}");
+                    if (!userResponse.IsSuccessStatusCode)
+                    {
+                        MessageBox.Show($"User with ID {request.UserID} does not exist!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
 
                     
                     var createEmployerDto = new CreateEmployerDto
                     {
-                        UserID = request.UserID, 
                         CompanyName = request.CompanyName,
                         CompanyAddress = request.CompanyAddress,
                         Industry = request.Industry,
@@ -70,10 +73,8 @@ namespace AdminPanel
                     };
 
                     
-                    var jsonPayload = JsonSerializer.Serialize(createEmployerDto);
-                    MessageBox.Show($"Payload: {jsonPayload}", "Debug", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                    var createResponse = await ApiClient.httpClient.PostAsJsonAsync("employers/postEmployer", createEmployerDto);
+                    var url = $"employers/postEmployer?UserId={request.UserID}";
+                    var createResponse = await ApiClient.httpClient.PostAsJsonAsync(url, createEmployerDto);
 
                     if (createResponse.IsSuccessStatusCode)
                     {
@@ -81,10 +82,19 @@ namespace AdminPanel
                         await ApiClient.httpClient.DeleteAsync($"employerrequests/deleteRequest/{applicantId}");
                         LoadRequests(); 
                         MessageBox.Show("Employer created successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                        
+                        var updateRoleUrl = $"api/user/updateUserRole?UserId={request.UserID}";
+                        var roleUpdateResponse = await ApiClient.httpClient.PutAsJsonAsync(updateRoleUrl, new { Role = "employer" });
+
+                        if (!roleUpdateResponse.IsSuccessStatusCode)
+                        {
+                            var errorContent = await roleUpdateResponse.Content.ReadAsStringAsync();
+                            MessageBox.Show($"Failed to update user role: {roleUpdateResponse.StatusCode}\n{errorContent}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
                     }
                     else
                     {
-                        
                         var errorContent = await createResponse.Content.ReadAsStringAsync();
                         MessageBox.Show($"Failed to create employer: {createResponse.StatusCode}\n{errorContent}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
@@ -110,7 +120,7 @@ namespace AdminPanel
 
                     if (response.IsSuccessStatusCode)
                     {
-                        LoadRequests(); 
+                        LoadRequests();
                         MessageBox.Show("Request deleted!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                 }
@@ -124,7 +134,7 @@ namespace AdminPanel
 
     public class EmployerRequest
     {
-        public int ApplicationID { get; set; }
+        public int ApplicantId { get; set; }
         public int UserID { get; set; }
         public string CompanyName { get; set; }
         public string CompanyAddress { get; set; }
@@ -136,7 +146,6 @@ namespace AdminPanel
 
     public class CreateEmployerDto
     {
-        public int UserID { get; set; } 
         public string CompanyName { get; set; }
         public string CompanyAddress { get; set; }
         public string Industry { get; set; }
@@ -144,6 +153,4 @@ namespace AdminPanel
         public string CompanyDescription { get; set; }
         public int EstablishedYear { get; set; }
     }
-
-
 }

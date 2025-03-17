@@ -35,7 +35,6 @@ C:\Users\Gibau\vizsgaremek\desktop\AdminPanel\AdminPanel\bin\Debug\System.Text.J
 C:\Users\Gibau\vizsgaremek\desktop\AdminPanel\AdminPanel\bin\Debug\System.Threading.Tasks.Extensions.xml
 C:\Users\Gibau\vizsgaremek\desktop\AdminPanel\AdminPanel\bin\Debug\System.ValueTuple.xml
 C:\Users\Gibau\vizsgaremek\desktop\AdminPanel\AdminPanel\obj\Debug\AdminPanel.csproj.Up2Date
-C:\Users\Tanulo\Desktop\vizsgaremek\desktop\AdminPanel\AdminPanel\obj\Debug\AdminPanel.csproj.AssemblyReference.cache
 C:\Users\Tanulo\Desktop\vizsgaremek\desktop\AdminPanel\AdminPanel\obj\Debug\Dashboard.g.cs
 C:\Users\Tanulo\Desktop\vizsgaremek\desktop\AdminPanel\AdminPanel\obj\Debug\MainWindow.g.cs
 C:\Users\Tanulo\Desktop\vizsgaremek\desktop\AdminPanel\AdminPanel\obj\Debug\App.g.cs
@@ -74,7 +73,6 @@ C:\Users\Tanulo\Desktop\vizsgaremek\desktop\AdminPanel\AdminPanel\obj\Debug\Admi
 C:\Users\Tanulo\Desktop\vizsgaremek\desktop\AdminPanel\AdminPanel\obj\Debug\AdminPanel.Properties.Resources.resources
 C:\Users\Tanulo\Desktop\vizsgaremek\desktop\AdminPanel\AdminPanel\obj\Debug\AdminPanel.csproj.GenerateResource.cache
 C:\Users\Tanulo\Desktop\vizsgaremek\desktop\AdminPanel\AdminPanel\obj\Debug\AdminPanel.csproj.CoreCompileInputs.cache
-C:\Users\Tanulo\Desktop\vizsgaremek\desktop\AdminPanel\AdminPanel\obj\Debug\AdminPanel.csproj.Up2Date
 C:\Users\Tanulo\Desktop\vizsgaremek\desktop\AdminPanel\AdminPanel\obj\Debug\AdminPanel.exe
 C:\Users\Tanulo\Desktop\vizsgaremek\desktop\AdminPanel\AdminPanel\obj\Debug\AdminPanel.pdb
 C:\Users\ablonczya\Desktop\vizsgaremek\vizsgaremek\desktop\AdminPanel\AdminPanel\bin\Debug\AdminPanel.exe.config
@@ -125,3 +123,10 @@ C:\Users\ablonczya\Desktop\vizsgaremek\vizsgaremek\desktop\AdminPanel\AdminPanel
 C:\Users\ablonczya\Desktop\vizsgaremek\vizsgaremek\desktop\AdminPanel\AdminPanel\bin\Debug\System.Net.Http.Json.xml
 C:\Users\ablonczya\Desktop\vizsgaremek\vizsgaremek\desktop\AdminPanel\AdminPanel\obj\Debug\EmployerRequestsPage.baml
 C:\Users\ablonczya\Desktop\vizsgaremek\vizsgaremek\desktop\AdminPanel\AdminPanel\obj\Debug\EmployerRequestsPage.g.cs
+C:\Users\Tanulo\Desktop\vizsgaremek\desktop\AdminPanel\AdminPanel\bin\Debug\System.Net.Http.Json.dll
+C:\Users\Tanulo\Desktop\vizsgaremek\desktop\AdminPanel\AdminPanel\bin\Debug\System.Net.Http.Json.xml
+C:\Users\Tanulo\Desktop\vizsgaremek\desktop\AdminPanel\AdminPanel\obj\Debug\EmployerRequestsPage.baml
+C:\Users\Tanulo\Desktop\vizsgaremek\desktop\AdminPanel\AdminPanel\obj\Debug\UsersPage.baml
+C:\Users\Tanulo\Desktop\vizsgaremek\desktop\AdminPanel\AdminPanel\obj\Debug\EmployerRequestsPage.g.cs
+C:\Users\Tanulo\Desktop\vizsgaremek\desktop\AdminPanel\AdminPanel\obj\Debug\UsersPage.g.cs
+C:\Users\Tanulo\Desktop\vizsgaremek\desktop\AdminPanel\AdminPanel\obj\Debug\AdminPanel.csproj.CopyComplete
