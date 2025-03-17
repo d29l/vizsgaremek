@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Mar 13, 2025 at 10:06 AM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Gép: 127.0.0.1
+-- Létrehozás ideje: 2025. Már 17. 11:51
+-- Kiszolgáló verziója: 10.4.20-MariaDB
+-- PHP verzió: 7.3.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `projekt`
+-- Adatbázis: `projekt`
 --
 CREATE DATABASE IF NOT EXISTS `projekt` DEFAULT CHARACTER SET utf8 COLLATE utf8_hungarian_ci;
 USE `projekt`;
@@ -26,96 +26,97 @@ USE `projekt`;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `connections`
+-- Tábla szerkezet ehhez a táblához `connections`
 --
 
 CREATE TABLE `connections` (
   `ConnectionID` int(11) NOT NULL,
   `RequesterID` int(11) NOT NULL,
   `ReceiverID` int(11) NOT NULL,
-  `Status` enum('Pending','Accepted','Declined') DEFAULT 'Pending',
+  `Status` enum('Pending','Accepted','Declined') COLLATE utf8_hungarian_ci DEFAULT 'Pending',
   `CreatedAt` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `employerrequest`
+-- Tábla szerkezet ehhez a táblához `employerrequest`
 --
 
 CREATE TABLE `employerrequest` (
   `ApplicantID` int(11) NOT NULL,
   `UserID` int(11) NOT NULL,
-  `CompanyName` varchar(255) NOT NULL,
-  `CompanyAddress` varchar(255) NOT NULL,
-  `Industry` varchar(255) NOT NULL,
-  `CompanyWebsite` varchar(255) NOT NULL,
-  `CompanyDescription` text NOT NULL,
+  `CompanyName` varchar(255) COLLATE utf8_hungarian_ci NOT NULL,
+  `CompanyAddress` varchar(255) COLLATE utf8_hungarian_ci NOT NULL,
+  `Industry` varchar(255) COLLATE utf8_hungarian_ci NOT NULL,
+  `CompanyWebsite` varchar(255) COLLATE utf8_hungarian_ci NOT NULL,
+  `CompanyDescription` text COLLATE utf8_hungarian_ci NOT NULL,
   `EstabilishedYear` year(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `employers`
+-- Tábla szerkezet ehhez a táblához `employers`
 --
 
 CREATE TABLE `employers` (
   `EmployerID` int(11) NOT NULL,
   `UserID` int(11) NOT NULL,
-  `CompanyName` varchar(255) NOT NULL,
-  `CompanyAddress` varchar(255) DEFAULT NULL,
-  `Industry` varchar(255) DEFAULT NULL,
-  `CompanyWebsite` varchar(255) DEFAULT NULL,
-  `CompanyDescription` text DEFAULT NULL,
+  `CompanyName` varchar(255) COLLATE utf8_hungarian_ci NOT NULL,
+  `CompanyAddress` varchar(255) COLLATE utf8_hungarian_ci DEFAULT NULL,
+  `Industry` varchar(255) COLLATE utf8_hungarian_ci DEFAULT NULL,
+  `CompanyWebsite` varchar(255) COLLATE utf8_hungarian_ci DEFAULT NULL,
+  `CompanyDescription` text COLLATE utf8_hungarian_ci DEFAULT NULL,
   `EstablishedYear` year(4) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 --
--- Dumping data for table `employers`
+-- A tábla adatainak kiíratása `employers`
 --
 
 INSERT INTO `employers` (`EmployerID`, `UserID`, `CompanyName`, `CompanyAddress`, `Industry`, `CompanyWebsite`, `CompanyDescription`, `EstablishedYear`) VALUES
-(1, 1, 'Voomm', '8061 Weeping Birch Street', 'n/a', 'http://people.com.cn/massa.json?neque=in&libero=felis&convallis=eu', 'Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum.', '2006'),
-(2, 2, 'Ntags', '8709 Moulton Place', 'Business Services', 'https://lycos.com/sed/sagittis/nam/congue.aspx?nulla=quam&suspendisse=nec&potenti=dui&cras=luctus&in=rutrum&purus=nulla&eu=tellus&magna=in&vulputate=sagittis&luctus=dui&cum=vel&sociis=nisl&natoque=duis&penatibus=ac&et=nibh&magnis=fusce&dis=lacus&parturien', 'Fusce consequat. Nulla nisl. Nunc nisl.', '2007'),
-(3, 3, 'Youfeed', '62 Esch Junction', 'n/a', 'https://patch.com/a/suscipit/nulla/elit/ac.js?vel=porta&augue=volutpat&vestibulum=quam&ante=pede&ipsum=lobortis&primis=ligula&in=sit&faucibus=amet&orci=eleifend&luctus=pede&et=libero&ultrices=quis&posuere=orci&cubilia=nullam&curae=molestie&donec=nibh&phar', 'Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus.', '2012'),
-(4, 4, 'Bubblemix', '61305 7th Point', 'Major Pharmaceuticals', 'https://ebay.com/elit/ac.aspx?justo=nisl&eu=duis&massa=bibendum&donec=felis&dapibus=sed&duis=interdum&at=venenatis&velit=turpis&eu=enim&est=blandit&congue=mi&elementum=in&in=porttitor&hac=pede&habitasse=justo&platea=eu&dictumst=massa&morbi=donec&vestibulu', 'Nulla ut erat id mauris vulputate elementum. Nullam varius. Nulla facilisi.', '1990'),
-(5, 5, 'Ooba', '4 Hintze Alley', 'Major Chemicals', 'https://liveinternet.ru/dui/maecenas/tristique/est/et/tempus.aspx?enim=felis&blandit=ut&mi=at&in=dolor&porttitor=quis&pede=odio&justo=consequat&eu=varius&massa=integer&donec=ac&dapibus=leo&duis=pellentesque&at=ultrices&velit=mattis&eu=odio&est=donec&congu', 'In congue. Etiam justo. Etiam pretium iaculis justo.', '1978'),
-(6, 6, 'Torol', 'Miskolc Buza Ter', 'n/a', 'https://youtube.com', 'Lorem Ipsum', '2002'),
-(11, 11, 'Temp', 'Temp', 'Temp', 'Temp', 'Temp', '2000');
+(1, 1, 'Voomm', '8061 Weeping Birch Street', 'n/a', 'http://people.com.cn/massa.json?neque=in&libero=felis&convallis=eu', 'Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum.', 2006),
+(2, 2, 'Ntags', '8709 Moulton Place', 'Business Services', 'https://lycos.com/sed/sagittis/nam/congue.aspx?nulla=quam&suspendisse=nec&potenti=dui&cras=luctus&in=rutrum&purus=nulla&eu=tellus&magna=in&vulputate=sagittis&luctus=dui&cum=vel&sociis=nisl&natoque=duis&penatibus=ac&et=nibh&magnis=fusce&dis=lacus&parturien', 'Fusce consequat. Nulla nisl. Nunc nisl.', 2007),
+(3, 3, 'Youfeed', '62 Esch Junction', 'n/a', 'https://patch.com/a/suscipit/nulla/elit/ac.js?vel=porta&augue=volutpat&vestibulum=quam&ante=pede&ipsum=lobortis&primis=ligula&in=sit&faucibus=amet&orci=eleifend&luctus=pede&et=libero&ultrices=quis&posuere=orci&cubilia=nullam&curae=molestie&donec=nibh&phar', 'Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus.', 2012),
+(4, 4, 'Bubblemix', '61305 7th Point', 'Major Pharmaceuticals', 'https://ebay.com/elit/ac.aspx?justo=nisl&eu=duis&massa=bibendum&donec=felis&dapibus=sed&duis=interdum&at=venenatis&velit=turpis&eu=enim&est=blandit&congue=mi&elementum=in&in=porttitor&hac=pede&habitasse=justo&platea=eu&dictumst=massa&morbi=donec&vestibulu', 'Nulla ut erat id mauris vulputate elementum. Nullam varius. Nulla facilisi.', 1990),
+(5, 5, 'Ooba', '4 Hintze Alley', 'Major Chemicals', 'https://liveinternet.ru/dui/maecenas/tristique/est/et/tempus.aspx?enim=felis&blandit=ut&mi=at&in=dolor&porttitor=quis&pede=odio&justo=consequat&eu=varius&massa=integer&donec=ac&dapibus=leo&duis=pellentesque&at=ultrices&velit=mattis&eu=odio&est=donec&congu', 'In congue. Etiam justo. Etiam pretium iaculis justo.', 1978),
+(6, 6, 'Torol', 'Miskolc Buza Ter', 'n/a', 'https://youtube.com', 'Lorem Ipsum', 2002),
+(11, 11, 'Temp', 'Temp', 'Temp', 'Temp', 'Temp', 2000),
+(12, 9, 'string', 'string', 'string', 'string', 'string', 0000);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `messages`
+-- Tábla szerkezet ehhez a táblához `messages`
 --
 
 CREATE TABLE `messages` (
   `MessageID` int(11) NOT NULL,
   `SenderID` int(11) NOT NULL,
   `ReceiverID` int(11) NOT NULL,
-  `Content` text NOT NULL,
+  `Content` text COLLATE utf8_hungarian_ci NOT NULL,
   `SentAt` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `posts`
+-- Tábla szerkezet ehhez a táblához `posts`
 --
 
 CREATE TABLE `posts` (
   `PostID` int(11) NOT NULL,
   `EmployerID` int(11) NOT NULL,
   `UserID` int(11) NOT NULL,
-  `Title` text NOT NULL,
-  `Content` text NOT NULL,
+  `Title` text COLLATE utf8_hungarian_ci NOT NULL,
+  `Content` text COLLATE utf8_hungarian_ci NOT NULL,
   `CreatedAt` datetime DEFAULT current_timestamp(),
   `Likes` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 --
--- Dumping data for table `posts`
+-- A tábla adatainak kiíratása `posts`
 --
 
 INSERT INTO `posts` (`PostID`, `EmployerID`, `UserID`, `Title`, `Content`, `CreatedAt`, `Likes`) VALUES
@@ -129,20 +130,20 @@ INSERT INTO `posts` (`PostID`, `EmployerID`, `UserID`, `Title`, `Content`, `Crea
 -- --------------------------------------------------------
 
 --
--- Table structure for table `profiles`
+-- Tábla szerkezet ehhez a táblához `profiles`
 --
 
 CREATE TABLE `profiles` (
   `ProfileID` int(11) NOT NULL,
   `UserID` int(11) NOT NULL,
-  `Headline` varchar(255) DEFAULT NULL,
-  `Bio` text DEFAULT NULL,
-  `Location` varchar(255) DEFAULT NULL,
-  `ProfilePicture` varchar(255) DEFAULT NULL
+  `Headline` varchar(255) COLLATE utf8_hungarian_ci DEFAULT NULL,
+  `Bio` text COLLATE utf8_hungarian_ci DEFAULT NULL,
+  `Location` varchar(255) COLLATE utf8_hungarian_ci DEFAULT NULL,
+  `ProfilePicture` varchar(255) COLLATE utf8_hungarian_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 --
--- Dumping data for table `profiles`
+-- A tábla adatainak kiíratása `profiles`
 --
 
 INSERT INTO `profiles` (`ProfileID`, `UserID`, `Headline`, `Bio`, `Location`, `ProfilePicture`) VALUES
@@ -151,22 +152,22 @@ INSERT INTO `profiles` (`ProfileID`, `UserID`, `Headline`, `Bio`, `Location`, `P
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Tábla szerkezet ehhez a táblához `users`
 --
 
 CREATE TABLE `users` (
   `UserID` int(11) NOT NULL,
-  `FirstName` varchar(255) NOT NULL,
-  `LastName` varchar(255) NOT NULL,
-  `Email` varchar(255) NOT NULL,
-  `Password` varchar(255) NOT NULL,
-  `Role` enum('Employee','Employer','Admin') DEFAULT 'Employee',
+  `FirstName` varchar(255) COLLATE utf8_hungarian_ci NOT NULL,
+  `LastName` varchar(255) COLLATE utf8_hungarian_ci NOT NULL,
+  `Email` varchar(255) COLLATE utf8_hungarian_ci NOT NULL,
+  `Password` varchar(255) COLLATE utf8_hungarian_ci NOT NULL,
+  `Role` enum('Employee','Employer','Admin') COLLATE utf8_hungarian_ci DEFAULT 'Employee',
   `CreatedAt` datetime DEFAULT current_timestamp(),
   `IsActive` tinyint(1) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 --
--- Dumping data for table `users`
+-- A tábla adatainak kiíratása `users`
 --
 
 INSERT INTO `users` (`UserID`, `FirstName`, `LastName`, `Email`, `Password`, `Role`, `CreatedAt`, `IsActive`) VALUES
@@ -179,14 +180,15 @@ INSERT INTO `users` (`UserID`, `FirstName`, `LastName`, `Email`, `Password`, `Ro
 (8, 'Bodi', 'Gusztika', 'utalomazadofizetest@gmail.com', 'QCMhWNTszTuPsiK8FEZqi3EBU/o1gnwq6e0h89Z8VQu/Id6N6kLtbmPyXp1+WXrx', 'Employee', '2025-02-18 21:04:44', 1),
 (9, 'john', 'admin', 'admin@gmail.com', 'q9qtFdV/f+/NeRpkJBAz5BV3WcEAdTi1dH11SS/BNjK5rxkQlqEWJkWLpRqyblaW', 'Employee', '2025-02-18 21:12:02', 1),
 (10, 'admin', 'admin', 'admin', 'UMpb+AnYxJl3A22rnZE3nvomoYp1Khg3FwAjGAu31GaSxkoT5J5+k6fc0FEun/AX', 'Admin', '2025-02-19 23:00:08', 1),
-(11, 'admin', 'admin', 'admin2', 'X0bSYAMcD5utwSGpSYTLXiTz5INqbVFoDUpmVicNktqAkOuOjSbGdjNcoQ0lo/wI', 'Employer', '2025-02-19 23:02:26', 1);
+(11, 'admin', 'admin', 'admin2', 'X0bSYAMcD5utwSGpSYTLXiTz5INqbVFoDUpmVicNktqAkOuOjSbGdjNcoQ0lo/wI', 'Employer', '2025-02-19 23:02:26', 1),
+(13, 'string', 'string', 'string@', 'xYWQHvTCfkl7ZzEhFuRf812eryIspCOWAMq8r56y2ZeSd4+W6A+PDKURU+vrozM3', 'Employee', '2025-03-17 08:18:56', 1);
 
 --
--- Indexes for dumped tables
+-- Indexek a kiírt táblákhoz
 --
 
 --
--- Indexes for table `connections`
+-- A tábla indexei `connections`
 --
 ALTER TABLE `connections`
   ADD PRIMARY KEY (`ConnectionID`),
@@ -194,21 +196,22 @@ ALTER TABLE `connections`
   ADD KEY `ReceiverID` (`ReceiverID`);
 
 --
--- Indexes for table `employerrequest`
+-- A tábla indexei `employerrequest`
 --
 ALTER TABLE `employerrequest`
   ADD PRIMARY KEY (`ApplicantID`),
+  ADD UNIQUE KEY `UserID_2` (`UserID`),
   ADD KEY `UserID` (`UserID`);
 
 --
--- Indexes for table `employers`
+-- A tábla indexei `employers`
 --
 ALTER TABLE `employers`
   ADD PRIMARY KEY (`EmployerID`) USING BTREE,
   ADD KEY `UserID` (`UserID`);
 
 --
--- Indexes for table `messages`
+-- A tábla indexei `messages`
 --
 ALTER TABLE `messages`
   ADD PRIMARY KEY (`MessageID`),
@@ -216,7 +219,7 @@ ALTER TABLE `messages`
   ADD KEY `ReceiverID` (`ReceiverID`);
 
 --
--- Indexes for table `posts`
+-- A tábla indexei `posts`
 --
 ALTER TABLE `posts`
   ADD PRIMARY KEY (`PostID`) USING BTREE,
@@ -224,97 +227,103 @@ ALTER TABLE `posts`
   ADD KEY `EmployerID` (`EmployerID`);
 
 --
--- Indexes for table `profiles`
+-- A tábla indexei `profiles`
 --
 ALTER TABLE `profiles`
   ADD PRIMARY KEY (`ProfileID`),
   ADD KEY `UserID` (`UserID`);
 
 --
--- Indexes for table `users`
+-- A tábla indexei `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`UserID`),
   ADD UNIQUE KEY `Email` (`Email`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- A kiírt táblák AUTO_INCREMENT értéke
 --
 
 --
--- AUTO_INCREMENT for table `connections`
+-- AUTO_INCREMENT a táblához `connections`
 --
 ALTER TABLE `connections`
   MODIFY `ConnectionID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `employers`
+-- AUTO_INCREMENT a táblához `employerrequest`
 --
-ALTER TABLE `employers`
-  MODIFY `EmployerID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+ALTER TABLE `employerrequest`
+  MODIFY `ApplicantID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `messages`
+-- AUTO_INCREMENT a táblához `employers`
+--
+ALTER TABLE `employers`
+  MODIFY `EmployerID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT a táblához `messages`
 --
 ALTER TABLE `messages`
   MODIFY `MessageID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `posts`
+-- AUTO_INCREMENT a táblához `posts`
 --
 ALTER TABLE `posts`
   MODIFY `PostID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT for table `profiles`
+-- AUTO_INCREMENT a táblához `profiles`
 --
 ALTER TABLE `profiles`
   MODIFY `ProfileID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT a táblához `users`
 --
 ALTER TABLE `users`
-  MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- Constraints for dumped tables
+-- Megkötések a kiírt táblákhoz
 --
 
 --
--- Constraints for table `connections`
+-- Megkötések a táblához `connections`
 --
 ALTER TABLE `connections`
   ADD CONSTRAINT `connections_ibfk_1` FOREIGN KEY (`RequesterID`) REFERENCES `users` (`UserID`) ON DELETE CASCADE,
   ADD CONSTRAINT `connections_ibfk_2` FOREIGN KEY (`ReceiverID`) REFERENCES `users` (`UserID`) ON DELETE CASCADE;
 
 --
--- Constraints for table `employerrequest`
+-- Megkötések a táblához `employerrequest`
 --
 ALTER TABLE `employerrequest`
   ADD CONSTRAINT `employerrequest_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `users` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `employers`
+-- Megkötések a táblához `employers`
 --
 ALTER TABLE `employers`
   ADD CONSTRAINT `employers_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `users` (`UserID`) ON DELETE CASCADE;
 
 --
--- Constraints for table `messages`
+-- Megkötések a táblához `messages`
 --
 ALTER TABLE `messages`
   ADD CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`SenderID`) REFERENCES `users` (`UserID`) ON DELETE CASCADE,
   ADD CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`ReceiverID`) REFERENCES `users` (`UserID`) ON DELETE CASCADE;
 
 --
--- Constraints for table `posts`
+-- Megkötések a táblához `posts`
 --
 ALTER TABLE `posts`
   ADD CONSTRAINT `FK_Posts_Employers` FOREIGN KEY (`EmployerID`) REFERENCES `employers` (`EmployerID`);
 
 --
--- Constraints for table `profiles`
+-- Megkötések a táblához `profiles`
 --
 ALTER TABLE `profiles`
   ADD CONSTRAINT `profiles_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `users` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE;
