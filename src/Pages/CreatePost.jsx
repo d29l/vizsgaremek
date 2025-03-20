@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Navbar from "../Components/Navbar";
-import { getUserId } from "../getUserId";
 import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
@@ -9,9 +8,8 @@ export default function CreatePost() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const userId = getUserId();
         const response = await axios.post(
-            `https://localhost:7077/api/posts/newPost/${userId}`,
+            `https://localhost:7077/api/posts/newPost/`,
             {
                 title,
                 content

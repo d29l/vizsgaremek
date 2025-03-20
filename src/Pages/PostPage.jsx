@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Navbar from "../Components/Navbar";
+import axios from "axios";
 
 export default function PostPage() {
   const { postId } = useParams();
@@ -8,10 +9,10 @@ export default function PostPage() {
 
   useEffect(() => {
     const fetchPost = async () => {
-      const response = await fetch(
+      const response = await axios.get(
         `https://localhost:7077/api/posts/fetchPost/${postId}`
       );
-      const data = await response.json();
+      const data = await response;
       setPost(data);
       console.log(data);
     };

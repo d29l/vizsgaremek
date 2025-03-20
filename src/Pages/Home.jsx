@@ -22,7 +22,7 @@ export default function Home() {
         <button class="w-12 h-8 bg-crust rounded-lg text-lavender hover:bg-mantle" onClick={getPosts}>Fasz</button>
       </div>
 
-      <div id="cardsContainer" className="mocha flex h-full flex-col">
+      <div id="cardsContainer" className="flex h-full flex-col">
         <div class="bg-mantle grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-y-0">
           {database.map((job) => (
             <PostCard

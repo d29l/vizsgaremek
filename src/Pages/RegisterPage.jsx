@@ -79,6 +79,7 @@ export default function RegisterPage() {
               class="mb-2 h-8 rounded-lg bg-mantle pl-2 text-subtext0 placeholder-surface2 focus:border-2 focus:border-lavender focus:outline-none"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              
             />
             <label class="mb-2 font-bold text-text">Password</label>
             <input

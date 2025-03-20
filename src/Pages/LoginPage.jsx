@@ -5,6 +5,7 @@ import axios from "axios";
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [incorrect, setIncorrect] = useState(false);
 
   function decodeJWT(token) {
     try {
@@ -41,6 +42,9 @@ export default function LoginPage() {
         console.log(response.data.message || "Sign in failed");
       }
     } catch (err) {
+      if (err.status == 401) {
+        setIncorrect(true)
+      }
       console.log(
         err.response?.data?.message || "An error occurred during signing in",
       );
@@ -74,7 +78,6 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-
             <div class="mt-2 flex items-center">
               <input
                 type="checkbox"
@@ -100,6 +103,10 @@ export default function LoginPage() {
                 Sign in
               </button>
             </div>
+
+            {incorrect && (
+              <div class="text-sm font-bold text-red pt-4 self-center">Incorrect email or password</div>
+            )}
 
             <div class="mt-6 flex flex-row justify-center">
               <p class="text-subtext1">Don't have an account yet?</p>
