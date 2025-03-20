@@ -81,13 +81,16 @@ namespace AdminPanel
                         
                         await ApiClient.httpClient.DeleteAsync($"employerrequests/deleteRequest/{applicantId}");
                         LoadRequests(); 
-                        MessageBox.Show("Employer created successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
 
                         
-                        var updateRoleUrl = $"api/user/updateUserRole?UserId={request.UserID}";
-                        var roleUpdateResponse = await ApiClient.httpClient.PutAsJsonAsync(updateRoleUrl, new { Role = "employer" });
+                        var updateRoleUrl = $"users/updateUserRole?UserId={request.UserID}&Role=employer";
+                        var roleUpdateResponse = await ApiClient.httpClient.PutAsync(updateRoleUrl, null);
 
-                        if (!roleUpdateResponse.IsSuccessStatusCode)
+                        if (roleUpdateResponse.IsSuccessStatusCode)
+                        {
+                            MessageBox.Show("Employer created successfully and role updated to employer in users table!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                        else
                         {
                             var errorContent = await roleUpdateResponse.Content.ReadAsStringAsync();
                             MessageBox.Show($"Failed to update user role: {roleUpdateResponse.StatusCode}\n{errorContent}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -129,6 +132,11 @@ namespace AdminPanel
                     MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
+
+        }
+        private void Back_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new Dashboard());
         }
     }
 
@@ -153,4 +161,5 @@ namespace AdminPanel
         public string CompanyDescription { get; set; }
         public int EstablishedYear { get; set; }
     }
+
 }

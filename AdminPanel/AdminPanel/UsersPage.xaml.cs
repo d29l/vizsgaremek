@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using System.Net.Http.Json;
 using System.Net.Http;
 
+
 namespace AdminPanel
 {
     /// <summary>
@@ -55,6 +56,10 @@ namespace AdminPanel
             {
                 MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+        private void Back_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new Dashboard());
         }
     }
 }

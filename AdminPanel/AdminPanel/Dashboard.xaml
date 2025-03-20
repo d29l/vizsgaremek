@@ -70,5 +70,33 @@
                 </Style>
             </Button.Style>
         </Button>
+
+        <!-- View Posts Button -->
+        <Button Content="View Posts"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Padding="20,12"
+                FontSize="14"
+                FontWeight="SemiBold"
+                Background="#CBA6F7"
+                Foreground="#1E1E2E"
+                BorderThickness="0"
+                Cursor="Hand"
+                Click="ViewPosts_Click"
+                Margin="0,240,0,0">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Background" Value="#CBA6F7"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#B493F4"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="#9D7BEF"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
     </Grid>
 </Page>

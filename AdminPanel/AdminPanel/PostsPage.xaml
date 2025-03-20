@@ -1,0 +1,111 @@
+﻿<Page x:Class="AdminPanel.PostsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d"
+      Title="PostsPage" Height="450" Width="800">
+
+    <Grid Background="#1E1E2E">
+        <!-- Back Button -->
+        <Button Content="Back"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Margin="10,10,0,0"
+                Padding="10,5"
+                FontSize="12"
+                FontWeight="SemiBold"
+                Background="#CBA6F7"
+                Foreground="#1E1E2E"
+                BorderThickness="0"
+                Cursor="Hand"
+                Click="Back_Click">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Background" Value="#CBA6F7"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#B493F4"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="#9D7BEF"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+
+        <!-- Header -->
+        <TextBlock Text="Post List" 
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Top"
+                   Margin="0,50,0,0"
+                   FontSize="24"
+                   Foreground="#CDD6F4"/>
+
+        <!-- List of Posts -->
+        <ListView x:Name="PostsListView"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Width="700"
+                  Background="#313244"
+                  BorderBrush="#585B70"
+                  BorderThickness="1"
+                  Foreground="#CDD6F4">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding PostId}" Width="50"/>
+                    <GridViewColumn Header="Title" DisplayMemberBinding="{Binding Title}" Width="200"/>
+                    <GridViewColumn Header="Content" Width="300">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Content}" TextWrapping="Wrap" MaxHeight="50"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Created At" DisplayMemberBinding="{Binding CreatedAt, StringFormat=yyyy-MM-dd HH:mm}" Width="120"/>
+                    <GridViewColumn Header="Likes" DisplayMemberBinding="{Binding Likes}" Width="60"/>
+                    <GridViewColumn Header="Employer" DisplayMemberBinding="{Binding Employer.CompanyName}" Width="150"/>
+                    <GridViewColumn Header="Actions" Width="100">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="Edit" Click="Edit_Click" Tag="{Binding PostId}" Margin="2,0,2,0" Padding="5,2" Background="#CBA6F7" Foreground="#1E1E2E" BorderThickness="0">
+                                        <Button.Style>
+                                            <Style TargetType="Button">
+                                                <Setter Property="Background" Value="#CBA6F7"/>
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="#B493F4"/>
+                                                    </Trigger>
+                                                    <Trigger Property="IsPressed" Value="True">
+                                                        <Setter Property="Background" Value="#9D7BEF"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+                                    <Button Content="Delete" Click="Delete_Click" Tag="{Binding PostId}" Margin="2,0,2,0" Padding="5,2" Background="#F38BA8" Foreground="#1E1E2E" BorderThickness="0">
+                                        <Button.Style>
+                                            <Style TargetType="Button">
+                                                <Setter Property="Background" Value="#F38BA8"/>
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="#E87094"/>
+                                                    </Trigger>
+                                                    <Trigger Property="IsPressed" Value="True">
+                                                        <Setter Property="Background" Value="#D75A7D"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Page>

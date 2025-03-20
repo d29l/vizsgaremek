@@ -9,7 +9,36 @@
       Width="800">
 
     <Grid Background="#1E1E2E">
-        <StackPanel>
+        <!-- Back Button -->
+        <Button Content="Back"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Margin="10,10,0,0"
+                Padding="10,5"
+                FontSize="12"
+                FontWeight="SemiBold"
+                Background="#CBA6F7"
+                Foreground="#1E1E2E"
+                BorderThickness="0"
+                Cursor="Hand"
+                Click="Back_Click">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Background" Value="#CBA6F7"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#B493F4"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="#9D7BEF"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+
+        <StackPanel HorizontalAlignment="Center" Margin="0,50,0,0">
+            <!-- Added alignment and margin -->
             <!-- Header -->
             <TextBlock Text="Employer Requests" 
                        HorizontalAlignment="Center"
@@ -51,7 +80,6 @@
                                             Tag="{Binding ApplicantId}"/>
                                 </StackPanel>
                             </StackPanel>
-                            
                         </Border>
                     </DataTemplate>
                 </ListView.ItemTemplate>

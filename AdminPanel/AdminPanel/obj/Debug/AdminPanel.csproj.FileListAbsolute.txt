@@ -130,3 +130,7 @@ C:\Users\Tanulo\Desktop\vizsgaremek\desktop\AdminPanel\AdminPanel\obj\Debug\User
 C:\Users\Tanulo\Desktop\vizsgaremek\desktop\AdminPanel\AdminPanel\obj\Debug\EmployerRequestsPage.g.cs
 C:\Users\Tanulo\Desktop\vizsgaremek\desktop\AdminPanel\AdminPanel\obj\Debug\UsersPage.g.cs
 C:\Users\Tanulo\Desktop\vizsgaremek\desktop\AdminPanel\AdminPanel\obj\Debug\AdminPanel.csproj.CopyComplete
+C:\Users\ablonczya\Desktop\vizsgaremek\vizsgaremek\desktop\AdminPanel\AdminPanel\obj\Debug\PostsPage.baml
+C:\Users\ablonczya\Desktop\vizsgaremek\vizsgaremek\desktop\AdminPanel\AdminPanel\obj\Debug\PostsPage.g.cs
+C:\Users\ablonczya\Desktop\vizsgaremek\vizsgaremek\desktop\AdminPanel\AdminPanel\obj\Debug\EditPostPage.baml
+C:\Users\ablonczya\Desktop\vizsgaremek\vizsgaremek\desktop\AdminPanel\AdminPanel\obj\Debug\EditPostPage.g.cs

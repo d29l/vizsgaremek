@@ -34,5 +34,9 @@ namespace AdminPanel
             
             NavigationService.Navigate(new UsersPage());
         }
+        private void ViewPosts_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new PostsPage());
+        }
     }
 }
