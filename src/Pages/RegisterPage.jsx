@@ -9,6 +9,9 @@ export default function RegisterPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const [showPass, setShowPass] = useState(false); 
+
+
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
@@ -42,6 +45,11 @@ export default function RegisterPage() {
   const handleRedirect = () => {
     navigate(`/login`);
   };
+
+  const handleShowPassword = (e) => {
+    const checked = e.target.checked
+    setShowPass(checked)
+  }
 
   return (
     <div class="flex min-h-[92vh] items-center justify-center">
@@ -83,14 +91,14 @@ export default function RegisterPage() {
             />
             <label class="mb-2 font-bold text-text">Password</label>
             <input
-              type="password"
+              type= {showPass ? "text" : "password"}
               class="mb-2 h-8 rounded-lg bg-mantle pl-2 text-subtext0 focus:border-2 focus:border-lavender focus:outline-none"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
             <label class="mb-2 font-bold text-text">Confirm password</label>
             <input
-              type="password"
+              type= {showPass ? "text" : "password"}
               class="mb-2 h-8 rounded-lg bg-mantle pl-2 text-subtext0 focus:border-2 focus:border-lavender focus:outline-none"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
@@ -100,6 +108,7 @@ export default function RegisterPage() {
               <input
                 type="checkbox"
                 class="h-4 w-4 cursor-pointer appearance-none rounded border-2 border-subtext1 transition-colors duration-200 checked:bg-lavender focus:outline-none"
+                onChange={handleShowPassword}
               />
               <label class="ml-2 cursor-pointer select-none text-subtext1">
                 Show password
