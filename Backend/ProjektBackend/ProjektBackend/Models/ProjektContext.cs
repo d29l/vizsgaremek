@@ -110,6 +110,8 @@ public partial class ProjektContext : DbContext
 
             entity.HasIndex(e => e.UserId, "UserID");
 
+            entity.HasIndex(e => e.UserId, "UserID_2").IsUnique();
+
             entity.Property(e => e.ApplicantId)
                 .HasColumnType("int(11)")
                 .HasColumnName("ApplicantID");
@@ -123,8 +125,8 @@ public partial class ProjektContext : DbContext
                 .HasColumnType("int(11)")
                 .HasColumnName("UserID");
 
-            entity.HasOne(d => d.User).WithMany(p => p.Employerrequests)
-                .HasForeignKey(d => d.UserId)
+            entity.HasOne(d => d.User).WithOne(p => p.Employerrequest)
+                .HasForeignKey<Employerrequest>(d => d.UserId)
                 .HasConstraintName("employerrequest_ibfk_1");
         });
 
@@ -245,6 +247,7 @@ public partial class ProjektContext : DbContext
             entity.Property(e => e.IsActive).HasDefaultValueSql("'1'");
             entity.Property(e => e.LastName).HasMaxLength(255);
             entity.Property(e => e.Password).HasMaxLength(255);
+            entity.Property(e => e.RefreshToken).HasMaxLength(255);
             entity.Property(e => e.Role)
                 .HasDefaultValueSql("'''Employee'''")
                 .HasColumnType("enum('Employee','Employer','Admin')");

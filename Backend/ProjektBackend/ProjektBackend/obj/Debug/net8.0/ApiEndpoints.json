@@ -203,6 +203,11 @@
         "Name": "EmployerId",
         "Type": "System.Int32",
         "IsRequired": false
+      },
+      {
+        "Name": "UserId",
+        "Type": "System.Int32",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -222,6 +227,11 @@
       },
       {
         "Name": "EmployerId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "UserId",
         "Type": "System.Int32",
         "IsRequired": false
       },
@@ -390,15 +400,15 @@
   {
     "ContainingType": "ProjektBackend.Controllers.UserController",
     "Method": "deleteUser",
-    "RelativePath": "api/users/deleteUser",
+    "RelativePath": "api/users/deleteUser/{UserId}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "userId",
+        "Name": "UserId",
         "Type": "System.Int32",
-        "IsRequired": false
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -477,6 +487,32 @@
   },
   {
     "ContainingType": "ProjektBackend.Controllers.UserController",
+    "Method": "RefreshToken",
+    "RelativePath": "api/users/refreshToken",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "refreshTokenDto",
+        "Type": "ProjektBackend.Controllers.RefreshTokenDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.String",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "ProjektBackend.Controllers.UserController",
     "Method": "registerUser",
     "RelativePath": "api/users/registerUser",
     "HttpMethod": "POST",
@@ -500,5 +536,47 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "ProjektBackend.Controllers.UserController",
+    "Method": "updateUser",
+    "RelativePath": "api/users/updateUser/{UserId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "UserId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "updateUserDto",
+        "Type": "ProjektBackend.Controllers.UpdateUserDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProjektBackend.Controllers.UserController",
+    "Method": "updateUserRole",
+    "RelativePath": "api/users/updateUserRole/{UserId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "UserId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "Role",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
   }
 ]

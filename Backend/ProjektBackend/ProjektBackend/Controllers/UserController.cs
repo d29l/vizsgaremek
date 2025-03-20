@@ -10,7 +10,6 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
-
 namespace ProjektBackend.Controllers
 {
     [Route("api/users")]
@@ -63,14 +62,11 @@ namespace ProjektBackend.Controllers
             '┃', '╳', '■', '□', '▣', '▢', '▯', '●', '○'
         };
 
-
         // Get All
         [Authorize(Policy = "AdminOnly")]
         [HttpGet("fetchUsers")]
         public async Task<ActionResult<User>> fetchUsers()
         {
-
-
             var users = await _context.Users.ToListAsync();
             if (users != null)
             {
@@ -80,7 +76,6 @@ namespace ProjektBackend.Controllers
         }
 
         // Get Id
-
         [Authorize(Policy = "SelfOrAdmin")]
         [HttpGet("fetchUser/{UserId}")]
         public async Task<ActionResult<User>> fetchUser(int UserId)
@@ -93,7 +88,6 @@ namespace ProjektBackend.Controllers
         }
 
         // Register
-
         [HttpPost("registerUser")]
         public async Task<ActionResult<User>> registerUser(RegisterUserDto registerUserDto)
         {
@@ -116,7 +110,6 @@ namespace ProjektBackend.Controllers
                 LastName = registerUserDto.LastName,
                 Email = registerUserDto.Email,
                 Password = Convert.ToBase64String(hashBytes)
-
             };
 
             if (!newUser.Email.Contains("@"))
@@ -145,11 +138,8 @@ namespace ProjektBackend.Controllers
             return BadRequest();
         }
 
-
-
-        //Login
+        // Login
         [HttpPost("loginUser")]
-
         public async Task<ActionResult<string>> loginUser(LoginUserDto loginUserDto)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == loginUserDto.Email);
@@ -182,32 +172,77 @@ namespace ProjektBackend.Controllers
                 return Unauthorized(new { Message = "Invalid email or password!" });
             }
 
+            var accessToken = GenerateAccessToken(user);
+
+            var refreshToken = GenerateRefreshToken();
+
+            user.RefreshToken = refreshToken;
+            _context.Update(user);
+            await _context.SaveChangesAsync();
+
+            return Ok(new
+            {
+                AccessToken = accessToken,
+                RefreshToken = refreshToken
+            });
+        }
+
+        [HttpPost("refreshToken")]
+        public async Task<ActionResult<string>> RefreshToken([FromBody] RefreshTokenDto refreshTokenDto)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.RefreshToken == refreshTokenDto.RefreshToken);
+
+            if (user == null)
+            {
+                return Unauthorized(new { Message = "Invalid refresh token." });
+            }
+
+            var accessToken = GenerateAccessToken(user);
+
+            var newRefreshToken = GenerateRefreshToken();
+
+            user.RefreshToken = newRefreshToken;
+            _context.Update(user);
+            await _context.SaveChangesAsync();
+
+            return Ok(new
+            {
+                AccessToken = accessToken,
+                RefreshToken = newRefreshToken
+            });
+        }
+
+        private string GenerateAccessToken(User user)
+        {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Secret"]);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
-                new Claim(ClaimTypes.Role, user.Role),
-                new Claim(ClaimTypes.Email, user.Email)
-            }),
+                    new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
+                    new Claim(ClaimTypes.Role, user.Role),
+                    new Claim(ClaimTypes.Email, user.Email)
+                }),
                 Expires = DateTime.UtcNow.AddMinutes(Convert.ToDouble(_configuration["Jwt:ExpiryInMinutes"])),
                 Issuer = _configuration["Jwt:Issuer"],
                 Audience = _configuration["Jwt:Audience"],
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            var tokenString = tokenHandler.WriteToken(token);
-
-            return Ok(new { Token = tokenString });
+            return tokenHandler.WriteToken(token);
         }
-
+        private string GenerateRefreshToken()
+        {
+            var randomNumber = new byte[64];
+            using var rng = RandomNumberGenerator.Create();
+            rng.GetBytes(randomNumber);
+            return Convert.ToBase64String(randomNumber);
+        }
 
         // Put
         [Authorize(Policy = "AdminOnly")]
-        [HttpPut("updateUserRole")]
-
+        [HttpPut("updateUserRole/{UserId}")]
         public async Task<ActionResult> updateUserRole(int UserId, string Role)
         {
             var existingUser = await _context.Users.FirstOrDefaultAsync(x => x.UserId == UserId);
@@ -223,8 +258,7 @@ namespace ProjektBackend.Controllers
         }
 
         [Authorize(Policy = "SelfOrAdmin")]
-        [HttpPut("updateUser")]
-
+        [HttpPut("updateUser/{UserId}")]
         public async Task<ActionResult> updateUser(int UserId, UpdateUserDto updateUserDto)
         {
             var existingUser = await _context.Users.FirstOrDefaultAsync(x => x.UserId == UserId);
@@ -257,29 +291,20 @@ namespace ProjektBackend.Controllers
             return BadRequest();
         }
 
-
-
         // Delete
         [Authorize(Policy = "SelfOrAdmin")]
-        [HttpDelete("deleteUser")]
-
-        public async Task<ActionResult> deleteUser(int userId)
+        [HttpDelete("deleteUser/{UserId}")]
+        public async Task<ActionResult> deleteUser(int UserId)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.UserId == userId);
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.UserId == UserId);
 
-            if (user != null) 
+            if (user != null)
             {
                 _context.Remove(user);
                 await _context.SaveChangesAsync();
                 return StatusCode(200, "Sucessfully deleted.");
-
             }
             return StatusCode(418, "Not Found.");
         }
-        
-    
     }
-
-
 }
-

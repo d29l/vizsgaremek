@@ -21,4 +21,6 @@
 
     public record CreateRequestDto(string CompanyName, string CompanyAddress, string Industry, string CompanyWebsite, string CompanyDescription, int EstabilishedYear);
     public record UpdateRequestDto(string CompanyName, string CompanyAddress, string Industry, string CompanyWebsite, string CompanyDescription, int EstabilishedYear);
+
+    public record RefreshTokenDto(string RefreshToken);
 }

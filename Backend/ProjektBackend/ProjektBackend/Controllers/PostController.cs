@@ -77,7 +77,7 @@ namespace ProjektBackend.Controllers
         [Authorize(Policy = "EmployerSelfOrAdmin")]
         [HttpPut("editPost/{PostId}")]
 
-        public async Task<ActionResult<Post>> editPost(int PostId, int EmployerId, UpdatePostDto updatePostDto)
+        public async Task<ActionResult<Post>> editPost(int PostId, int EmployerId, int UserId, UpdatePostDto updatePostDto)
         {
             var existingPost = await _context.Posts.FirstOrDefaultAsync(x => x.PostId == PostId && x.EmployerId == EmployerId);
             if (existingPost != null)
@@ -94,7 +94,7 @@ namespace ProjektBackend.Controllers
         // Delete
         [Authorize(Policy = "EmployerSelfOrAdmin")]
         [HttpDelete("deletePost/{PostId}")]
-        public async Task<ActionResult> DeletePost(int PostId, int EmployerId)
+        public async Task<ActionResult> DeletePost(int PostId, int EmployerId, int UserId)
         {
             var deletePost = await _context.Posts
         .FirstOrDefaultAsync(x => x.PostId == PostId && x.EmployerId == EmployerId);

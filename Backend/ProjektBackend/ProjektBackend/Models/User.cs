@@ -22,6 +22,8 @@ public partial class User
     [DataType(DataType.Password)]
     public string Password { get; set; } = null!;
 
+    public string RefreshToken { get; set; } = null!;
+
     public string? Role { get; set; }
 
     public DateTime? CreatedAt { get; set; }
@@ -32,7 +34,7 @@ public partial class User
 
     public virtual ICollection<Connection> ConnectionRequesters { get; set; } = new List<Connection>();
 
-    public virtual ICollection<Employerrequest> Employerrequests { get; set; } = new List<Employerrequest>();
+    public virtual Employerrequest? Employerrequest { get; set; }
 
     public virtual ICollection<Employer> Employers { get; set; } = new List<Employer>();
 
