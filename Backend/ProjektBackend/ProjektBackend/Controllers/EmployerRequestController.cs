@@ -19,34 +19,34 @@ namespace ProjektBackend.Controllers
 
         [Authorize(Policy = "AdminOnly")]
         [HttpGet("fetchRequests")]
-        public async Task<ActionResult<Employerrequest>> fetchRequests()
+        public async Task<ActionResult<Employerrequest>> FetchRequests()
         {
             var requests = await _context.Employerrequests.ToListAsync();
 
-            if (requests != null)
+            if (requests != null && requests.Any())
             {
-                return Ok(requests);
+                return StatusCode(200, requests);
             }
-            return NotFound();
+            return StatusCode(404, "There are currently no Employer Requests.");
         }
 
         [Authorize(Policy = "AdminOnly")]
         [HttpGet("fetchRequest/{ApplicantId}")]
-        public async Task<ActionResult<Employerrequest>> fetchRequest(int ApplicantId)
+        public async Task<ActionResult<Employerrequest>> FetchRequest(int ApplicantId)
         {
             var request = await _context.Employerrequests.FirstOrDefaultAsync(x => x.ApplicantId == ApplicantId);
 
             if (request != null)
             {
-                return Ok(request);
+                return StatusCode(200, request);
             }
-            return NotFound();
+            return StatusCode(404, "No Request can be found with this Id.");
         }
 
         [Authorize(Policy = "EmployeeSelfOrAdmin")]
         [HttpPost("postRequest")]
 
-        public async Task<ActionResult> postRequest(int UserId, CreateRequestDto createRequestDto)
+        public async Task<ActionResult> PostRequest(int UserId, CreateRequestDto createRequestDto)
         {
 
             var newRequest = new Employerrequest
@@ -64,15 +64,15 @@ namespace ProjektBackend.Controllers
             {
                 _context.Add(newRequest);
                 await _context.SaveChangesAsync();
-                return StatusCode(201, "Request successfully created.");
+                return StatusCode(201, "Request created successfully.");
             }
-            return BadRequest();
+            return StatusCode(400, "Invalid data.");
         }
 
         [Authorize(Policy = "AdminOnly")]
         [HttpDelete("deleteRequest/{ApplicantId}")]
 
-        public async Task<ActionResult> deleteRequest(int ApplicantId)
+        public async Task<ActionResult> DeleteRequest(int ApplicantId)
         {
             var request = await _context.Employerrequests.FirstOrDefaultAsync(x => x.ApplicantId == ApplicantId);
 
@@ -80,9 +80,9 @@ namespace ProjektBackend.Controllers
             {
                 _context.Remove(request);
                 await _context.SaveChangesAsync();
-                return Ok("User successfully deleted.");
+                return StatusCode(200, "User successfully deleted.");
             }
-            return BadRequest();
+            return StatusCode(404, "No Request can be found with this Id.");
         }
 
     }

@@ -19,10 +19,9 @@ namespace ProjektBackend.Controllers
             _context = context;
         }
 
-        //Post
         [HttpPost]
 
-        public async Task<ActionResult<Profile>> postProfile(int UserId, CreateProfileDto createProfileDto)
+        public async Task<ActionResult<Profile>> PostProfile(int UserId, CreateProfileDto createProfileDto)
         {
             var existingProfile = await _context.Profiles
                 .FirstOrDefaultAsync(p => p.UserId == UserId);
@@ -38,42 +37,41 @@ namespace ProjektBackend.Controllers
                 Headline = createProfileDto.Headline,
                 Bio = createProfileDto.Bio,
                 Location = createProfileDto.Location,
-                ProfilePicture = createProfileDto.ProfilePicture
+                ProfilePicture = "https://shorturl.at/Z5xgu"
             };
             if (profile != null)
             {
                 _context.Profiles.Add(profile);
                 await _context.SaveChangesAsync();
 
-                return Ok(profile);
+                return StatusCode(201, "Profile created successfully.");
             }
-            return BadRequest();
+            return StatusCode(400, "Invalid data.");
         }
 
 
-        //Put
         [Authorize(Policy = "SelfOrAdmin")]
         [HttpPut("updateProfile/{ProfileId}")]
-        public async Task<ActionResult<Profile>> updateProfile(int ProfileId, UpdateProfileDto updateProfileDto)
+        public async Task<ActionResult<Profile>> UpdateProfile(int ProfileId, UpdateProfileDto updateProfileDto)
         {
 
             var profile = await _context.Profiles
                 .FirstOrDefaultAsync(p => p.ProfileId == ProfileId);
 
-            profile.Headline = updateProfileDto.Headline ?? profile.Headline;
-            profile.Bio = updateProfileDto.Bio ?? profile.Bio;
-            profile.Location = updateProfileDto.Location ?? profile.Location;
-            profile.ProfilePicture = updateProfileDto.ProfilePicture ?? profile.ProfilePicture;
-
             if (profile != null)
             {
+                profile.Headline = updateProfileDto.Headline ?? profile.Headline;
+                profile.Bio = updateProfileDto.Bio ?? profile.Bio;
+                profile.Location = updateProfileDto.Location ?? profile.Location;
+                profile.ProfilePicture = updateProfileDto.ProfilePicture ?? profile.ProfilePicture;
+
                 _context.Profiles.Update(profile);
                 await _context.SaveChangesAsync();
 
-                return Ok(profile);
+                return StatusCode(200, "Profile updated.");
             }
 
-            return BadRequest();
+            return StatusCode(404, "No Profile can be found with this Id.");
         }
     }
 }

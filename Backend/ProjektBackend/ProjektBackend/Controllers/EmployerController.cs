@@ -20,35 +20,35 @@ namespace ProjektBackend.Controllers
         [Authorize(Policy = "AdminOnly")]
         [HttpGet("fetchEmployers")]
 
-        public async Task<ActionResult<Employer>> fetchEmployers()
+        public async Task<ActionResult<Employer>> FetchEmployers()
         {
             var employers = await _context.Employers.ToListAsync();
 
-            if (employers != null)
+            if (employers != null && employers.Any())
             {
-                return Ok(employers);
+                return StatusCode(200, employers);
             }
-            return NotFound();
+            return StatusCode(404, "There are currently no Employers.");
         }
 
         [Authorize(Policy = "EmployerSelfOrAdmin")]
         [HttpGet("fetchEmployer/{EmployerId}")]
 
-        public async Task<ActionResult<Employer>> fetchEmployer(int EmployerId)
+        public async Task<ActionResult<Employer>> FetchEmployer(int EmployerId)
         {
             var employer = await _context.Employers.FirstOrDefaultAsync(x => x.EmployerId == EmployerId);
 
             if (employer != null)
             {
-                return Ok(employer);
+                return StatusCode(200, employer);
             }
-            return BadRequest();
+            return StatusCode(404, "No Employer can be found with this Id.");
         }
 
         [Authorize(Policy = "AdminOnly")]
         [HttpPost("postEmployer")]
 
-        public async Task<ActionResult> postEmployer(int UserId, CreateEmployerDto createEmployerDto)
+        public async Task<ActionResult> PostEmployer(int UserId, CreateEmployerDto createEmployerDto)
         {
             var newEmployer = new Employer
             {
@@ -65,15 +65,15 @@ namespace ProjektBackend.Controllers
             {
                 _context.Add(newEmployer);
                 await _context.SaveChangesAsync();
-                return StatusCode(201, "Employer successfully created.");
+                return StatusCode(201, "Employer created successfully.");
             }
-            return BadRequest();
+            return StatusCode(400, "Invalid data.");
         }
 
         [Authorize(Policy = "EmployerSelfOrAdmin")]
         [HttpPut("editEmployer/{EmployerId}")]
 
-        public async Task<ActionResult> editEmployer(int EmployerId, UpdateEmployerDto updateEmployerDto)
+        public async Task<ActionResult> EditEmployer(int EmployerId, UpdateEmployerDto updateEmployerDto)
         {
             var existingEmployer = await _context.Employers.FirstOrDefaultAsync(x => x.EmployerId == EmployerId);
 
@@ -87,9 +87,9 @@ namespace ProjektBackend.Controllers
 
                 _context.Update(existingEmployer);
                 await _context.SaveChangesAsync();
-                return Ok(existingEmployer);
+                return StatusCode(200, "Employer updated.");
             }
-            return BadRequest();
+            return StatusCode(404, "No Employer can be found with this Id.");
 
             
         }
@@ -97,7 +97,7 @@ namespace ProjektBackend.Controllers
         [Authorize(Policy = "AdminOnly")]
         [HttpDelete("deleteEmployer/{EmployerId}")]
 
-        public async Task<ActionResult> deleteEmployer(int EmployerId)
+        public async Task<ActionResult> DeleteEmployer(int EmployerId)
         {
             var employer = await _context.Employers.FirstOrDefaultAsync(x => x.EmployerId == EmployerId);
 
@@ -105,9 +105,9 @@ namespace ProjektBackend.Controllers
             {
                 _context.Remove(employer);
                 await _context.SaveChangesAsync();
-                return Ok("User successfully deleted.");
+                return StatusCode(200, "Employer successfully deleted.");
             }
-            return BadRequest();
+            return StatusCode(404, "No Employer can be found with this Id.");
         }
 
 

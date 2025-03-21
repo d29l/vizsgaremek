@@ -24,6 +24,9 @@ public partial class User
 
     public string RefreshToken { get; set; } = null!;
 
+    [Required]
+    [RegularExpression("^(Employee|Employer|Admin)$",
+        ErrorMessage = "Role must be 'Employee', 'Employer', or 'Admin'.")]
     public string? Role { get; set; }
 
     public DateTime? CreatedAt { get; set; }

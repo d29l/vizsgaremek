@@ -18,39 +18,34 @@ namespace ProjektBackend.Controllers
         {
             _context = context;
         }
-
-        // Get All
-
+        [Authorize]
         [HttpGet("fetchPosts")]
-        public async Task<ActionResult<Post>> fetchPosts()
+        public async Task<ActionResult<Post>> FetchPosts()
         {
             var posts = await _context.Posts.ToListAsync();
-            if (posts != null)
+            if (posts != null && posts.Any())
             {
-                return Ok(posts);
+                return StatusCode(200, posts);
             }
-            return BadRequest();
+            return StatusCode(404, "There are currently no Posts.");
         }
-
-        // Get Id
-
+        [Authorize]
         [HttpGet("fetchPost/{PostId}")]
-        public async Task<ActionResult<Post>> fetchPost(int PostId)
+        public async Task<ActionResult<Post>> FetchPost(int PostId)
         {
             var post = await _context.Posts
                         .Include(x => x.Employer)
                         .FirstOrDefaultAsync(y => y.PostId == PostId);
             if (post != null)
             {
-                return Ok(post);
+                return StatusCode(200, post);
             }
-            return NotFound();
+            return StatusCode(404, "No Post can be found with this Id.");
         }
 
-        // Post
         [Authorize(Policy = "EmployerSelfOrAdmin")]
         [HttpPost("newPost")]
-        public async Task<ActionResult<Post>> newPost(int EmployerId, int UserId, CreatePostDto createPostDto)
+        public async Task<ActionResult<Post>> NewPost(int EmployerId, int UserId, CreatePostDto createPostDto)
         {
             var Post = new Post()
             {
@@ -67,17 +62,16 @@ namespace ProjektBackend.Controllers
             {
                 _context.Add(Post);
                 await _context.SaveChangesAsync();
-                return StatusCode(201, Post);
+                return StatusCode(201, "Post created successfully.");
             }
-            return BadRequest();
+            return StatusCode(400, "Invalid data.");
 
         }
 
-        // Put
         [Authorize(Policy = "EmployerSelfOrAdmin")]
         [HttpPut("editPost/{PostId}")]
 
-        public async Task<ActionResult<Post>> editPost(int PostId, int EmployerId, int UserId, UpdatePostDto updatePostDto)
+        public async Task<ActionResult<Post>> EditPost(int PostId, int EmployerId, int UserId, UpdatePostDto updatePostDto)
         {
             var existingPost = await _context.Posts.FirstOrDefaultAsync(x => x.PostId == PostId && x.EmployerId == EmployerId);
             if (existingPost != null)
@@ -86,12 +80,11 @@ namespace ProjektBackend.Controllers
                 existingPost.Content = updatePostDto.Content;
                 existingPost.CreatedAt = DateTime.Now;
                 _context.SaveChanges();
-                return StatusCode(200, existingPost);
+                return StatusCode(200, "Post updated.");
             }
-            return NotFound();
+            return StatusCode(404, "No Post can be found with this Id.");
         }
 
-        // Delete
         [Authorize(Policy = "EmployerSelfOrAdmin")]
         [HttpDelete("deletePost/{PostId}")]
         public async Task<ActionResult> DeletePost(int PostId, int EmployerId, int UserId)
@@ -103,10 +96,10 @@ namespace ProjektBackend.Controllers
             {
                 _context.Remove(deletePost);
                 await _context.SaveChangesAsync();
-                return Ok("Post successfully deleted");
+                return StatusCode(200,"Post successfully deleted.");
             }
 
-            return NotFound();
+            return StatusCode(404, "No Post can be found with this Id.");
         }
     }
 }

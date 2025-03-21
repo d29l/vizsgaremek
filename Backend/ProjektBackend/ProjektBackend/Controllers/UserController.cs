@@ -62,34 +62,35 @@ namespace ProjektBackend.Controllers
             '┃', '╳', '■', '□', '▣', '▢', '▯', '●', '○'
         };
 
-        // Get All
         [Authorize(Policy = "AdminOnly")]
         [HttpGet("fetchUsers")]
-        public async Task<ActionResult<User>> fetchUsers()
+        public async Task<ActionResult<User>> FetchUsers()
         {
             var users = await _context.Users.ToListAsync();
-            if (users != null)
+            if (users != null && users.Any())
             {
-                return Ok(users);
+                return StatusCode(200, users);
             }
-            return BadRequest();
+            return StatusCode(404, "There are currently no Users.");
         }
 
-        // Get Id
         [Authorize(Policy = "SelfOrAdmin")]
         [HttpGet("fetchUser/{UserId}")]
-        public async Task<ActionResult<User>> fetchUser(int UserId)
+        public async Task<ActionResult<User>> FetchUser(int UserId)
         {
             var user = await _context.Users
             .Include(p => p.Employers)
             .FirstOrDefaultAsync(p => p.UserId == UserId);
 
-            return user != null ? Ok(user) : NotFound();
+            if (user != null)
+            {
+                return StatusCode(200, user);
+            }
+            return StatusCode(404, "No User can be found with this Id.");
         }
 
-        // Register
         [HttpPost("registerUser")]
-        public async Task<ActionResult<User>> registerUser(RegisterUserDto registerUserDto)
+        public async Task<ActionResult<User>> RegisterUser(RegisterUserDto registerUserDto)
         {
             byte[] salt = new byte[16];
             using (var rng = RandomNumberGenerator.Create())
@@ -132,21 +133,20 @@ namespace ProjektBackend.Controllers
             {
                 _context.Add(newUser);
                 await _context.SaveChangesAsync();
-                return StatusCode(201, newUser);
+                return StatusCode(201, "User created successfully.");
             }
 
-            return BadRequest();
+            return StatusCode(400, "Invalid data.");
         }
 
-        // Login
         [HttpPost("loginUser")]
-        public async Task<ActionResult<string>> loginUser(LoginUserDto loginUserDto)
+        public async Task<ActionResult<string>> LoginUser(LoginUserDto loginUserDto)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == loginUserDto.Email);
 
             if (user == null)
             {
-                return Unauthorized(new { Message = "Invalid email or password." });
+                return StatusCode(401, "Invalid email or password.");
             }
 
             byte[] hashBytes = Convert.FromBase64String(user.Password);
@@ -169,7 +169,7 @@ namespace ProjektBackend.Controllers
 
             if (!isPasswordValid)
             {
-                return Unauthorized(new { Message = "Invalid email or password!" });
+                return StatusCode(401, "Invalid email or password.");
             }
 
             var accessToken = GenerateAccessToken(user);
@@ -180,7 +180,7 @@ namespace ProjektBackend.Controllers
             _context.Update(user);
             await _context.SaveChangesAsync();
 
-            return Ok(new
+            return StatusCode(200, new
             {
                 AccessToken = accessToken,
                 RefreshToken = refreshToken
@@ -194,7 +194,7 @@ namespace ProjektBackend.Controllers
 
             if (user == null)
             {
-                return Unauthorized(new { Message = "Invalid refresh token." });
+                return StatusCode(401, "Invalid RefreshToken.");
             }
 
             var accessToken = GenerateAccessToken(user);
@@ -205,7 +205,7 @@ namespace ProjektBackend.Controllers
             _context.Update(user);
             await _context.SaveChangesAsync();
 
-            return Ok(new
+            return StatusCode(200,new
             {
                 AccessToken = accessToken,
                 RefreshToken = newRefreshToken
@@ -240,10 +240,9 @@ namespace ProjektBackend.Controllers
             return Convert.ToBase64String(randomNumber);
         }
 
-        // Put
         [Authorize(Policy = "AdminOnly")]
         [HttpPut("updateUserRole/{UserId}")]
-        public async Task<ActionResult> updateUserRole(int UserId, string Role)
+        public async Task<ActionResult> UpdateUserRole(int UserId, string Role)
         {
             var existingUser = await _context.Users.FirstOrDefaultAsync(x => x.UserId == UserId);
 
@@ -252,14 +251,14 @@ namespace ProjektBackend.Controllers
                 existingUser.Role = Role;
                 _context.Update(existingUser);
                 await _context.SaveChangesAsync();
-                return Ok("User Role updated.");
+                return StatusCode(200, "User Role updated.");
             }
-            return BadRequest();
+            return StatusCode(404, "No User can be found with this Id.");
         }
 
         [Authorize(Policy = "SelfOrAdmin")]
         [HttpPut("updateUser/{UserId}")]
-        public async Task<ActionResult> updateUser(int UserId, UpdateUserDto updateUserDto)
+        public async Task<ActionResult> UpdateUser(int UserId, UpdateUserDto updateUserDto)
         {
             var existingUser = await _context.Users.FirstOrDefaultAsync(x => x.UserId == UserId);
 
@@ -286,15 +285,14 @@ namespace ProjektBackend.Controllers
 
                 _context.Update(existingUser);
                 await _context.SaveChangesAsync();
-                return Ok("User updated.");
+                return StatusCode(200, "User updated.");
             }
-            return BadRequest();
+            return StatusCode(404, "No User can be found with this Id.");
         }
 
-        // Delete
         [Authorize(Policy = "SelfOrAdmin")]
         [HttpDelete("deleteUser/{UserId}")]
-        public async Task<ActionResult> deleteUser(int UserId)
+        public async Task<ActionResult> DeleteUser(int UserId)
         {
             var user = await _context.Users.FirstOrDefaultAsync(x => x.UserId == UserId);
 
@@ -302,9 +300,9 @@ namespace ProjektBackend.Controllers
             {
                 _context.Remove(user);
                 await _context.SaveChangesAsync();
-                return StatusCode(200, "Sucessfully deleted.");
+                return StatusCode(200, "User successfully deleted.");
             }
-            return StatusCode(418, "Not Found.");
+            return StatusCode(404, "No User can be found with this Id.");
         }
     }
 }

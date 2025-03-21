@@ -1,7 +1,136 @@
 [
   {
+    "ContainingType": "ProjektBackend.Controllers.ConnectionController",
+    "Method": "DeleteConnection",
+    "RelativePath": "api/connections/deleteConnection/{RequesterId}/{ReceiverId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "UserId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "ReceiverId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "RequesterId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProjektBackend.Controllers.ConnectionController",
+    "Method": "UpdateConnection",
+    "RelativePath": "api/connections/editConnection/{ReceiverId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "UserId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "ReceiverId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "updateConnectionDto",
+        "Type": "ProjektBackend.Controllers.UpdateConnectionDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProjektBackend.Controllers.ConnectionController",
+    "Method": "FetchConnections",
+    "RelativePath": "api/connections/fetchConnections",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "ProjektBackend.Models.Connection",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "ProjektBackend.Controllers.ConnectionController",
+    "Method": "FetchConnections",
+    "RelativePath": "api/connections/fetchConnections/{ReceiverId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ReceiverId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "UserId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[ProjektBackend.Models.Connection, ProjektBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "ProjektBackend.Controllers.ConnectionController",
+    "Method": "PostNewConnection",
+    "RelativePath": "api/connections/postNewConnection",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "UserId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "RequesterId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "createConnectionDto",
+        "Type": "ProjektBackend.Controllers.CreateConnectionDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "ProjektBackend.Controllers.EmployerRequestController",
-    "Method": "deleteRequest",
+    "Method": "DeleteRequest",
     "RelativePath": "api/employerrequests/deleteRequest/{ApplicantId}",
     "HttpMethod": "DELETE",
     "IsController": true,
@@ -17,7 +146,7 @@
   },
   {
     "ContainingType": "ProjektBackend.Controllers.EmployerRequestController",
-    "Method": "fetchRequest",
+    "Method": "FetchRequest",
     "RelativePath": "api/employerrequests/fetchRequest/{ApplicantId}",
     "HttpMethod": "GET",
     "IsController": true,
@@ -43,7 +172,7 @@
   },
   {
     "ContainingType": "ProjektBackend.Controllers.EmployerRequestController",
-    "Method": "fetchRequests",
+    "Method": "FetchRequests",
     "RelativePath": "api/employerrequests/fetchRequests",
     "HttpMethod": "GET",
     "IsController": true,
@@ -63,7 +192,7 @@
   },
   {
     "ContainingType": "ProjektBackend.Controllers.EmployerRequestController",
-    "Method": "postRequest",
+    "Method": "PostRequest",
     "RelativePath": "api/employerrequests/postRequest",
     "HttpMethod": "POST",
     "IsController": true,
@@ -84,7 +213,7 @@
   },
   {
     "ContainingType": "ProjektBackend.Controllers.EmployerController",
-    "Method": "deleteEmployer",
+    "Method": "DeleteEmployer",
     "RelativePath": "api/employers/deleteEmployer/{EmployerId}",
     "HttpMethod": "DELETE",
     "IsController": true,
@@ -100,7 +229,7 @@
   },
   {
     "ContainingType": "ProjektBackend.Controllers.EmployerController",
-    "Method": "editEmployer",
+    "Method": "EditEmployer",
     "RelativePath": "api/employers/editEmployer/{EmployerId}",
     "HttpMethod": "PUT",
     "IsController": true,
@@ -121,7 +250,7 @@
   },
   {
     "ContainingType": "ProjektBackend.Controllers.EmployerController",
-    "Method": "fetchEmployer",
+    "Method": "FetchEmployer",
     "RelativePath": "api/employers/fetchEmployer/{EmployerId}",
     "HttpMethod": "GET",
     "IsController": true,
@@ -147,7 +276,7 @@
   },
   {
     "ContainingType": "ProjektBackend.Controllers.EmployerController",
-    "Method": "fetchEmployers",
+    "Method": "FetchEmployers",
     "RelativePath": "api/employers/fetchEmployers",
     "HttpMethod": "GET",
     "IsController": true,
@@ -167,7 +296,7 @@
   },
   {
     "ContainingType": "ProjektBackend.Controllers.EmployerController",
-    "Method": "postEmployer",
+    "Method": "PostEmployer",
     "RelativePath": "api/employers/postEmployer",
     "HttpMethod": "POST",
     "IsController": true,
@@ -214,7 +343,7 @@
   },
   {
     "ContainingType": "ProjektBackend.Controllers.PostController",
-    "Method": "editPost",
+    "Method": "EditPost",
     "RelativePath": "api/posts/editPost/{PostId}",
     "HttpMethod": "PUT",
     "IsController": true,
@@ -255,7 +384,7 @@
   },
   {
     "ContainingType": "ProjektBackend.Controllers.PostController",
-    "Method": "fetchPost",
+    "Method": "FetchPost",
     "RelativePath": "api/posts/fetchPost/{PostId}",
     "HttpMethod": "GET",
     "IsController": true,
@@ -281,7 +410,7 @@
   },
   {
     "ContainingType": "ProjektBackend.Controllers.PostController",
-    "Method": "fetchPosts",
+    "Method": "FetchPosts",
     "RelativePath": "api/posts/fetchPosts",
     "HttpMethod": "GET",
     "IsController": true,
@@ -301,7 +430,7 @@
   },
   {
     "ContainingType": "ProjektBackend.Controllers.PostController",
-    "Method": "newPost",
+    "Method": "NewPost",
     "RelativePath": "api/posts/newPost",
     "HttpMethod": "POST",
     "IsController": true,
@@ -337,7 +466,7 @@
   },
   {
     "ContainingType": "ProjektBackend.Controllers.ProfileController",
-    "Method": "postProfile",
+    "Method": "PostProfile",
     "RelativePath": "api/profiles",
     "HttpMethod": "POST",
     "IsController": true,
@@ -368,7 +497,7 @@
   },
   {
     "ContainingType": "ProjektBackend.Controllers.ProfileController",
-    "Method": "updateProfile",
+    "Method": "UpdateProfile",
     "RelativePath": "api/profiles/updateProfile/{ProfileId}",
     "HttpMethod": "PUT",
     "IsController": true,
@@ -399,7 +528,7 @@
   },
   {
     "ContainingType": "ProjektBackend.Controllers.UserController",
-    "Method": "deleteUser",
+    "Method": "DeleteUser",
     "RelativePath": "api/users/deleteUser/{UserId}",
     "HttpMethod": "DELETE",
     "IsController": true,
@@ -415,7 +544,7 @@
   },
   {
     "ContainingType": "ProjektBackend.Controllers.UserController",
-    "Method": "fetchUser",
+    "Method": "FetchUser",
     "RelativePath": "api/users/fetchUser/{UserId}",
     "HttpMethod": "GET",
     "IsController": true,
@@ -441,7 +570,7 @@
   },
   {
     "ContainingType": "ProjektBackend.Controllers.UserController",
-    "Method": "fetchUsers",
+    "Method": "FetchUsers",
     "RelativePath": "api/users/fetchUsers",
     "HttpMethod": "GET",
     "IsController": true,
@@ -461,7 +590,7 @@
   },
   {
     "ContainingType": "ProjektBackend.Controllers.UserController",
-    "Method": "loginUser",
+    "Method": "LoginUser",
     "RelativePath": "api/users/loginUser",
     "HttpMethod": "POST",
     "IsController": true,
@@ -513,7 +642,7 @@
   },
   {
     "ContainingType": "ProjektBackend.Controllers.UserController",
-    "Method": "registerUser",
+    "Method": "RegisterUser",
     "RelativePath": "api/users/registerUser",
     "HttpMethod": "POST",
     "IsController": true,
@@ -539,7 +668,7 @@
   },
   {
     "ContainingType": "ProjektBackend.Controllers.UserController",
-    "Method": "updateUser",
+    "Method": "UpdateUser",
     "RelativePath": "api/users/updateUser/{UserId}",
     "HttpMethod": "PUT",
     "IsController": true,
@@ -560,7 +689,7 @@
   },
   {
     "ContainingType": "ProjektBackend.Controllers.UserController",
-    "Method": "updateUserRole",
+    "Method": "UpdateUserRole",
     "RelativePath": "api/users/updateUserRole/{UserId}",
     "HttpMethod": "PUT",
     "IsController": true,
