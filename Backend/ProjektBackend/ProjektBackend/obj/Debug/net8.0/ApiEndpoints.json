@@ -44,6 +44,11 @@
         "IsRequired": true
       },
       {
+        "Name": "RequesterId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
         "Name": "updateConnectionDto",
         "Type": "ProjektBackend.Controllers.UpdateConnectionDto",
         "IsRequired": true
@@ -213,43 +218,6 @@
   },
   {
     "ContainingType": "ProjektBackend.Controllers.EmployerController",
-    "Method": "DeleteEmployer",
-    "RelativePath": "api/employers/deleteEmployer/{EmployerId}",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "EmployerId",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "ProjektBackend.Controllers.EmployerController",
-    "Method": "EditEmployer",
-    "RelativePath": "api/employers/editEmployer/{EmployerId}",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "EmployerId",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "updateEmployerDto",
-        "Type": "ProjektBackend.Controllers.UpdateEmployerDto",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "ProjektBackend.Controllers.EmployerController",
     "Method": "FetchEmployer",
     "RelativePath": "api/employers/fetchEmployer/{EmployerId}",
     "HttpMethod": "GET",
@@ -314,73 +282,6 @@
       }
     ],
     "ReturnTypes": []
-  },
-  {
-    "ContainingType": "ProjektBackend.Controllers.PostController",
-    "Method": "DeletePost",
-    "RelativePath": "api/posts/deletePost/{PostId}",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "PostId",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "EmployerId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "UserId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "ProjektBackend.Controllers.PostController",
-    "Method": "EditPost",
-    "RelativePath": "api/posts/editPost/{PostId}",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "PostId",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "EmployerId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "UserId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "updatePostDto",
-        "Type": "ProjektBackend.Controllers.UpdatePostDto",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "ProjektBackend.Models.Post",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
   },
   {
     "ContainingType": "ProjektBackend.Controllers.PostController",
@@ -507,6 +408,11 @@
         "Name": "ProfileId",
         "Type": "System.Int32",
         "IsRequired": true
+      },
+      {
+        "Name": "UserId",
+        "Type": "System.Int32",
+        "IsRequired": false
       },
       {
         "Name": "updateProfileDto",

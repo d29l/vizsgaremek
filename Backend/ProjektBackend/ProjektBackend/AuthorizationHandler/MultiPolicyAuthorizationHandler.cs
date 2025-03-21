@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Http;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-
+#pragma warning disable CS8602
+#pragma warning disable CS8603
 public class EmployeeSelfOnlyOrAdminRequirement : IAuthorizationRequirement { }
 public class EmployerSelfOnlyOrAdminRequirement : IAuthorizationRequirement { }
 public class EmployerOnlyOrAdminRequirement : IAuthorizationRequirement { }
@@ -67,7 +68,8 @@ public class MultiPolicyAuthorizationHandler : IAuthorizationHandler
             return;
         }
 
-        if (context.User.IsInRole("Admin") || currentUserId == resourceUserId)
+        if (context.User.IsInRole("Admin") ||
+            (context.User.IsInRole("Employer") && currentUserId == resourceUserId))
         {
             context.Succeed(requirement);
         }
@@ -82,6 +84,10 @@ public class MultiPolicyAuthorizationHandler : IAuthorizationHandler
         if (context.User.IsInRole("Admin") || context.User.IsInRole("Employer"))
         {
             context.Succeed(requirement);
+        }
+        else
+        {
+            context.Fail();
         }
     }
 
@@ -115,15 +121,14 @@ public class MultiPolicyAuthorizationHandler : IAuthorizationHandler
         context.Fail();
     }
 
-
     private string GetResourceId(AuthorizationHandlerContext context, string paramName)
     {
         if (context.Resource is HttpContext httpContext)
-    {
-        var value = httpContext.GetRouteValue(paramName)?.ToString();
-        
-        return value ?? httpContext.Request.Query[paramName].ToString();
-    }
-    return null;
+        {
+            var value = httpContext.GetRouteValue(paramName)?.ToString();
+
+            return value ?? httpContext.Request.Query[paramName].ToString();
+        }
+        return null;
     }
 }

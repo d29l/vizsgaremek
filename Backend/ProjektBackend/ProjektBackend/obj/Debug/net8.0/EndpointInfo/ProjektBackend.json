@@ -162,6 +162,14 @@
               "type": "integer",
               "format": "int32"
             }
+          },
+          {
+            "name": "RequesterId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
           }
         ],
         "requestBody": {
@@ -333,71 +341,6 @@
             }
           }
         },
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      }
-    },
-    "/api/employers/editEmployer/{EmployerId}": {
-      "put": {
-        "tags": [
-          "Employer"
-        ],
-        "parameters": [
-          {
-            "name": "EmployerId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateEmployerDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateEmployerDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateEmployerDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      }
-    },
-    "/api/employers/deleteEmployer/{EmployerId}": {
-      "delete": {
-        "tags": [
-          "Employer"
-        ],
-        "parameters": [
-          {
-            "name": "EmployerId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "Success"
@@ -673,120 +616,6 @@
         }
       }
     },
-    "/api/posts/editPost/{PostId}": {
-      "put": {
-        "tags": [
-          "Post"
-        ],
-        "parameters": [
-          {
-            "name": "PostId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "EmployerId",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "UserId",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdatePostDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdatePostDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdatePostDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Post"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Post"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Post"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/posts/deletePost/{PostId}": {
-      "delete": {
-        "tags": [
-          "Post"
-        ],
-        "parameters": [
-          {
-            "name": "PostId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "EmployerId",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "UserId",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      }
-    },
     "/api/profiles": {
       "post": {
         "tags": [
@@ -855,6 +684,14 @@
             "name": "ProfileId",
             "in": "path",
             "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "UserId",
+            "in": "query",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -1249,10 +1086,6 @@
       "CreateConnectionDto": {
         "type": "object",
         "properties": {
-          "requesterId": {
-            "type": "integer",
-            "format": "int32"
-          },
           "receiverId": {
             "type": "integer",
             "format": "int32"
@@ -1601,50 +1434,6 @@
         "type": "object",
         "properties": {
           "status": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "UpdateEmployerDto": {
-        "type": "object",
-        "properties": {
-          "companyName": {
-            "type": "string",
-            "nullable": true
-          },
-          "companyAddress": {
-            "type": "string",
-            "nullable": true
-          },
-          "industry": {
-            "type": "string",
-            "nullable": true
-          },
-          "companyWebsite": {
-            "type": "string",
-            "nullable": true
-          },
-          "companyDescription": {
-            "type": "string",
-            "nullable": true
-          },
-          "estabilishedYear": {
-            "type": "integer",
-            "format": "int32"
-          }
-        },
-        "additionalProperties": false
-      },
-      "UpdatePostDto": {
-        "type": "object",
-        "properties": {
-          "title": {
-            "type": "string",
-            "nullable": true
-          },
-          "content": {
             "type": "string",
             "nullable": true
           }

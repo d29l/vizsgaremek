@@ -1,6 +1,7 @@
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -9,10 +10,13 @@ using System.Security.Claims;
 using System.Text;
 using System.Text.Json.Serialization;
 
+#pragma warning disable CS8604
+
 namespace ProjektBackend
 {
     public class Program
     {
+
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
@@ -111,15 +115,15 @@ namespace ProjektBackend
                     
             });
             builder.Services.AddSingleton<IAuthorizationHandler, MultiPolicyAuthorizationHandler>();
-            // Add services to the container.
 
             builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
             
             builder.Services.AddCors(c => { c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()); });
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
             builder.Services.AddEndpointsApiExplorer();
+
             builder.Services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "Job Platform API", Version = "v1" });
@@ -166,10 +170,34 @@ namespace ProjektBackend
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
             app.UseAuthentication();
+
             app.UseAuthorization();
+
             app.MapControllers();
 
+            app.UseExceptionHandler(appError =>
+            {
+                appError.Run(async context =>
+                {
+                    context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                    context.Response.ContentType = "application/json";
+
+                    var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
+                    if (contextFeature != null)
+                    {
+                        var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
+                        logger.LogError($"Something went wrong: {contextFeature.Error}");
+
+                        await context.Response.WriteAsync(new
+                        {
+                            StatusCode = context.Response.StatusCode,
+                            Message = "Internal Server Error. Please try again later."
+                        }.ToString());
+                    }
+                });
+            });
 
 
             app.Run();

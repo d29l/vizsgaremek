@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
+#pragma warning disable CS8618
+
 namespace ProjektBackend.Models;
 
 public partial class ProjektContext : DbContext
 {
+
     public ProjektContext()
     {
     }
@@ -170,8 +173,6 @@ public partial class ProjektContext : DbContext
             entity.ToTable("posts");
 
             entity.HasIndex(e => e.EmployerId, "EmployerID");
-
-            entity.HasIndex(e => e.UserId, "UserID").IsUnique();
 
             entity.Property(e => e.PostId)
                 .HasColumnType("int(11)")
