@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+
 #pragma warning disable CS8602
 #pragma warning disable CS8603
 public class EmployeeSelfOnlyOrAdminRequirement : IAuthorizationRequirement { }

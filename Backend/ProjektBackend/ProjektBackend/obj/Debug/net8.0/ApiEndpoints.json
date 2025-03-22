@@ -218,9 +218,9 @@
   },
   {
     "ContainingType": "ProjektBackend.Controllers.EmployerController",
-    "Method": "FetchEmployer",
-    "RelativePath": "api/employers/fetchEmployer/{EmployerId}",
-    "HttpMethod": "GET",
+    "Method": "DeleteEmployer",
+    "RelativePath": "api/employers/deleteEmployer/{EmployerId}",
+    "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
     "Parameters": [
@@ -228,6 +228,43 @@
         "Name": "EmployerId",
         "Type": "System.Int32",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProjektBackend.Controllers.EmployerController",
+    "Method": "EditEmployer",
+    "RelativePath": "api/employers/editEmployer/{EmployerId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "EmployerId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "updateEmployerDto",
+        "Type": "ProjektBackend.Controllers.UpdateEmployerDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProjektBackend.Controllers.EmployerController",
+    "Method": "FetchEmployer",
+    "RelativePath": "api/employers/fetchEmployer",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "UserId",
+        "Type": "System.Int32",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [
@@ -282,6 +319,73 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProjektBackend.Controllers.PostController",
+    "Method": "DeletePost",
+    "RelativePath": "api/posts/deletePost/{PostId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "PostId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "EmployerId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "UserId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProjektBackend.Controllers.PostController",
+    "Method": "EditPost",
+    "RelativePath": "api/posts/editPost/{PostId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "PostId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "EmployerId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "UserId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "updatePostDto",
+        "Type": "ProjektBackend.Controllers.UpdatePostDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "ProjektBackend.Models.Post",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "ProjektBackend.Controllers.PostController",
@@ -384,6 +488,52 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": [
+      {
+        "Type": "ProjektBackend.Models.Profile",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "ProjektBackend.Controllers.ProfileController",
+    "Method": "FetchProfile",
+    "RelativePath": "api/profiles/fetchProfile/{ProfileId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ProfileId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "ProjektBackend.Models.Profile",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "ProjektBackend.Controllers.ProfileController",
+    "Method": "FetchProfiles",
+    "RelativePath": "api/profiles/fetchProfiles",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": [
       {
         "Type": "ProjektBackend.Models.Profile",

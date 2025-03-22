@@ -821,3 +821,8 @@ C:\Users\Tanulo\Music\vizsgaremek\backend\Backend\ProjektBackend\ProjektBackend\
 C:\Users\Tanulo\Music\vizsgaremek\backend\Backend\ProjektBackend\ProjektBackend\obj\Debug\net8.0\ProjektBackend.pdb
 C:\Users\Tanulo\Music\vizsgaremek\backend\Backend\ProjektBackend\ProjektBackend\obj\Debug\net8.0\ProjektBackend.genruntimeconfig.cache
 C:\Users\Tanulo\Music\vizsgaremek\backend\Backend\ProjektBackend\ProjektBackend\obj\Debug\net8.0\ref\ProjektBackend.dll
+C:\vizsgaremek\backend\Backend\ProjektBackend\ProjektBackend\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.Abstractions.dll
+C:\vizsgaremek\backend\Backend\ProjektBackend\ProjektBackend\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.HealthChecks.dll
+C:\vizsgaremek\backend\Backend\ProjektBackend\ProjektBackend\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions.dll
+C:\vizsgaremek\backend\Backend\ProjektBackend\ProjektBackend\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore.dll
+C:\vizsgaremek\backend\Backend\ProjektBackend\ProjektBackend\bin\Debug\net8.0\Microsoft.Extensions.Hosting.Abstractions.dll

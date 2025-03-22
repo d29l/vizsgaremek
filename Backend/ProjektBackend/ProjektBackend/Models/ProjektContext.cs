@@ -72,10 +72,10 @@ public partial class ProjektContext : DbContext
         modelBuilder.Entity<Employer>(entity =>
         {
             entity.HasKey(e => e.EmployerId).HasName("PRIMARY");
-
+            
             entity.ToTable("employers");
 
-            entity.HasIndex(e => e.UserId, "UserID");
+            entity.HasIndex(e => e.UserId, "UserID").IsUnique();
 
             entity.Property(e => e.EmployerId)
                 .HasColumnType("int(11)")

@@ -107,6 +107,10 @@ namespace ProjektBackend.Controllers
 
                 if (existingConnection != null)
                 {
+                    if (updateConnectionDto.Status != "Accepted" && updateConnectionDto.Status != "Declined")
+                    {
+                        return StatusCode(403, "You are not allowed to give custom Status'.");
+                    }
                     existingConnection.Status = updateConnectionDto.Status;
 
                     _context.Update(existingConnection);

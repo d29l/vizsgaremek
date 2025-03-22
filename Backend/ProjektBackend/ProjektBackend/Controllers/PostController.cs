@@ -59,7 +59,6 @@ namespace ProjektBackend.Controllers
                 return StatusCode(500, "An error occurred while fetching the post.");
             }
         }
-        // Faulty
         [Authorize(Policy = "EmployerSelfOrAdmin")]
         [HttpPost("newPost")]
         public async Task<ActionResult<Post>> NewPost(int EmployerId, int UserId, CreatePostDto createPostDto)
@@ -78,6 +77,10 @@ namespace ProjektBackend.Controllers
 
                 if (Post != null)
                 {
+                    if (string.IsNullOrEmpty(createPostDto.Title) || string.IsNullOrEmpty(createPostDto.Content))
+                    {
+                        return StatusCode(400, "Title and content are required.");
+                    }
                     _context.Add(Post);
                     await _context.SaveChangesAsync();
                     return StatusCode(201, "Post created successfully.");
@@ -86,11 +89,69 @@ namespace ProjektBackend.Controllers
             }
             catch (DbUpdateException dbEx)
             {
-                return StatusCode(409, "Unable to create post.");
+                return StatusCode(409, $"Unable to create post: {dbEx.InnerException?.Message}");
             }
             catch (Exception ex)
             {
                 return StatusCode(500, "An error occurred while creating the post.");
+            }
+        }
+
+        [Authorize(Policy = "EmployerSelfOrAdmin")]
+        [HttpPut("editPost/{PostId}")]
+        public async Task<ActionResult<Post>> EditPost(int PostId, int EmployerId, int UserId, UpdatePostDto updatePostDto)
+        {
+            try
+            {
+                var existingPost = await _context.Posts.FirstOrDefaultAsync(x => x.PostId == PostId && x.EmployerId == EmployerId);
+                if (existingPost != null)
+                {
+                    existingPost.Title = updatePostDto.Title ?? existingPost.Title;
+                    existingPost.Content = updatePostDto.Content ?? existingPost.Content;
+
+                    existingPost.CreatedAt = DateTime.Now;
+
+                    _context.Update(existingPost);
+                    await _context.SaveChangesAsync();
+
+                    return StatusCode(200, "Post updated.");
+                }
+                return StatusCode(404, "No Post can be found with this Id.");
+            }
+            catch (DbUpdateException dbEx)
+            {
+                return StatusCode(409, "Unable to update post.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while updating the post.");
+            }
+        }
+
+        [Authorize(Policy = "EmployerSelfOrAdmin")]
+        [HttpDelete("deletePost/{PostId}")]
+        public async Task<ActionResult> DeletePost(int PostId, int EmployerId, int UserId)
+        {
+            try
+            {
+                var deletePost = await _context.Posts
+                    .FirstOrDefaultAsync(x => x.PostId == PostId && x.EmployerId == EmployerId);
+
+                if (deletePost != null)
+                {
+                    _context.Remove(deletePost);
+                    await _context.SaveChangesAsync();
+                    return StatusCode(200, "Post successfully deleted.");
+                }
+                return StatusCode(404, "No Post can be found with this Id.");
+            }
+            catch (DbUpdateException dbEx)
+            {
+                return StatusCode(409, "Unable to delete post due to related records.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while deleting the post.");
             }
         }
 

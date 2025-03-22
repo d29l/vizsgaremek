@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -9,6 +10,7 @@ using ProjektBackend.Models;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Json.Serialization;
+using System.Threading.RateLimiting;
 
 #pragma warning disable CS8604
 
@@ -46,6 +48,29 @@ namespace ProjektBackend
                     ClockSkew = TimeSpan.Zero
                 };
             });
+
+            builder.Services.AddRateLimiter(options =>
+            {
+                options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(context =>
+                    RateLimitPartition.GetFixedWindowLimiter(
+                        partitionKey: context.Connection.RemoteIpAddress?.ToString() ?? "anonymous",
+                        factory: partition => new FixedWindowRateLimiterOptions
+                        {
+                            AutoReplenishment = true,
+                            PermitLimit = 50,
+                            QueueLimit = 0,
+                            Window = TimeSpan.FromMinutes(1)
+                        }));
+                options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+            });
+
+            builder.Services.AddResponseCompression(options =>
+            {
+                options.EnableForHttps = true;
+                options.Providers.Add<GzipCompressionProvider>();
+            });
+
+            builder.Services.AddHealthChecks().AddDbContextCheck<ProjektContext>();
 
             builder.Services.AddAuthorization(options =>
             {
@@ -164,19 +189,7 @@ namespace ProjektBackend
                     options.SwaggerEndpoint("/swagger/v1/swagger.json", "Job Platform API V1");
                 });
             }
-
-            app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-
-            app.UseHttpsRedirection();
-
-            app.UseRouting();
-
-            app.UseAuthentication();
-
-            app.UseAuthorization();
-
-            app.MapControllers();
-
+            app.UseResponseCompression();
             app.UseExceptionHandler(appError =>
             {
                 appError.Run(async context =>
@@ -198,6 +211,24 @@ namespace ProjektBackend
                     }
                 });
             });
+
+            app.MapHealthChecks("/health");
+
+            app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
+            app.UseHttpsRedirection();
+
+            app.UseRouting();
+
+            app.UseRateLimiter();
+            
+            app.UseAuthentication();
+
+            app.UseAuthorization();
+
+            app.MapControllers();
+
+            
 
 
             app.Run();

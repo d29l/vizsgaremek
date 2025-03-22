@@ -40,12 +40,12 @@ namespace ProjektBackend.Controllers
         }
 
         [Authorize(Policy = "EmployerSelfOrAdmin")]
-        [HttpGet("fetchEmployer/{EmployerId}")]
-        public async Task<ActionResult<Employer>> FetchEmployer(int EmployerId)
+        [HttpGet("fetchEmployer")]
+        public async Task<ActionResult<Employer>> FetchEmployer(int UserId)
         {
             try
             {
-                var employer = await _context.Employers.FirstOrDefaultAsync(x => x.EmployerId == EmployerId);
+                var employer = await _context.Employers.FirstOrDefaultAsync(x => x.UserId == UserId);
 
                 if (employer != null)
                 {
@@ -94,7 +94,62 @@ namespace ProjektBackend.Controllers
             }
         }
 
+        [Authorize(Policy = "EmployerSelfOrAdmin")]
+        [HttpPut("editEmployer/{EmployerId}")]
+        public async Task<ActionResult> EditEmployer(int EmployerId, UpdateEmployerDto updateEmployerDto)
+        {
+            try
+            {
+                var existingEmployer = await _context.Employers.FirstOrDefaultAsync(x => x.EmployerId == EmployerId);
 
+                if (existingEmployer != null)
+                {
+                    existingEmployer.CompanyName = updateEmployerDto.CompanyName ?? existingEmployer.CompanyName;
+                    existingEmployer.CompanyAddress = updateEmployerDto.CompanyAddress ?? existingEmployer.CompanyAddress;
+                    existingEmployer.Industry = updateEmployerDto.Industry ?? existingEmployer.Industry;
+                    existingEmployer.CompanyWebsite = updateEmployerDto.CompanyWebsite ?? existingEmployer.CompanyWebsite;
+                    existingEmployer.CompanyDescription = updateEmployerDto.CompanyDescription ?? existingEmployer.CompanyDescription;
 
+                    _context.Update(existingEmployer);
+                    await _context.SaveChangesAsync();
+                    return StatusCode(200, "Employer updated.");
+                }
+                return StatusCode(404, "No Employer can be found with this Id.");
+            }
+            catch (DbUpdateException dbEx)
+            {
+                return StatusCode(409, "Unable to update employer information.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while updating the employer.");
+            }
+        }
+
+        [Authorize(Policy = "AdminOnly")]
+        [HttpDelete("deleteEmployer/{EmployerId}")]
+        public async Task<ActionResult> DeleteEmployer(int EmployerId)
+        {
+            try
+            {
+                var employer = await _context.Employers.FirstOrDefaultAsync(x => x.EmployerId == EmployerId);
+
+                if (employer != null)
+                {
+                    _context.Remove(employer);
+                    await _context.SaveChangesAsync();
+                    return StatusCode(200, "Employer successfully deleted.");
+                }
+                return StatusCode(404, "No Employer can be found with this Id.");
+            }
+            catch (DbUpdateException dbEx)
+            {
+                return StatusCode(409, "Unable to delete employer due to related records.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while deleting the employer.");
+            }
+        }
     }
 }

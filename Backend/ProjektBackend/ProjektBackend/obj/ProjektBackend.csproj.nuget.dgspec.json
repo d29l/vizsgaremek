@@ -63,7 +63,11 @@
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[8.0.11, )"
+              "version": "[8.0.14, )"
+            },
+            "Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.14, )"
             },
             "MySql.EntityFrameworkCore": {
               "target": "Package",

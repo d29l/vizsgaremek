@@ -9,6 +9,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 
 #pragma warning disable CS8604
 #pragma warning disable CS0168
@@ -28,42 +29,7 @@ namespace ProjektBackend.Controllers
             _configuration = configuration;
         }
 
-        char[] specialCharsAndNumbers =
-        {
-            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-
-            '!', '"', '#', '$', '%', '&', '\'', '(', ')', '*', '+',
-            ',', '-', '.', '/', ':', ';', '<', '=', '>', '?', '@',
-            '[', '\\', ']', '^', '_', '`', '{', '|', '}', '~',
-
-            '¡', '¿', '¢', '£', '¤', '¥', '§', '©', '®', '°', '±', '×', '÷', 'µ', '¶', '·',
-            '•', '∞', '≈', '√', '∑', '∏', '≠', '≤', '≥', '∂', '∫', '∩', '∪',
-
-            '(', ')', '[', ']', '{', '}', '<', '>', '⌈', '⌉', '⌊', '⌋', '⟨', '⟩',
-
-            '$', '€', '£', '¥', '₣', '₤', '₹', '₱', '₿', '₲', '₴', '₽',
-
-            '⁰', '¹', '²', '³', '⁴', '⁵', '⁶', '⁷', '⁸', '⁹', '⁺', '−', '÷', '≡', '∼', '≈',
-            '≠', '≡', '∀', '∃', '⊂', '⊆', '⊇', '⊕', '⊗', '⊥', '∠', '∇',
-
-            'α', 'β', 'γ', 'δ', 'ε', 'ζ', 'η', 'θ', 'ι', 'κ', 'λ', 'μ', 'ν', 'ξ', 'ο', 'π',
-            'ρ', 'σ', 'τ', 'υ', 'φ', 'χ', 'ψ', 'ω', 'Α', 'Β', 'Γ', 'Δ', 'Ε', 'Ζ', 'Η', 'Θ',
-            'Ι', 'Κ', 'Λ', 'Μ', 'Ν', 'Ξ', 'Ο', 'Π', 'Ρ', 'Σ', 'Τ', 'Υ', 'Φ', 'Χ', 'Ψ', 'Ω',
-
-            '∫', '∑', '∏', '∞', '⊂', '⊆', '⊇', '⊕', '⊗', '≠', '≡', '≅', '∼', '≈',
-
-            '♥', '♦', '♣', '♠', '♪', '♫', '☀', '☂', '☃', '☠', '✈', '✉', '☃', '⚡', '☻',
-
-            '←', '↑', '→', '↓', '↔', '↕', '↗', '↖', '⇐', '⇑', '⇒', '⇓', '⇔',
-
-            '∀', '∃', '∧', '∨', '∩', '∪', '∈', '∉', '⊂', '⊄', '⊆', '⊇', '⊕', '⊗', '⊥',
-            '≠', '≡', '≤', '≥',
-
-            ' ', '\t', '\n', '\r', '\b', '\f', '\v', '\a',
-
-            '─', '┄', '┅', '┈', '┉', '━', '┛', '┓', '┃', '┏', '┛', '┣', '┫', '┳', '┻', '┳',
-            '┃', '╳', '■', '□', '▣', '▢', '▯', '●', '○'
-        };
+        string letterOnlyPattern = @"^[a-zA-Z]+$";
 
         [Authorize(Policy = "AdminOnly")]
         [HttpGet("fetchUsers")]
@@ -138,16 +104,14 @@ namespace ProjektBackend.Controllers
                 {
                     return StatusCode(418, "Invalid Email address.");
                 }
-                foreach (var item in specialCharsAndNumbers)
+                if (!Regex.IsMatch(registerUserDto.FirstName, letterOnlyPattern))
                 {
-                    if (newUser.FirstName.Contains(item))
-                    {
-                        return StatusCode(418, "Invalid First Name.");
-                    }
-                    if (newUser.LastName.Contains(item))
-                    {
-                        return StatusCode(418, "Invalid Last Name.");
-                    }
+                    return StatusCode(418, "Invalid First Name. Only letters are allowed.");
+                }
+
+                if (!Regex.IsMatch(registerUserDto.LastName, letterOnlyPattern))
+                {
+                    return StatusCode(418, "Invalid Last Name. Only letters are allowed.");
                 }
 
                 if (newUser != null)
@@ -295,9 +259,15 @@ namespace ProjektBackend.Controllers
 
                 if (existingUser != null)
                 {
+                    if (Role != "Employee" && Role != "Employer" && Role != "Admin")
+                    {
+                        return StatusCode(403, "You are not allowed to give custom Roles");
+                    }
                     existingUser.Role = Role;
+
                     _context.Update(existingUser);
                     await _context.SaveChangesAsync();
+
                     return StatusCode(200, "User Role updated.");
                 }
                 return StatusCode(404, "No User can be found with this Id.");
@@ -329,16 +299,14 @@ namespace ProjektBackend.Controllers
                     {
                         return StatusCode(418, "Invalid Email address.");
                     }
-                    foreach (var item in specialCharsAndNumbers)
+                    if (!Regex.IsMatch(updateUserDto.FirstName, letterOnlyPattern))
                     {
-                        if (updateUserDto.FirstName.Contains(item))
-                        {
-                            return StatusCode(418, "Invalid First Name.");
-                        }
-                        if (updateUserDto.LastName.Contains(item))
-                        {
-                            return StatusCode(418, "Invalid Last Name.");
-                        }
+                        return StatusCode(418, "Invalid First Name. Only letters are allowed.");
+                    }
+
+                    if (!Regex.IsMatch(updateUserDto.LastName, letterOnlyPattern))
+                    {
+                        return StatusCode(418, "Invalid Last Name. Only letters are allowed.");
                     }
 
                     _context.Update(existingUser);

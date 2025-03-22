@@ -22,6 +22,48 @@ namespace ProjektBackend.Controllers
             _context = context;
         }
 
+        [Authorize(Policy = "AdminOnly")]
+        [HttpGet("fetchProfiles")]
+
+        public async Task<ActionResult<Profile>> FetchProfiles()
+        {
+            try
+            {
+                var profiles = await _context.Profiles.ToListAsync();
+
+                if (profiles != null && profiles.Any())
+                {
+                    return StatusCode(200, profiles);
+                }
+                return StatusCode(404, "There are currently no Profiles.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while fetching profiles.");
+            }
+        }
+
+        [Authorize]
+        [HttpGet("fetchProfile/{ProfileId}")]
+
+        public async Task<ActionResult<Profile>> FetchProfile(int ProfileId)
+        {
+            try
+            {
+                var profile = await _context.Profiles.FirstOrDefaultAsync(x => x.ProfileId == ProfileId);
+
+                if (profile != null)
+                {
+                    return StatusCode(200, profile);
+                }
+                return StatusCode(404, "No Profile can be found with this Id.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while fetching the profile.");
+            }
+        }
+
         [HttpPost]
         public async Task<ActionResult<Profile>> PostProfile(int UserId, CreateProfileDto createProfileDto)
         {
