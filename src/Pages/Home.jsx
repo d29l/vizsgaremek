@@ -9,8 +9,7 @@ export default function Home() {
 
   async function getPosts() {
     const data = await fetchPosts();
-    console.log(data);
-    setDatabase(data);
+    setDatabase(data.data);
   }
 
   useEffect(() => { }, [database]);
