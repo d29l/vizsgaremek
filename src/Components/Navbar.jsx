@@ -22,29 +22,36 @@ export default function Navbar() {
     navigate("/login");
   };
 
+  const handleSettingsClick = () => {
+    navigate("/settings")
+  }
+
   const handleProfileClick = () => {
     setProfileClicked(!profileClicked);
   };
 
   const handleProfileLink = () => {
     const userId = getUserId();
-    navigate(`/profiles/${userId}`)
+    navigate(`/profiles/${userId}`);
   };
 
   const handleCreatePostClick = () => {
     navigate("/create-post");
-  }
+  };
 
   const handleHome = () => {
     navigate("/");
-  }
+  };
 
   return (
     <nav className="h-[8vh] bg-base pb-1">
       <div className="flex h-full items-center justify-between shadow-md shadow-crust">
         <div className="flex items-center space-x-6 pl-4">
           <div className="flex flex-col">
-            <h1 className="text-2xl font-extrabold text-lavender cursor-pointer" onClick={handleHome}>
+            <h1
+              className="cursor-pointer text-2xl font-extrabold text-lavender"
+              onClick={handleHome}
+            >
               Job platform
             </h1>
           </div>
@@ -52,11 +59,14 @@ export default function Navbar() {
           <div className="flex space-x-4"></div>
         </div>
 
-
-
         <div className="relative flex flex-row items-center">
           {isEmployer && (
-          <h2 class="mr-4 text-subtext1 cursor-pointer hover:text-lavender hover:underline" onClick={handleCreatePostClick}>New Post </h2>
+            <h2
+              class="mr-4 cursor-pointer text-subtext1 hover:text-lavender hover:underline"
+              onClick={handleCreatePostClick}
+            >
+              New Post{" "}
+            </h2>
           )}
 
           <div
@@ -72,6 +82,12 @@ export default function Navbar() {
                   className="cursor-pointer text-text hover:text-lavender"
                 >
                   Profile
+                </div>
+                <div
+                  onClick={handleSettingsClick}
+                  className="cursor-pointer text-text hover:text-lavender"
+                >
+                  Settings
                 </div>
                 <div
                   onClick={handleLogout}

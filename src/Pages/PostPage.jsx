@@ -10,7 +10,12 @@ export default function PostPage() {
   useEffect(() => {
     const fetchPost = async () => {
       const response = await axios.get(
-        `https://localhost:7077/api/posts/fetchPost/${postId}`
+        `https://localhost:7077/api/posts/fetchPost/${postId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        },
       );
       const data = await response;
       setPost(data);
@@ -22,29 +27,30 @@ export default function PostPage() {
 
   return (
     <div>
-      <Navbar/>
-      <div class="bg-base shadow-lg rounded-lg p-8 m-5 flex flex-col min-h-[87.5vh]">
-        <h1 class="text-2xl font-bold text-lavender mb-4">{post?.title}</h1>
+      <Navbar />
+      <div class="m-5 flex min-h-[87.5vh] flex-col rounded-lg bg-base p-8 shadow-lg">
+        <h1 class="mb-4 text-2xl font-bold text-lavender">{post?.title}</h1>
 
-        <div class="text-subtext0 mb-4">
+        <div class="mb-4 text-subtext0">
           <span class="font-semibold">Company Name:</span> Company Name
         </div>
 
-        <div class="text-subtext0 mb-4">
-          <span class="font-semibold">Company Address:</span> Company Address Line
+        <div class="mb-4 text-subtext0">
+          <span class="font-semibold">Company Address:</span> Company Address
+          Line
         </div>
 
-        <div class="text-subtext0 mb-4">
+        <div class="mb-4 text-subtext0">
           <span class="font-semibold">Job Description:</span>
-          <p class="text-wrap max-w-4xl">{post?.content}</p>
+          <p class="max-w-4xl text-wrap">{post?.content}</p>
         </div>
 
-        <div class="text-subtext0 mb-4">
+        <div class="mb-4 text-subtext0">
           <span class="font-semibold">Posted On:</span> {post?.createdAt}
         </div>
 
         <div class="flex items-center space-x-2">
-          <button class="px-2 py-1 bg-crust text-lavender rounded-md hover:bg-mantle">
+          <button class="rounded-md bg-crust px-2 py-1 text-lavender hover:bg-mantle">
             Like
           </button>
           <span class="text-gray-600">{post?.likes}</span>
