@@ -1,4 +1,6 @@
-﻿namespace ProjektBackend.Controllers
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ProjektBackend.Controllers
 {
     // Post
     public record CreatePostDto
@@ -102,4 +104,11 @@
         (
         string Status
         );
+
+    public record ChangePasswordDto
+    (
+        string CurrentPassword,
+        string NewPassword,
+        string ConfirmNewPassword
+    );
 }

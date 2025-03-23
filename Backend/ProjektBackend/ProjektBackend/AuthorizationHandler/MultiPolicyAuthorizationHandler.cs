@@ -44,12 +44,31 @@ public class MultiPolicyAuthorizationHandler : IAuthorizationHandler
 
     private void HandleEmployeeRequirement(AuthorizationHandlerContext context, IAuthorizationRequirement requirement)
     {
-        if (context.User.IsInRole("Admin") ||
-            (context.User.IsInRole("Employee") &&
-             context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value == GetResourceId(context, "UserID")))
+        if (!context.User.Identity.IsAuthenticated)
+        {
+            context.Fail();
+            return;
+        }
+
+        if (context.User.IsInRole("Admin"))
         {
             context.Succeed(requirement);
+            return;
         }
+
+        if (context.User.IsInRole("Employee"))
+        {
+            var routeUserId = GetRouteUserId(context);
+            var currentUserId = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(routeUserId) || routeUserId == currentUserId)
+            {
+                context.Succeed(requirement);
+                return;
+            }
+        }
+
+        context.Fail();
     }
 
     private void HandleEmployerSelfRequirement(AuthorizationHandlerContext context, IAuthorizationRequirement requirement)
@@ -60,28 +79,35 @@ public class MultiPolicyAuthorizationHandler : IAuthorizationHandler
             return;
         }
 
-        var resourceUserId = GetResourceId(context, "UserId");
-        var currentUserId = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (context.User.IsInRole("Admin"))
+        {
+            context.Succeed(requirement);
+            return;
+        }
 
-        if (string.IsNullOrEmpty(currentUserId) || string.IsNullOrEmpty(resourceUserId))
+        if (context.User.IsInRole("Employer"))
+        {
+            var routeUserId = GetRouteUserId(context);
+            var currentUserId = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(routeUserId) || routeUserId == currentUserId)
+            {
+                context.Succeed(requirement);
+                return;
+            }
+        }
+
+        context.Fail();
+    }
+
+    private void HandleEmployerRequirement(AuthorizationHandlerContext context, IAuthorizationRequirement requirement)
+    {
+        if (!context.User.Identity.IsAuthenticated)
         {
             context.Fail();
             return;
         }
 
-        if (context.User.IsInRole("Admin") ||
-            (context.User.IsInRole("Employer") && currentUserId == resourceUserId))
-        {
-            context.Succeed(requirement);
-        }
-        else
-        {
-            context.Fail();
-        }
-    }
-
-    private void HandleEmployerRequirement(AuthorizationHandlerContext context, IAuthorizationRequirement requirement)
-    {
         if (context.User.IsInRole("Admin") || context.User.IsInRole("Employer"))
         {
             context.Succeed(requirement);
@@ -100,36 +126,59 @@ public class MultiPolicyAuthorizationHandler : IAuthorizationHandler
             return;
         }
 
-        var resourceUserId = GetResourceId(context, "UserId");
+        if (context.User.IsInRole("Admin"))
+        {
+            context.Succeed(requirement);
+            return;
+        }
+
+        var routeUserId = GetRouteUserId(context);
         var currentUserId = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-        if (string.IsNullOrEmpty(resourceUserId) || string.IsNullOrEmpty(currentUserId))
+        if (string.IsNullOrEmpty(currentUserId))
         {
             context.Fail();
             return;
         }
 
-        if (int.TryParse(resourceUserId, out int resourceId) &&
-            int.TryParse(currentUserId, out int userId))
+        if (string.IsNullOrEmpty(routeUserId) || routeUserId == currentUserId)
         {
-            if (context.User.IsInRole("Admin") || userId == resourceId)
-            {
-                context.Succeed(requirement);
-                return;
-            }
+            context.Succeed(requirement);
+            return;
         }
 
         context.Fail();
     }
 
-    private string GetResourceId(AuthorizationHandlerContext context, string paramName)
+    private string GetRouteUserId(AuthorizationHandlerContext context)
     {
         if (context.Resource is HttpContext httpContext)
         {
-            var value = httpContext.GetRouteValue(paramName)?.ToString();
+            var routeValue = httpContext.GetRouteValue("userId")?.ToString();
+            if (!string.IsNullOrEmpty(routeValue))
+            {
+                return routeValue;
+            }
 
-            return value ?? httpContext.Request.Query[paramName].ToString();
+            routeValue = httpContext.GetRouteValue("UserID")?.ToString();
+            if (!string.IsNullOrEmpty(routeValue))
+            {
+                return routeValue;
+            }
+
+            var queryValue = httpContext.Request.Query["userId"].ToString();
+            if (!string.IsNullOrEmpty(queryValue))
+            {
+                return queryValue;
+            }
+
+            queryValue = httpContext.Request.Query["UserID"].ToString();
+            if (!string.IsNullOrEmpty(queryValue))
+            {
+                return queryValue;
+            }
         }
+
         return null;
     }
 }

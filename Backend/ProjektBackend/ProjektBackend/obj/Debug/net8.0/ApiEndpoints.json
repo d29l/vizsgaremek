@@ -8,11 +8,6 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "UserId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
         "Name": "ReceiverId",
         "Type": "System.Int32",
         "IsRequired": true
@@ -21,6 +16,11 @@
         "Name": "RequesterId",
         "Type": "System.Int32",
         "IsRequired": true
+      },
+      {
+        "Name": "userId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -33,11 +33,6 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [
-      {
-        "Name": "UserId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
       {
         "Name": "ReceiverId",
         "Type": "System.Int32",
@@ -52,9 +47,45 @@
         "Name": "updateConnectionDto",
         "Type": "ProjektBackend.Controllers.UpdateConnectionDto",
         "IsRequired": true
+      },
+      {
+        "Name": "userId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProjektBackend.Controllers.ConnectionController",
+    "Method": "FetchConnections",
+    "RelativePath": "api/connections/fetchConnection",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ReceiverId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "userId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[ProjektBackend.Models.Connection, ProjektBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "ProjektBackend.Controllers.ConnectionController",
@@ -78,37 +109,6 @@
   },
   {
     "ContainingType": "ProjektBackend.Controllers.ConnectionController",
-    "Method": "FetchConnections",
-    "RelativePath": "api/connections/fetchConnections/{ReceiverId}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "ReceiverId",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "UserId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[ProjektBackend.Models.Connection, ProjektBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "ProjektBackend.Controllers.ConnectionController",
     "Method": "PostNewConnection",
     "RelativePath": "api/connections/postNewConnection",
     "HttpMethod": "POST",
@@ -116,19 +116,14 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "UserId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "RequesterId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
         "Name": "createConnectionDto",
         "Type": "ProjektBackend.Controllers.CreateConnectionDto",
         "IsRequired": true
+      },
+      {
+        "Name": "userId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -136,15 +131,15 @@
   {
     "ContainingType": "ProjektBackend.Controllers.EmployerRequestController",
     "Method": "DeleteRequest",
-    "RelativePath": "api/employerrequests/deleteRequest/{ApplicantId}",
+    "RelativePath": "api/employerrequests/deleteRequest",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "ApplicantId",
-        "Type": "System.Int32",
-        "IsRequired": true
+        "Name": "applicantId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -152,15 +147,15 @@
   {
     "ContainingType": "ProjektBackend.Controllers.EmployerRequestController",
     "Method": "FetchRequest",
-    "RelativePath": "api/employerrequests/fetchRequest/{ApplicantId}",
+    "RelativePath": "api/employerrequests/fetchRequest",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "ApplicantId",
-        "Type": "System.Int32",
-        "IsRequired": true
+        "Name": "applicantId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [
@@ -204,14 +199,14 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "UserId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
         "Name": "createRequestDto",
         "Type": "ProjektBackend.Controllers.CreateRequestDto",
         "IsRequired": true
+      },
+      {
+        "Name": "userId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -219,15 +214,15 @@
   {
     "ContainingType": "ProjektBackend.Controllers.EmployerController",
     "Method": "DeleteEmployer",
-    "RelativePath": "api/employers/deleteEmployer/{EmployerId}",
+    "RelativePath": "api/employers/deleteEmployer",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "EmployerId",
-        "Type": "System.Int32",
-        "IsRequired": true
+        "Name": "userId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -235,20 +230,20 @@
   {
     "ContainingType": "ProjektBackend.Controllers.EmployerController",
     "Method": "EditEmployer",
-    "RelativePath": "api/employers/editEmployer/{EmployerId}",
+    "RelativePath": "api/employers/editEmployer",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "EmployerId",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
         "Name": "updateEmployerDto",
         "Type": "ProjektBackend.Controllers.UpdateEmployerDto",
         "IsRequired": true
+      },
+      {
+        "Name": "userId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -262,8 +257,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "UserId",
-        "Type": "System.Int32",
+        "Name": "userId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
       }
     ],
@@ -308,14 +303,14 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "UserId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
         "Name": "createEmployerDto",
         "Type": "ProjektBackend.Controllers.CreateEmployerDto",
         "IsRequired": true
+      },
+      {
+        "Name": "userId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -323,7 +318,7 @@
   {
     "ContainingType": "ProjektBackend.Controllers.PostController",
     "Method": "DeletePost",
-    "RelativePath": "api/posts/deletePost/{PostId}",
+    "RelativePath": "api/posts/deletePost",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -331,7 +326,7 @@
       {
         "Name": "PostId",
         "Type": "System.Int32",
-        "IsRequired": true
+        "IsRequired": false
       },
       {
         "Name": "EmployerId",
@@ -339,8 +334,8 @@
         "IsRequired": false
       },
       {
-        "Name": "UserId",
-        "Type": "System.Int32",
+        "Name": "userId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
       }
     ],
@@ -349,7 +344,7 @@
   {
     "ContainingType": "ProjektBackend.Controllers.PostController",
     "Method": "EditPost",
-    "RelativePath": "api/posts/editPost/{PostId}",
+    "RelativePath": "api/posts/editPost",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -357,7 +352,7 @@
       {
         "Name": "PostId",
         "Type": "System.Int32",
-        "IsRequired": true
+        "IsRequired": false
       },
       {
         "Name": "EmployerId",
@@ -365,14 +360,14 @@
         "IsRequired": false
       },
       {
-        "Name": "UserId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
         "Name": "updatePostDto",
         "Type": "ProjektBackend.Controllers.UpdatePostDto",
         "IsRequired": true
+      },
+      {
+        "Name": "userId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [
@@ -442,19 +437,19 @@
     "Order": 0,
     "Parameters": [
       {
+        "Name": "createPostDto",
+        "Type": "ProjektBackend.Controllers.CreatePostDto",
+        "IsRequired": true
+      },
+      {
         "Name": "EmployerId",
         "Type": "System.Int32",
         "IsRequired": false
       },
       {
-        "Name": "UserId",
-        "Type": "System.Int32",
+        "Name": "userId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
-      },
-      {
-        "Name": "createPostDto",
-        "Type": "ProjektBackend.Controllers.CreatePostDto",
-        "IsRequired": true
       }
     ],
     "ReturnTypes": [
@@ -471,21 +466,21 @@
   },
   {
     "ContainingType": "ProjektBackend.Controllers.ProfileController",
-    "Method": "PostProfile",
-    "RelativePath": "api/profiles",
+    "Method": "CreateProfile",
+    "RelativePath": "api/profiles/createProfile",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "UserId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
         "Name": "createProfileDto",
         "Type": "ProjektBackend.Controllers.CreateProfileDto",
         "IsRequired": true
+      },
+      {
+        "Name": "userId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [
@@ -503,15 +498,15 @@
   {
     "ContainingType": "ProjektBackend.Controllers.ProfileController",
     "Method": "FetchProfile",
-    "RelativePath": "api/profiles/fetchProfile/{ProfileId}",
+    "RelativePath": "api/profiles/fetchProfile",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "ProfileId",
-        "Type": "System.Int32",
-        "IsRequired": true
+        "Name": "userId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [
@@ -549,25 +544,20 @@
   {
     "ContainingType": "ProjektBackend.Controllers.ProfileController",
     "Method": "UpdateProfile",
-    "RelativePath": "api/profiles/updateProfile/{ProfileId}",
+    "RelativePath": "api/profiles/updateProfile",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "ProfileId",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "UserId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
         "Name": "updateProfileDto",
         "Type": "ProjektBackend.Controllers.UpdateProfileDto",
         "IsRequired": true
+      },
+      {
+        "Name": "userId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [
@@ -584,16 +574,37 @@
   },
   {
     "ContainingType": "ProjektBackend.Controllers.UserController",
+    "Method": "ChangePassword",
+    "RelativePath": "api/users/changePassword",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "changePasswordDto",
+        "Type": "ProjektBackend.Controllers.ChangePasswordDto",
+        "IsRequired": true
+      },
+      {
+        "Name": "userId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProjektBackend.Controllers.UserController",
     "Method": "DeleteUser",
-    "RelativePath": "api/users/deleteUser/{UserId}",
+    "RelativePath": "api/users/deleteUser",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "UserId",
-        "Type": "System.Int32",
-        "IsRequired": true
+        "Name": "userId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -601,15 +612,15 @@
   {
     "ContainingType": "ProjektBackend.Controllers.UserController",
     "Method": "FetchUser",
-    "RelativePath": "api/users/fetchUser/{UserId}",
+    "RelativePath": "api/users/fetchUser",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "UserId",
-        "Type": "System.Int32",
-        "IsRequired": true
+        "Name": "userId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [
@@ -725,20 +736,20 @@
   {
     "ContainingType": "ProjektBackend.Controllers.UserController",
     "Method": "UpdateUser",
-    "RelativePath": "api/users/updateUser/{UserId}",
+    "RelativePath": "api/users/updateUser",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "UserId",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
         "Name": "updateUserDto",
         "Type": "ProjektBackend.Controllers.UpdateUserDto",
         "IsRequired": true
+      },
+      {
+        "Name": "userId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -746,13 +757,13 @@
   {
     "ContainingType": "ProjektBackend.Controllers.UserController",
     "Method": "UpdateUserRole",
-    "RelativePath": "api/users/updateUserRole/{UserId}",
+    "RelativePath": "api/users/updateUserRole/{userId}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "UserId",
+        "Name": "userId",
         "Type": "System.Int32",
         "IsRequired": true
       },

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using ProjektBackend.Models;
+using ProjektBackend.PasswordHandler;
 using System.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -12,6 +13,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 
 #pragma warning disable CS8604
+#pragma warning disable CS8602
 #pragma warning disable CS0168
 
 namespace ProjektBackend.Controllers
@@ -51,14 +53,30 @@ namespace ProjektBackend.Controllers
         }
 
         [Authorize(Policy = "SelfOrAdmin")]
-        [HttpGet("fetchUser/{UserId}")]
-        public async Task<ActionResult<User>> FetchUser(int UserId)
+        [HttpGet("fetchUser")]
+        public async Task<ActionResult<User>> FetchUser(int? userId = null)
         {
             try
             {
+                int targetUserId;
+                bool isAdmin = User.IsInRole("Admin");
+
+                if (userId.HasValue && isAdmin)
+                {
+                    targetUserId = userId.Value;
+                }
+                else
+                {
+                    var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+                    if (userIdClaim == null)
+                        return StatusCode(401, "User ID not found in token.");
+
+                    targetUserId = int.Parse(userIdClaim.Value);
+                }
+
                 var user = await _context.Users
-                .Include(p => p.Employers)
-                .FirstOrDefaultAsync(p => p.UserId == UserId);
+                    .Include(p => p.Employers)
+                    .FirstOrDefaultAsync(p => p.UserId == targetUserId);
 
                 if (user != null)
                 {
@@ -100,22 +118,28 @@ namespace ProjektBackend.Controllers
                     RefreshToken = string.Empty
                 };
 
-                if (!newUser.Email.Contains("@"))
-                {
-                    return StatusCode(418, "Invalid Email address.");
-                }
-                if (!Regex.IsMatch(registerUserDto.FirstName, letterOnlyPattern))
-                {
-                    return StatusCode(418, "Invalid First Name. Only letters are allowed.");
-                }
-
-                if (!Regex.IsMatch(registerUserDto.LastName, letterOnlyPattern))
-                {
-                    return StatusCode(418, "Invalid Last Name. Only letters are allowed.");
-                }
-
                 if (newUser != null)
                 {
+                    if (!newUser.Email.Contains("@"))
+                    {
+                        return StatusCode(418, "Invalid Email address.");
+                    }
+                    if (!Regex.IsMatch(registerUserDto.FirstName, letterOnlyPattern))
+                    {
+                        return StatusCode(418, "Invalid First Name. Only letters are allowed.");
+                    }
+
+                    if (!Regex.IsMatch(registerUserDto.LastName, letterOnlyPattern))
+                    {
+                        return StatusCode(418, "Invalid Last Name. Only letters are allowed.");
+                    }
+
+                    if (!PasswordPolicy.IsValid(registerUserDto.Password))
+                    {
+                        return StatusCode(400, "Password does not meet security requirements.");
+                    }
+
+
                     _context.Add(newUser);
                     await _context.SaveChangesAsync();
                     return StatusCode(201, "User created successfully.");
@@ -230,6 +254,7 @@ namespace ProjektBackend.Controllers
                 {
                     new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
                     new Claim(ClaimTypes.Role, user.Role),
+                    new Claim("status", user.IsActive.ToString()),
                     new Claim(ClaimTypes.Email, user.Email)
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(Convert.ToDouble(_configuration["Jwt:ExpiryInMinutes"])),
@@ -250,12 +275,12 @@ namespace ProjektBackend.Controllers
         }
 
         [Authorize(Policy = "AdminOnly")]
-        [HttpPut("updateUserRole/{UserId}")]
-        public async Task<ActionResult> UpdateUserRole(int UserId, string Role)
+        [HttpPut("updateUserRole/{userId}")]
+        public async Task<ActionResult> UpdateUserRole(int userId, string Role)
         {
             try
             {
-                var existingUser = await _context.Users.FirstOrDefaultAsync(x => x.UserId == UserId);
+                var existingUser = await _context.Users.FirstOrDefaultAsync(x => x.UserId == userId);
 
                 if (existingUser != null)
                 {
@@ -283,12 +308,28 @@ namespace ProjektBackend.Controllers
         }
 
         [Authorize(Policy = "SelfOrAdmin")]
-        [HttpPut("updateUser/{UserId}")]
-        public async Task<ActionResult> UpdateUser(int UserId, UpdateUserDto updateUserDto)
+        [HttpPut("updateUser")]
+        public async Task<ActionResult> UpdateUser(UpdateUserDto updateUserDto, int? userId = null)
         {
             try
             {
-                var existingUser = await _context.Users.FirstOrDefaultAsync(x => x.UserId == UserId);
+                int targetUserId;
+                bool isAdmin = User.IsInRole("Admin");
+
+                if (userId.HasValue && isAdmin)
+                {
+                    targetUserId = userId.Value;
+                }
+                else
+                {
+                    var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+                    if (userIdClaim == null)
+                        return StatusCode(401, "User ID not found in token.");
+
+                    targetUserId = int.Parse(userIdClaim.Value);
+                }
+
+                var existingUser = await _context.Users.FirstOrDefaultAsync(x => x.UserId == targetUserId);
 
                 if (existingUser != null)
                 {
@@ -325,13 +366,119 @@ namespace ProjektBackend.Controllers
             }
         }
 
-        [Authorize(Policy = "SelfOrAdmin")]
-        [HttpDelete("deleteUser/{UserId}")]
-        public async Task<ActionResult> DeleteUser(int UserId)
+        [Authorize("SelfOrAdmin")]
+        [HttpPut("changePassword")]
+        public async Task<ActionResult> ChangePassword(ChangePasswordDto changePasswordDto, int? userId = null)
         {
             try
             {
-                var user = await _context.Users.FirstOrDefaultAsync(x => x.UserId == UserId);
+                int targetUserId;
+                bool isAdmin = User.IsInRole("Admin");
+
+                if (userId.HasValue && isAdmin)
+                {
+                    targetUserId = userId.Value;
+                }
+                else
+                {
+                    var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+                    if (userIdClaim == null)
+                        return StatusCode(401, "User ID not found in token.");
+
+                    targetUserId = int.Parse(userIdClaim.Value);
+                }
+
+                var user = await _context.Users.FirstOrDefaultAsync(u => u.UserId == targetUserId);
+
+                if (user == null)
+                {
+                    return StatusCode(404, "User not found.");
+                }
+
+                bool skipCurrentPasswordCheck = userId.HasValue && isAdmin && targetUserId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+                if (!skipCurrentPasswordCheck)
+                {
+                    byte[] hashBytes = Convert.FromBase64String(user.Password);
+
+                    byte[] salt = new byte[16];
+                    Array.Copy(hashBytes, 0, salt, 0, 16);
+
+                    var pbkdf2 = new Rfc2898DeriveBytes(changePasswordDto.CurrentPassword, salt, 100000, HashAlgorithmName.SHA256);
+                    byte[] currentHash = pbkdf2.GetBytes(32);
+
+                    bool isCurrentPasswordValid = true;
+                    for (int i = 0; i < 32; i++)
+                    {
+                        if (hashBytes[i + 16] != currentHash[i])
+                        {
+                            isCurrentPasswordValid = false;
+                            break;
+                        }
+                    }
+
+                    if (!isCurrentPasswordValid)
+                    {
+                        return StatusCode(401, "Current password is incorrect.");
+                    }
+                }
+
+                if (!PasswordPolicy.IsValid(changePasswordDto.NewPassword))
+                {
+                    return StatusCode(400, "New password does not meet security requirements.");
+                }
+
+                byte[] newSalt = new byte[16];
+                using (var rng = RandomNumberGenerator.Create())
+                {
+                    rng.GetBytes(newSalt);
+                }
+
+                var newPbkdf2 = new Rfc2898DeriveBytes(changePasswordDto.NewPassword, newSalt, 100000, HashAlgorithmName.SHA256);
+                byte[] newHash = newPbkdf2.GetBytes(32);
+
+                byte[] newHashBytes = new byte[48];
+                Array.Copy(newSalt, 0, newHashBytes, 0, 16);
+                Array.Copy(newHash, 0, newHashBytes, 16, 32);
+
+                user.Password = Convert.ToBase64String(newHashBytes);
+
+                _context.Update(user);
+                await _context.SaveChangesAsync();
+
+                return StatusCode(200, "Password changed successfully.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while changing the password.");
+            }
+        }
+
+        [Authorize(Policy = "SelfOrAdmin")]
+        [HttpDelete("deleteUser")]
+        public async Task<ActionResult> DeleteUser(int? userId = null)
+        {
+            try
+            {
+                int targetUserId;
+                bool isAdmin = User.IsInRole("Admin");
+
+                if (userId.HasValue && isAdmin)
+                {
+                    targetUserId = userId.Value;
+                }
+                else
+                {
+                    var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+                    if (userIdClaim == null)
+                    {
+                        return StatusCode(401, "User ID not found in token.");
+                    }
+
+                    targetUserId = int.Parse(userIdClaim.Value);
+                }
+
+                var user = await _context.Users.FirstOrDefaultAsync(x => x.UserId == targetUserId);
 
                 if (user != null)
                 {

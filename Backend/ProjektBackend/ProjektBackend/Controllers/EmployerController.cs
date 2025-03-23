@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjektBackend.Models;
+using System.Security.Claims;
 
 #pragma warning disable CS0168
 
@@ -41,11 +42,27 @@ namespace ProjektBackend.Controllers
 
         [Authorize(Policy = "EmployerSelfOrAdmin")]
         [HttpGet("fetchEmployer")]
-        public async Task<ActionResult<Employer>> FetchEmployer(int UserId)
+        public async Task<ActionResult<Employer>> FetchEmployer(int? userId = null)
         {
             try
             {
-                var employer = await _context.Employers.FirstOrDefaultAsync(x => x.UserId == UserId);
+                int targetUserId;
+                bool isAdmin = User.IsInRole("Admin");
+
+                if (userId.HasValue && isAdmin)
+                {
+                    targetUserId = userId.Value;
+                }
+                else
+                {
+                    var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+                    if (userIdClaim == null)
+                        return StatusCode(401, "User ID not found in token.");
+
+                    targetUserId = int.Parse(userIdClaim.Value);
+                }
+
+                var employer = await _context.Employers.FirstOrDefaultAsync(x => x.UserId == targetUserId);
 
                 if (employer != null)
                 {
@@ -61,13 +78,29 @@ namespace ProjektBackend.Controllers
 
         [Authorize(Policy = "AdminOnly")]
         [HttpPost("postEmployer")]
-        public async Task<ActionResult> PostEmployer(int UserId, CreateEmployerDto createEmployerDto)
+        public async Task<ActionResult> PostEmployer(CreateEmployerDto createEmployerDto, int? userId = null)
         {
             try
             {
+                int targetUserId;
+                bool isAdmin = User.IsInRole("Admin");
+
+                if (userId.HasValue && isAdmin)
+                {
+                    targetUserId = userId.Value;
+                }
+                else
+                {
+                    var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+                    if (userIdClaim == null)
+                        return StatusCode(401, "User ID not found in token.");
+
+                    targetUserId = int.Parse(userIdClaim.Value);
+                }
+
                 var newEmployer = new Employer
                 {
-                    UserId = UserId,
+                    UserId = targetUserId,
                     CompanyName = createEmployerDto.CompanyName,
                     CompanyAddress = createEmployerDto.CompanyAddress,
                     Industry = createEmployerDto.Industry,
@@ -95,12 +128,28 @@ namespace ProjektBackend.Controllers
         }
 
         [Authorize(Policy = "EmployerSelfOrAdmin")]
-        [HttpPut("editEmployer/{EmployerId}")]
-        public async Task<ActionResult> EditEmployer(int EmployerId, UpdateEmployerDto updateEmployerDto)
+        [HttpPut("editEmployer")]
+        public async Task<ActionResult> EditEmployer(UpdateEmployerDto updateEmployerDto, int? userId = null)
         {
             try
             {
-                var existingEmployer = await _context.Employers.FirstOrDefaultAsync(x => x.EmployerId == EmployerId);
+                int targetUserId;
+                bool isAdmin = User.IsInRole("Admin");
+
+                if (userId.HasValue && isAdmin)
+                {
+                    targetUserId = userId.Value;
+                }
+                else
+                {
+                    var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+                    if (userIdClaim == null)
+                        return StatusCode(401, "User ID not found in token.");
+
+                    targetUserId = int.Parse(userIdClaim.Value);
+                }
+
+                var existingEmployer = await _context.Employers.FirstOrDefaultAsync(x => x.UserId == targetUserId);
 
                 if (existingEmployer != null)
                 {
@@ -127,12 +176,28 @@ namespace ProjektBackend.Controllers
         }
 
         [Authorize(Policy = "AdminOnly")]
-        [HttpDelete("deleteEmployer/{EmployerId}")]
-        public async Task<ActionResult> DeleteEmployer(int EmployerId)
+        [HttpDelete("deleteEmployer")]
+        public async Task<ActionResult> DeleteEmployer(int? userId = null)
         {
             try
             {
-                var employer = await _context.Employers.FirstOrDefaultAsync(x => x.EmployerId == EmployerId);
+                int targetUserId;
+                bool isAdmin = User.IsInRole("Admin");
+
+                if (userId.HasValue && isAdmin)
+                {
+                    targetUserId = userId.Value;
+                }
+                else
+                {
+                    var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+                    if (userIdClaim == null)
+                        return StatusCode(401, "User ID not found in token.");
+
+                    targetUserId = int.Parse(userIdClaim.Value);
+                }
+
+                var employer = await _context.Employers.FirstOrDefaultAsync(x => x.UserId == targetUserId);
 
                 if (employer != null)
                 {

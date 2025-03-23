@@ -34,7 +34,7 @@
         }
       }
     },
-    "/api/connections/fetchConnections/{ReceiverId}": {
+    "/api/connections/fetchConnection": {
       "get": {
         "tags": [
           "Connection"
@@ -42,15 +42,14 @@
         "parameters": [
           {
             "name": "ReceiverId",
-            "in": "path",
-            "required": true,
+            "in": "query",
             "schema": {
               "type": "integer",
               "format": "int32"
             }
           },
           {
-            "name": "UserId",
+            "name": "userId",
             "in": "query",
             "schema": {
               "type": "integer",
@@ -98,15 +97,7 @@
         ],
         "parameters": [
           {
-            "name": "UserId",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "RequesterId",
+            "name": "userId",
             "in": "query",
             "schema": {
               "type": "integer",
@@ -147,14 +138,6 @@
         ],
         "parameters": [
           {
-            "name": "UserId",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
             "name": "ReceiverId",
             "in": "path",
             "required": true,
@@ -165,6 +148,14 @@
           },
           {
             "name": "RequesterId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "userId",
             "in": "query",
             "schema": {
               "type": "integer",
@@ -205,14 +196,6 @@
         ],
         "parameters": [
           {
-            "name": "UserId",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
             "name": "ReceiverId",
             "in": "path",
             "required": true,
@@ -225,6 +208,14 @@
             "name": "RequesterId",
             "in": "path",
             "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "query",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -274,7 +265,7 @@
         ],
         "parameters": [
           {
-            "name": "UserId",
+            "name": "userId",
             "in": "query",
             "schema": {
               "type": "integer",
@@ -313,7 +304,7 @@
         ],
         "parameters": [
           {
-            "name": "UserId",
+            "name": "userId",
             "in": "query",
             "schema": {
               "type": "integer",
@@ -347,16 +338,15 @@
         }
       }
     },
-    "/api/employers/editEmployer/{EmployerId}": {
+    "/api/employers/editEmployer": {
       "put": {
         "tags": [
           "Employer"
         ],
         "parameters": [
           {
-            "name": "EmployerId",
-            "in": "path",
-            "required": true,
+            "name": "userId",
+            "in": "query",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -389,16 +379,15 @@
         }
       }
     },
-    "/api/employers/deleteEmployer/{EmployerId}": {
+    "/api/employers/deleteEmployer": {
       "delete": {
         "tags": [
           "Employer"
         ],
         "parameters": [
           {
-            "name": "EmployerId",
-            "in": "path",
-            "required": true,
+            "name": "userId",
+            "in": "query",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -441,16 +430,15 @@
         }
       }
     },
-    "/api/employerrequests/fetchRequest/{ApplicantId}": {
+    "/api/employerrequests/fetchRequest": {
       "get": {
         "tags": [
           "EmployerRequest"
         ],
         "parameters": [
           {
-            "name": "ApplicantId",
-            "in": "path",
-            "required": true,
+            "name": "applicantId",
+            "in": "query",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -488,7 +476,7 @@
         ],
         "parameters": [
           {
-            "name": "UserId",
+            "name": "userId",
             "in": "query",
             "schema": {
               "type": "integer",
@@ -522,16 +510,15 @@
         }
       }
     },
-    "/api/employerrequests/deleteRequest/{ApplicantId}": {
+    "/api/employerrequests/deleteRequest": {
       "delete": {
         "tags": [
           "EmployerRequest"
         ],
         "parameters": [
           {
-            "name": "ApplicantId",
-            "in": "path",
-            "required": true,
+            "name": "applicantId",
+            "in": "query",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -629,7 +616,7 @@
             }
           },
           {
-            "name": "UserId",
+            "name": "userId",
             "in": "query",
             "schema": {
               "type": "integer",
@@ -680,7 +667,7 @@
         }
       }
     },
-    "/api/posts/editPost/{PostId}": {
+    "/api/posts/editPost": {
       "put": {
         "tags": [
           "Post"
@@ -688,8 +675,7 @@
         "parameters": [
           {
             "name": "PostId",
-            "in": "path",
-            "required": true,
+            "in": "query",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -704,7 +690,7 @@
             }
           },
           {
-            "name": "UserId",
+            "name": "userId",
             "in": "query",
             "schema": {
               "type": "integer",
@@ -755,7 +741,7 @@
         }
       }
     },
-    "/api/posts/deletePost/{PostId}": {
+    "/api/posts/deletePost": {
       "delete": {
         "tags": [
           "Post"
@@ -763,8 +749,7 @@
         "parameters": [
           {
             "name": "PostId",
-            "in": "path",
-            "required": true,
+            "in": "query",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -779,7 +764,7 @@
             }
           },
           {
-            "name": "UserId",
+            "name": "userId",
             "in": "query",
             "schema": {
               "type": "integer",
@@ -823,16 +808,15 @@
         }
       }
     },
-    "/api/profiles/fetchProfile/{ProfileId}": {
+    "/api/profiles/fetchProfile": {
       "get": {
         "tags": [
           "Profile"
         ],
         "parameters": [
           {
-            "name": "ProfileId",
-            "in": "path",
-            "required": true,
+            "name": "userId",
+            "in": "query",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -863,14 +847,14 @@
         }
       }
     },
-    "/api/profiles": {
+    "/api/profiles/createProfile": {
       "post": {
         "tags": [
           "Profile"
         ],
         "parameters": [
           {
-            "name": "UserId",
+            "name": "userId",
             "in": "query",
             "schema": {
               "type": "integer",
@@ -921,23 +905,14 @@
         }
       }
     },
-    "/api/profiles/updateProfile/{ProfileId}": {
+    "/api/profiles/updateProfile": {
       "put": {
         "tags": [
           "Profile"
         ],
         "parameters": [
           {
-            "name": "ProfileId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "UserId",
+            "name": "userId",
             "in": "query",
             "schema": {
               "type": "integer",
@@ -1017,16 +992,15 @@
         }
       }
     },
-    "/api/users/fetchUser/{UserId}": {
+    "/api/users/fetchUser": {
       "get": {
         "tags": [
           "User"
         ],
         "parameters": [
           {
-            "name": "UserId",
-            "in": "path",
-            "required": true,
+            "name": "userId",
+            "in": "query",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -1201,14 +1175,14 @@
         }
       }
     },
-    "/api/users/updateUserRole/{UserId}": {
+    "/api/users/updateUserRole/{userId}": {
       "put": {
         "tags": [
           "User"
         ],
         "parameters": [
           {
-            "name": "UserId",
+            "name": "userId",
             "in": "path",
             "required": true,
             "schema": {
@@ -1231,16 +1205,15 @@
         }
       }
     },
-    "/api/users/updateUser/{UserId}": {
+    "/api/users/updateUser": {
       "put": {
         "tags": [
           "User"
         ],
         "parameters": [
           {
-            "name": "UserId",
-            "in": "path",
-            "required": true,
+            "name": "userId",
+            "in": "query",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -1273,16 +1246,56 @@
         }
       }
     },
-    "/api/users/deleteUser/{UserId}": {
+    "/api/users/changePassword": {
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangePasswordDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangePasswordDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangePasswordDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/users/deleteUser": {
       "delete": {
         "tags": [
           "User"
         ],
         "parameters": [
           {
-            "name": "UserId",
-            "in": "path",
-            "required": true,
+            "name": "userId",
+            "in": "query",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -1299,6 +1312,24 @@
   },
   "components": {
     "schemas": {
+      "ChangePasswordDto": {
+        "type": "object",
+        "properties": {
+          "currentPassword": {
+            "type": "string",
+            "nullable": true
+          },
+          "newPassword": {
+            "type": "string",
+            "nullable": true
+          },
+          "confirmNewPassword": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "Connection": {
         "required": [
           "status"

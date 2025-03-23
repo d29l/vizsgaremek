@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjektBackend.Models;
+using System.Security.Claims;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using Connection = ProjektBackend.Models.Connection;
 
@@ -42,12 +43,28 @@ namespace ProjektBackend.Controllers
         }
 
         [Authorize(Policy = "EmployerSelfOrAdmin")]
-        [HttpGet("fetchConnections/{ReceiverId}")]
-        public async Task<ActionResult<IEnumerable<Connection>>> FetchConnections(int ReceiverId, int UserId)
+        [HttpGet("fetchConnection")]
+        public async Task<ActionResult<IEnumerable<Connection>>> FetchConnections(int ReceiverId, int? userId = null)
         {
             try
             {
-                if (ReceiverId != UserId)
+                int targetUserId;
+                bool isAdmin = User.IsInRole("Admin");
+
+                if (userId.HasValue && isAdmin)
+                {
+                    targetUserId = userId.Value;
+                }
+                else
+                {
+                    var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+                    if (userIdClaim == null)
+                        return StatusCode(401, "User ID not found in token.");
+
+                    targetUserId = int.Parse(userIdClaim.Value);
+                }
+
+                if (ReceiverId != targetUserId)
                 {
                     return StatusCode(403, "You dont have access to this connection.");
                 }
@@ -68,13 +85,29 @@ namespace ProjektBackend.Controllers
 
         [Authorize(Policy = "EmployeeSelfOnly")]
         [HttpPost("postNewConnection")]
-        public async Task<ActionResult> PostNewConnection(int UserId, int RequesterId, CreateConnectionDto createConnectionDto)
+        public async Task<ActionResult> PostNewConnection(CreateConnectionDto createConnectionDto, int? userId = null)
         {
             try
             {
+                int targetUserId;
+                bool isAdmin = User.IsInRole("Admin");
+
+                if (userId.HasValue && isAdmin)
+                {
+                    targetUserId = userId.Value;
+                }
+                else
+                {
+                    var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+                    if (userIdClaim == null)
+                        return StatusCode(401, "User ID not found in token.");
+
+                    targetUserId = int.Parse(userIdClaim.Value);
+                }
+
                 var newConnection = new Connection
                 {
-                    RequesterId = RequesterId,
+                    RequesterId = targetUserId,
                     ReceiverId = createConnectionDto.ReceiverId,
                     Status = "Pending",
                     CreatedAt = DateTime.UtcNow,
@@ -99,10 +132,26 @@ namespace ProjektBackend.Controllers
 
         [Authorize(Policy = "EmployerSelfOnly")]
         [HttpPut("editConnection/{ReceiverId}")]
-        public async Task<ActionResult> UpdateConnection(int UserId, int ReceiverId, int RequesterId, UpdateConnectionDto updateConnectionDto)
+        public async Task<ActionResult> UpdateConnection(int ReceiverId, int RequesterId, UpdateConnectionDto updateConnectionDto, int? userId = null)
         {
             try
             {
+                int targetUserId;
+                bool isAdmin = User.IsInRole("Admin");
+
+                if (userId.HasValue && isAdmin)
+                {
+                    targetUserId = userId.Value;
+                }
+                else
+                {
+                    var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+                    if (userIdClaim == null)
+                        return StatusCode(401, "User ID not found in token.");
+
+                    targetUserId = int.Parse(userIdClaim.Value);
+                }
+
                 var existingConnection = await _context.Connections.FirstOrDefaultAsync(x => x.ReceiverId == ReceiverId && x.RequesterId == RequesterId);
 
                 if (existingConnection != null)
@@ -131,10 +180,26 @@ namespace ProjektBackend.Controllers
 
         [Authorize(Policy = "SelfOrAdmin")]
         [HttpDelete("deleteConnection/{RequesterId}/{ReceiverId}")]
-        public async Task<ActionResult> DeleteConnection(int UserId, int ReceiverId, int RequesterId)
+        public async Task<ActionResult> DeleteConnection(int ReceiverId, int RequesterId, int? userId = null)
         {
             try
             {
+                int targetUserId;
+                bool isAdmin = User.IsInRole("Admin");
+
+                if (userId.HasValue && isAdmin)
+                {
+                    targetUserId = userId.Value;
+                }
+                else
+                {
+                    var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+                    if (userIdClaim == null)
+                        return StatusCode(401, "User ID not found in token.");
+
+                    targetUserId = int.Parse(userIdClaim.Value);
+                }
+
                 var connection = await _context.Connections.FirstOrDefaultAsync(x => x.ReceiverId == ReceiverId && x.RequesterId == RequesterId);
 
                 if (connection != null)

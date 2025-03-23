@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjektBackend.Models;
+using System.Security.Claims;
 
 #pragma warning disable CS0168
 
@@ -40,12 +41,13 @@ namespace ProjektBackend.Controllers
         }
 
         [Authorize(Policy = "AdminOnly")]
-        [HttpGet("fetchRequest/{ApplicantId}")]
-        public async Task<ActionResult<Employerrequest>> FetchRequest(int ApplicantId)
+        [HttpGet("fetchRequest")]
+        public async Task<ActionResult<Employerrequest>> FetchRequest(int? applicantId = null)
         {
             try
             {
-                var request = await _context.Employerrequests.FirstOrDefaultAsync(x => x.ApplicantId == ApplicantId);
+
+                var request = await _context.Employerrequests.FirstOrDefaultAsync(x => x.ApplicantId == applicantId);
 
                 if (request != null)
                 {
@@ -61,13 +63,29 @@ namespace ProjektBackend.Controllers
 
         [Authorize(Policy = "EmployeeSelfOrAdmin")]
         [HttpPost("postRequest")]
-        public async Task<ActionResult> PostRequest(int UserId, CreateRequestDto createRequestDto)
+        public async Task<ActionResult> PostRequest(CreateRequestDto createRequestDto, int? userId = null)
         {
             try
             {
+                int targetUserId;
+                bool isAdmin = User.IsInRole("Admin");
+
+                if (userId.HasValue && isAdmin)
+                {
+                    targetUserId = userId.Value;
+                }
+                else
+                {
+                    var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+                    if (userIdClaim == null)
+                        return StatusCode(401, "User ID not found in token.");
+
+                    targetUserId = int.Parse(userIdClaim.Value);
+                }
+
                 var newRequest = new Employerrequest
                 {
-                    UserId = UserId,
+                    UserId = targetUserId,
                     CompanyName = createRequestDto.CompanyName,
                     CompanyAddress = createRequestDto.CompanyAddress,
                     Industry = createRequestDto.Industry,
@@ -95,18 +113,34 @@ namespace ProjektBackend.Controllers
         }
 
         [Authorize(Policy = "AdminOnly")]
-        [HttpDelete("deleteRequest/{ApplicantId}")]
-        public async Task<ActionResult> DeleteRequest(int ApplicantId)
+        [HttpDelete("deleteRequest")]
+        public async Task<ActionResult> DeleteRequest(int? applicantId = null)
         {
             try
             {
-                var request = await _context.Employerrequests.FirstOrDefaultAsync(x => x.ApplicantId == ApplicantId);
+                int targetApplicantId;
+                bool isAdmin = User.IsInRole("Admin");
+
+                if (applicantId.HasValue && isAdmin)
+                {
+                    targetApplicantId = applicantId.Value;
+                }
+                else
+                {
+                    var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+                    if (userIdClaim == null)
+                        return StatusCode(401, "User ID not found in token.");
+
+                    targetApplicantId = int.Parse(userIdClaim.Value);
+                }
+
+                var request = await _context.Employerrequests.FirstOrDefaultAsync(x => x.ApplicantId == targetApplicantId);
 
                 if (request != null)
                 {
                     _context.Remove(request);
                     await _context.SaveChangesAsync();
-                    return StatusCode(200, "User successfully deleted.");
+                    return StatusCode(200, "Request successfully deleted.");
                 }
                 return StatusCode(404, "No Request can be found with this Id.");
             }
@@ -119,7 +153,6 @@ namespace ProjektBackend.Controllers
                 return StatusCode(500, "An error occurred while deleting the employer request.");
             }
         }
-
-
     }
 }
+

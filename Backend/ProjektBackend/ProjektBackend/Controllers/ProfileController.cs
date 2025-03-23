@@ -14,7 +14,6 @@ namespace ProjektBackend.Controllers
     [ApiController]
     public class ProfileController : ControllerBase
     {
-
         private readonly ProjektContext _context;
 
         public ProfileController(ProjektContext context)
@@ -24,7 +23,6 @@ namespace ProjektBackend.Controllers
 
         [Authorize(Policy = "AdminOnly")]
         [HttpGet("fetchProfiles")]
-
         public async Task<ActionResult<Profile>> FetchProfiles()
         {
             try
@@ -43,14 +41,29 @@ namespace ProjektBackend.Controllers
             }
         }
 
-        [Authorize]
-        [HttpGet("fetchProfile/{ProfileId}")]
-
-        public async Task<ActionResult<Profile>> FetchProfile(int ProfileId)
+        [Authorize(Policy = "SelfOrAdmin")]
+        [HttpGet("fetchProfile")]
+        public async Task<ActionResult<Profile>> FetchProfile(int? userId = null)
         {
             try
             {
-                var profile = await _context.Profiles.FirstOrDefaultAsync(x => x.ProfileId == ProfileId);
+                int targetUserId;
+                bool isAdmin = User.IsInRole("Admin");
+
+                if (userId.HasValue && isAdmin)
+                {
+                    targetUserId = userId.Value;
+                }
+                else
+                {
+                    var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+                    if (userIdClaim == null)
+                        return StatusCode(401, "User ID not found in token.");
+
+                    targetUserId = int.Parse(userIdClaim.Value);
+                }
+
+                var profile = await _context.Profiles.FirstOrDefaultAsync(x => x.UserId == targetUserId);
 
                 if (profile != null)
                 {
@@ -64,13 +77,30 @@ namespace ProjektBackend.Controllers
             }
         }
 
-        [HttpPost]
-        public async Task<ActionResult<Profile>> PostProfile(int UserId, CreateProfileDto createProfileDto)
+        [Authorize(Policy = "SelfOrAdmin")]
+        [HttpPost("createProfile")]
+        public async Task<ActionResult<Profile>> CreateProfile(CreateProfileDto createProfileDto, int? userId = null)
         {
             try
             {
+                int targetUserId;
+                bool isAdmin = User.IsInRole("Admin");
+
+                if (userId.HasValue && isAdmin)
+                {
+                    targetUserId = userId.Value;
+                }
+                else
+                {
+                    var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+                    if (userIdClaim == null)
+                        return StatusCode(401, "User ID not found in token.");
+
+                    targetUserId = int.Parse(userIdClaim.Value);
+                }
+
                 var existingProfile = await _context.Profiles
-                    .FirstOrDefaultAsync(p => p.UserId == UserId);
+                    .FirstOrDefaultAsync(p => p.UserId == targetUserId);
 
                 if (existingProfile != null)
                 {
@@ -79,10 +109,10 @@ namespace ProjektBackend.Controllers
 
                 var profile = new Profile
                 {
-                    UserId = UserId,
-                    Headline = createProfileDto.Headline,
-                    Bio = createProfileDto.Bio,
-                    Location = createProfileDto.Location,
+                    UserId = targetUserId,
+                    Headline = createProfileDto.Headline ?? null,
+                    Bio = createProfileDto.Bio ?? null,
+                    Location = createProfileDto.Location ?? null,
                     ProfilePicture = "https://shorturl.at/Z5xgu"
                 };
                 if (profile != null)
@@ -105,13 +135,29 @@ namespace ProjektBackend.Controllers
         }
 
         [Authorize(Policy = "SelfOrAdmin")]
-        [HttpPut("updateProfile/{ProfileId}")]
-        public async Task<ActionResult<Profile>> UpdateProfile(int ProfileId, int UserId, UpdateProfileDto updateProfileDto)
+        [HttpPut("updateProfile")]
+        public async Task<ActionResult<Profile>> UpdateProfile(UpdateProfileDto updateProfileDto, int? userId = null)
         {
             try
             {
+                int targetUserId;
+                bool isAdmin = User.IsInRole("Admin");
+
+                if (userId.HasValue && isAdmin)
+                {
+                    targetUserId = userId.Value;
+                }
+                else
+                {
+                    var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+                    if (userIdClaim == null)
+                        return StatusCode(401, "User ID not found in token.");
+
+                    targetUserId = int.Parse(userIdClaim.Value);
+                }
+
                 var profile = await _context.Profiles
-                    .FirstOrDefaultAsync(p => p.ProfileId == ProfileId);
+                    .FirstOrDefaultAsync(p => p.UserId == targetUserId);
 
                 if (profile != null)
                 {
@@ -137,6 +183,5 @@ namespace ProjektBackend.Controllers
                 return StatusCode(500, "An error occurred while updating the profile.");
             }
         }
-
     }
 }

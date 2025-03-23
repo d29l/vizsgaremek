@@ -20,6 +20,7 @@ namespace ProjektBackend.Controllers
         {
             _context = context;
         }
+
         [Authorize]
         [HttpGet("fetchPosts")]
         public async Task<ActionResult<Post>> FetchPosts()
@@ -59,33 +60,46 @@ namespace ProjektBackend.Controllers
                 return StatusCode(500, "An error occurred while fetching the post.");
             }
         }
+
         [Authorize(Policy = "EmployerSelfOrAdmin")]
         [HttpPost("newPost")]
-        public async Task<ActionResult<Post>> NewPost(int EmployerId, int UserId, CreatePostDto createPostDto)
+        public async Task<ActionResult<Post>> NewPost(CreatePostDto createPostDto, int EmployerId, int? userId = null)
         {
             try
             {
+                int targetUserId;
+                bool isAdmin = User.IsInRole("Admin");
+
+                if (userId.HasValue && isAdmin)
+                {
+                    targetUserId = userId.Value;
+                }
+                else
+                {
+                    var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+                    if (userIdClaim == null)
+                        return StatusCode(401, "User ID not found in token.");
+
+                    targetUserId = int.Parse(userIdClaim.Value);
+                }
+
                 var Post = new Post()
                 {
                     EmployerId = EmployerId,
-                    UserId = UserId,
+                    UserId = targetUserId,
                     Title = createPostDto.Title,
                     Content = createPostDto.Content,
                     CreatedAt = DateTime.Now,
                     Likes = 0
                 };
 
-                if (Post != null)
+                if (string.IsNullOrEmpty(createPostDto.Title) || string.IsNullOrEmpty(createPostDto.Content))
                 {
-                    if (string.IsNullOrEmpty(createPostDto.Title) || string.IsNullOrEmpty(createPostDto.Content))
-                    {
-                        return StatusCode(400, "Title and content are required.");
-                    }
-                    _context.Add(Post);
-                    await _context.SaveChangesAsync();
-                    return StatusCode(201, "Post created successfully.");
+                    return StatusCode(400, "Title and content are required.");
                 }
-                return StatusCode(400, "Invalid data.");
+                _context.Add(Post);
+                await _context.SaveChangesAsync();
+                return StatusCode(201, "Post created successfully.");
             }
             catch (DbUpdateException dbEx)
             {
@@ -98,11 +112,27 @@ namespace ProjektBackend.Controllers
         }
 
         [Authorize(Policy = "EmployerSelfOrAdmin")]
-        [HttpPut("editPost/{PostId}")]
-        public async Task<ActionResult<Post>> EditPost(int PostId, int EmployerId, int UserId, UpdatePostDto updatePostDto)
+        [HttpPut("editPost")]
+        public async Task<ActionResult<Post>> EditPost(int PostId, int EmployerId, UpdatePostDto updatePostDto, int? userId = null)
         {
             try
             {
+                int targetUserId;
+                bool isAdmin = User.IsInRole("Admin");
+
+                if (userId.HasValue && isAdmin)
+                {
+                    targetUserId = userId.Value;
+                }
+                else
+                {
+                    var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+                    if (userIdClaim == null)
+                        return StatusCode(401, "User ID not found in token.");
+
+                    targetUserId = int.Parse(userIdClaim.Value);
+                }
+
                 var existingPost = await _context.Posts.FirstOrDefaultAsync(x => x.PostId == PostId && x.EmployerId == EmployerId);
                 if (existingPost != null)
                 {
@@ -129,11 +159,27 @@ namespace ProjektBackend.Controllers
         }
 
         [Authorize(Policy = "EmployerSelfOrAdmin")]
-        [HttpDelete("deletePost/{PostId}")]
-        public async Task<ActionResult> DeletePost(int PostId, int EmployerId, int UserId)
+        [HttpDelete("deletePost")]
+        public async Task<ActionResult> DeletePost(int PostId, int EmployerId, int? userId = null)
         {
             try
             {
+                int targetUserId;
+                bool isAdmin = User.IsInRole("Admin");
+
+                if (userId.HasValue && isAdmin)
+                {
+                    targetUserId = userId.Value;
+                }
+                else
+                {
+                    var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+                    if (userIdClaim == null)
+                        return StatusCode(401, "User ID not found in token.");
+
+                    targetUserId = int.Parse(userIdClaim.Value);
+                }
+
                 var deletePost = await _context.Posts
                     .FirstOrDefaultAsync(x => x.PostId == PostId && x.EmployerId == EmployerId);
 
@@ -154,6 +200,5 @@ namespace ProjektBackend.Controllers
                 return StatusCode(500, "An error occurred while deleting the post.");
             }
         }
-
     }
 }
