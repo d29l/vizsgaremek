@@ -26,14 +26,21 @@ namespace AdminPanel
                     var requests = await response.Content.ReadFromJsonAsync<List<EmployerRequest>>();
                     RequestsListView.ItemsSource = requests;
                 }
+                else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    RequestsListView.ItemsSource = null; // Clear the ListView if no requests exist
+                }
                 else
                 {
-                    MessageBox.Show($"Error loading requests: {response.StatusCode}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    MessageBox.Show($"Error loading requests: {response.StatusCode}\n{errorContent}",
+                                   "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Error: {ex.Message}",
+                               "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -43,25 +50,29 @@ namespace AdminPanel
             {
                 try
                 {
-                    
-                    var requestResponse = await ApiClient.httpClient.GetAsync($"employerrequests/fetchRequest/{applicantId}");
+                    // Step 1: Fetch the request
+                    var requestResponse = await ApiClient.httpClient.GetAsync($"employerrequests/fetchRequest?applicantId={applicantId}");
                     if (!requestResponse.IsSuccessStatusCode)
                     {
-                        MessageBox.Show("Request not found!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        var errorContent = await requestResponse.Content.ReadAsStringAsync();
+                        MessageBox.Show($"Request not found: {requestResponse.StatusCode}\n{errorContent}",
+                                       "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
 
                     var request = await requestResponse.Content.ReadFromJsonAsync<EmployerRequest>();
 
-                    
-                    var userResponse = await ApiClient.httpClient.GetAsync($"users/fetchUser/{request.UserID}");
+                    // Step 2: Fetch the user
+                    var userResponse = await ApiClient.httpClient.GetAsync($"users/fetchUser?userId={request.UserID}");
                     if (!userResponse.IsSuccessStatusCode)
                     {
-                        MessageBox.Show($"User with ID {request.UserID} does not exist!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        var errorContent = await userResponse.Content.ReadAsStringAsync();
+                        MessageBox.Show($"User with ID {request.UserID} does not exist: {userResponse.StatusCode}\n{errorContent}",
+                                       "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
 
-                    
+                    // Step 3: Create employer
                     var createEmployerDto = new CreateEmployerDto
                     {
                         CompanyName = request.CompanyName,
@@ -72,44 +83,52 @@ namespace AdminPanel
                         EstablishedYear = request.EstablishedYear
                     };
 
-                    
                     var url = $"employers/postEmployer?UserId={request.UserID}";
                     var createResponse = await ApiClient.httpClient.PostAsJsonAsync(url, createEmployerDto);
-
-                    if (createResponse.IsSuccessStatusCode)
-                    {
-                        
-                        await ApiClient.httpClient.DeleteAsync($"employerrequests/deleteRequest/{applicantId}");
-                        LoadRequests(); 
-
-                        
-                        var updateRoleUrl = $"users/updateUserRole?UserId={request.UserID}&Role=employer";
-                        var roleUpdateResponse = await ApiClient.httpClient.PutAsync(updateRoleUrl, null);
-
-                        if (roleUpdateResponse.IsSuccessStatusCode)
-                        {
-                            MessageBox.Show("Employer created successfully and role updated to employer in users table!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                        }
-                        else
-                        {
-                            var errorContent = await roleUpdateResponse.Content.ReadAsStringAsync();
-                            MessageBox.Show($"Failed to update user role: {roleUpdateResponse.StatusCode}\n{errorContent}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        }
-                    }
-                    else
+                    if (!createResponse.IsSuccessStatusCode)
                     {
                         var errorContent = await createResponse.Content.ReadAsStringAsync();
-                        MessageBox.Show($"Failed to create employer: {createResponse.StatusCode}\n{errorContent}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show($"Failed to create employer: {createResponse.StatusCode}\n{errorContent}",
+                                       "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
                     }
+
+                    // Step 4: Delete the request
+                    var deleteResponse = await ApiClient.httpClient.DeleteAsync($"employerrequests/deleteRequest?applicantId={applicantId}");
+                    if (!deleteResponse.IsSuccessStatusCode)
+                    {
+                        var errorContent = await deleteResponse.Content.ReadAsStringAsync();
+                        MessageBox.Show($"Failed to delete request: {deleteResponse.StatusCode}\n{errorContent}",
+                                       "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    // Step 5: Update user role
+                    var roleUpdateUrl = $"users/updateUserRole/{request.UserID}?Role=Employer";
+                    var roleUpdateResponse = await ApiClient.httpClient.PutAsync(roleUpdateUrl, null);
+                    if (!roleUpdateResponse.IsSuccessStatusCode)
+                    {
+                        var errorContent = await roleUpdateResponse.Content.ReadAsStringAsync();
+                        MessageBox.Show($"Failed to update user role: {roleUpdateResponse.StatusCode}\n{errorContent}",
+                                       "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    // Success: Refresh list and notify user
+                    LoadRequests();
+                    MessageBox.Show("Employer created successfully and role updated to employer!",
+                                   "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"An unexpected error occurred: {ex.Message}",
+                                   "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             else
             {
-                MessageBox.Show("Invalid button or Tag property!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Invalid button or Tag property!",
+                               "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -119,21 +138,29 @@ namespace AdminPanel
             {
                 try
                 {
-                    var response = await ApiClient.httpClient.DeleteAsync($"employerrequests/deleteRequest/{applicantId}");
+                    var response = await ApiClient.httpClient.DeleteAsync($"employerrequests/deleteRequest?applicantId={applicantId}");
 
                     if (response.IsSuccessStatusCode)
                     {
                         LoadRequests();
-                        MessageBox.Show("Request deleted!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                        MessageBox.Show("Request deleted successfully!",
+                                       "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    else
+                    {
+                        var errorContent = await response.Content.ReadAsStringAsync();
+                        MessageBox.Show($"Failed to delete request: {response.StatusCode}\n{errorContent}",
+                                       "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"Error: {ex.Message}",
+                                   "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-
         }
+
         private void Back_Click(object sender, RoutedEventArgs e)
         {
             this.NavigationService.Navigate(new Dashboard());
@@ -161,5 +188,4 @@ namespace AdminPanel
         public string CompanyDescription { get; set; }
         public int EstablishedYear { get; set; }
     }
-
 }

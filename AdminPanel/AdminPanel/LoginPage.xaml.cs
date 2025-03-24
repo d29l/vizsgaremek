@@ -24,32 +24,35 @@ namespace AdminPanel
         {
             InitializeComponent();
         }
+
         private void Password_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            
             PasswordPlaceholder.Visibility =
                 (string.IsNullOrEmpty(Password.Password)) ? Visibility.Visible : Visibility.Collapsed;
         }
+
         private async void SignIn_Click(object sender, RoutedEventArgs e)
         {
             string email = userName.Text;
             string password = Password.Password;
 
-            
-            string result = await LoginUsers.LoginAsync(email, password);
-
-            if (result == "Login successful")
+            try
             {
-                
-                MessageBox.Show("Login successful", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                string result = await LoginUsers.LoginAsync(email, password);
 
-                
-                NavigationService.Navigate(new Dashboard());
+                if (result == "Login successful")
+                {
+                    MessageBox.Show("Login successful", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    NavigationService.Navigate(new Dashboard());
+                }
+                else
+                {
+                    MessageBox.Show(result, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                
-                MessageBox.Show(result, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"An unexpected error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

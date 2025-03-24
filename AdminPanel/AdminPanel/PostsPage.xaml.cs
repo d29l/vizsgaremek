@@ -52,7 +52,7 @@ namespace AdminPanel
                     if (result == MessageBoxResult.Yes)
                     {
                         int userId = CurrentUser.UserId;
-                        string deleteUrl = $"posts/deletePost/{post.PostId}?UserId={userId}&EmployerId={post.EmployerId}";
+                        string deleteUrl = $"posts/deletePost?PostId={post.PostId}&EmployerId={post.EmployerId}&userId={userId}";
                         try
                         {
                             var response = await ApiClient.httpClient.DeleteAsync(deleteUrl);
@@ -80,6 +80,7 @@ namespace AdminPanel
                 }
             }
         }
+
 
         private void Edit_Click(object sender, RoutedEventArgs e)
         {

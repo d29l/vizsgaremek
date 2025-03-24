@@ -13,5 +13,7 @@ namespace AdminPanel
     /// </summary>
     public partial class App : Application
     {
+        public static string CurrentUserAccessToken { get; set; }
+        public static string CurrentUserRefreshToken { get; set; }
     }
 }

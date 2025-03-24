@@ -30,8 +30,7 @@ namespace AdminPanel
                 Content = ContentTextBox.Text
             };
 
-            // Include EmployerId and UserId in the URL
-            var url = $"posts/editPost/{_post.PostId}?EmployerId={_post.EmployerId}&UserId={CurrentUser.UserId}";
+            var url = $"posts/editPost?PostId={_post.PostId}&EmployerId={_post.EmployerId}&userId={CurrentUser.UserId}";
             try
             {
                 var response = await ApiClient.httpClient.PutAsJsonAsync(url, updatePostDto);
@@ -44,7 +43,8 @@ namespace AdminPanel
                 else
                 {
                     var errorContent = await response.Content.ReadAsStringAsync();
-                    MessageBox.Show($"Failed to update post: {response.StatusCode}\n{errorContent}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"Failed to update post: {response.StatusCode}\n{errorContent}",
+                                   "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             catch (Exception ex)
