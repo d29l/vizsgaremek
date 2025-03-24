@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { getUserId } from "../getUserId";
 import axios from "axios";
 
 export default function LoginPage() {
@@ -9,6 +10,13 @@ export default function LoginPage() {
   const [showPass, setShowPass] = useState(false);
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+
+  const [headline, setHeadline] = useState("");
+  const [bio, setBio] = useState("");
+  const [location, setLocation] = useState("");
+  const [profilePicture, setProfilePicture] = useState("");
+
+  const [userId, setUserId] = useState(null);
 
   const navigate = useNavigate();
 
@@ -28,33 +36,69 @@ export default function LoginPage() {
     setEmailError(emailErrorMsg);
     setPasswordError(passwordErrorMsg);
 
-    if (emailErrorMsg || passwordErrorMsg) {
-      return;
-    }
+    if (emailErrorMsg || passwordErrorMsg) return;
 
     try {
       const response = await axios.post(
         "https://localhost:7077/api/users/loginUser",
-        {
-          email,
-          password,
-        }
+        { email, password },
       );
 
       if (response.status === 200) {
-        navigate("/");
-        console.log("Successfully signed in");
         localStorage.setItem("token", response.data.accessToken);
-      } else {
-        console.log(response.data.message || "Sign in failed");
+
+        const userId_temp = getUserId();
+        setUserId(userId_temp);
+
+        console.log("User ID after login:", userId_temp);
+
+        await fetchUserProfile(userId_temp);
+
+        navigate("/");
       }
     } catch (err) {
       if (err.response?.status === 401) {
         setIncorrect(true);
       }
-      console.log(
-        err.response?.data?.message || "An error occurred during signing in"
+      console.error("Login error:", err);
+    }
+  };
+
+  const fetchUserProfile = async (userId) => {
+    try {
+      const response = await axios.get(
+        `https://localhost:7077/api/profiles/fetchProfile?userId=${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        },
       );
+    } catch (err) {
+      if (err.response?.status === 404) {
+        console.error("Profile doesn't exist");
+        console.log("Attempting to create profile");
+        try {
+          const createResponse = await axios.post(
+            `https://localhost:7077/api/profiles/createProfile?userId=${userId}`,
+            {
+              headline,
+              bio: "Bio not filled in yet",
+              location: "Location not filled in yet",
+              profilePicture,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+            },
+          );
+        } catch (err) {
+          console.error("Error creating profile: ", err);
+        }
+      } else {
+        console.error("Profile fetch error:", err);
+      }
     }
   };
 
@@ -77,7 +121,9 @@ export default function LoginPage() {
           <form className="flex w-full flex-col" onSubmit={handleLogin}>
             <label className="mb-2 font-bold text-text">Email</label>
             {emailError && (
-              <div className="text-sm font-bold text-red py-1">{emailError}</div>
+              <div className="py-1 text-sm font-bold text-red">
+                {emailError}
+              </div>
             )}
             <input
               placeholder="example@mail.com"
@@ -88,7 +134,9 @@ export default function LoginPage() {
 
             <label className="mb-2 font-bold text-text">Password</label>
             {passwordError && (
-              <div className="text-sm font-bold text-red py-1">{passwordError}</div>
+              <div className="py-1 text-sm font-bold text-red">
+                {passwordError}
+              </div>
             )}
             <input
               type={showPass ? "text" : "password"}
@@ -115,7 +163,7 @@ export default function LoginPage() {
             </div>
 
             {incorrect && (
-              <div className="text-sm font-bold text-red pt-4 self-center">
+              <div className="self-center pt-4 text-sm font-bold text-red">
                 Incorrect email or password
               </div>
             )}
