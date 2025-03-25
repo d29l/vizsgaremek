@@ -3,19 +3,37 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getUserId } from "../getUserId";
 import { getRole } from "../getRole";
+import axios from "axios";
 
 export default function Navbar() {
   const navigate = useNavigate();
 
   const [profileClicked, setProfileClicked] = useState(false);
   const [isEmployer, setIsEmployer] = useState(false);
+  const [profilePicture, setProfilePicture] = useState("");
 
   useEffect(() => {
+    const userId = getUserId();
     const role = getRole();
+
     if (role === "Employer") {
       setIsEmployer(true);
     }
+    fetchProfile(userId);
   });
+
+  const fetchProfile = async (userId) => {
+    const response = await axios.get(
+      `https://localhost:7077/api/profiles/fetchProfile?${getUserId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      },
+    );
+
+    setProfilePicture(response.data.profilePicture);
+  };
 
   const handleLogout = () => {
     localStorage.clear();
@@ -23,8 +41,8 @@ export default function Navbar() {
   };
 
   const handleSettingsClick = () => {
-    navigate("/settings")
-  }
+    navigate("/settings");
+  };
 
   const handleProfileClick = () => {
     setProfileClicked(!profileClicked);
@@ -72,7 +90,9 @@ export default function Navbar() {
           <div
             className="mr-4 flex size-10 cursor-pointer overflow-hidden rounded-full bg-surface0"
             onClick={handleProfileClick}
-          ></div>
+          >
+            <img src={profilePicture}></img>
+          </div>
 
           {profileClicked && (
             <div className="absolute right-0 z-50 mt-[9rem] w-48 rounded-lg bg-surface0">
