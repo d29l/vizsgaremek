@@ -66,7 +66,7 @@ export default function ProfilePage() {
             <FaEdit className="absolute cursor-pointer text-xl text-text hover:text-lavender" onClick={() => setEditPopoutOpen(true)}/>
           </div>
 
-          <div className="size-32 flex overflow-hidden rounded-full bg-surface0">
+          <div className="size-32 flex items-center overflow-hidden rounded-full bg-surface0">
             <img src={profilePicture}></img>
           </div>
 

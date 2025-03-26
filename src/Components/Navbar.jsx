@@ -88,7 +88,7 @@ export default function Navbar() {
           )}
 
           <div
-            className="mr-4 flex size-10 cursor-pointer overflow-hidden rounded-full bg-surface0"
+            className="mr-4 flex size-10 cursor-pointer items-center overflow-hidden rounded-full bg-surface0"
             onClick={handleProfileClick}
           >
             <img src={profilePicture}></img>
