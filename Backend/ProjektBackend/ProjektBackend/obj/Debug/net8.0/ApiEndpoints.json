@@ -473,9 +473,24 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "createProfileDto",
-        "Type": "ProjektBackend.Controllers.CreateProfileDto",
-        "IsRequired": true
+        "Name": "Headline",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Bio",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Location",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "ProfilePicture",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
       },
       {
         "Name": "userId",
@@ -550,9 +565,24 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "updateProfileDto",
-        "Type": "ProjektBackend.Controllers.UpdateProfileDto",
-        "IsRequired": true
+        "Name": "Headline",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Bio",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Location",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "ProfilePicture",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
       },
       {
         "Name": "userId",
@@ -683,6 +713,22 @@
   },
   {
     "ContainingType": "ProjektBackend.Controllers.UserController",
+    "Method": "Logout",
+    "RelativePath": "api/users/logout",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "logoutRequestDto",
+        "Type": "ProjektBackend.Controllers.LogoutRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProjektBackend.Controllers.UserController",
     "Method": "RefreshToken",
     "RelativePath": "api/users/refreshToken",
     "HttpMethod": "POST",
@@ -732,6 +778,27 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "ProjektBackend.Controllers.UserController",
+    "Method": "RevokeToken",
+    "RelativePath": "api/users/revokeToken",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "revokeTokenRequestDto",
+        "Type": "ProjektBackend.Controllers.RevokeTokenRequestDto",
+        "IsRequired": true
+      },
+      {
+        "Name": "userId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "ProjektBackend.Controllers.UserController",

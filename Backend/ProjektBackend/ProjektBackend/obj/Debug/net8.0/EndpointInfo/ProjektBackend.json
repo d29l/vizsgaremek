@@ -864,19 +864,38 @@
         ],
         "requestBody": {
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/CreateProfileDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateProfileDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateProfileDto"
+                "type": "object",
+                "properties": {
+                  "Headline": {
+                    "type": "string"
+                  },
+                  "Bio": {
+                    "type": "string"
+                  },
+                  "Location": {
+                    "type": "string"
+                  },
+                  "ProfilePicture": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "Headline": {
+                  "style": "form"
+                },
+                "Bio": {
+                  "style": "form"
+                },
+                "Location": {
+                  "style": "form"
+                },
+                "ProfilePicture": {
+                  "style": "form"
+                }
               }
             }
           }
@@ -922,19 +941,38 @@
         ],
         "requestBody": {
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateProfileDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateProfileDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateProfileDto"
+                "type": "object",
+                "properties": {
+                  "Headline": {
+                    "type": "string"
+                  },
+                  "Bio": {
+                    "type": "string"
+                  },
+                  "Location": {
+                    "type": "string"
+                  },
+                  "ProfilePicture": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "Headline": {
+                  "style": "form"
+                },
+                "Bio": {
+                  "style": "form"
+                },
+                "Location": {
+                  "style": "form"
+                },
+                "ProfilePicture": {
+                  "style": "form"
+                }
               }
             }
           }
@@ -1171,6 +1209,78 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/api/users/logout": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LogoutRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LogoutRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LogoutRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/users/revokeToken": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RevokeTokenRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RevokeTokenRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RevokeTokenRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
           }
         }
       }
@@ -1415,28 +1525,6 @@
         },
         "additionalProperties": false
       },
-      "CreateProfileDto": {
-        "type": "object",
-        "properties": {
-          "headline": {
-            "type": "string",
-            "nullable": true
-          },
-          "bio": {
-            "type": "string",
-            "nullable": true
-          },
-          "location": {
-            "type": "string",
-            "nullable": true
-          },
-          "profilePicture": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "CreateRequestDto": {
         "type": "object",
         "properties": {
@@ -1565,6 +1653,16 @@
             "nullable": true
           },
           "password": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LogoutRequestDto": {
+        "type": "object",
+        "properties": {
+          "refreshToken": {
             "type": "string",
             "nullable": true
           }
@@ -1708,6 +1806,16 @@
         },
         "additionalProperties": false
       },
+      "RevokeTokenRequestDto": {
+        "type": "object",
+        "properties": {
+          "refreshToken": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "UpdateConnectionDto": {
         "type": "object",
         "properties": {
@@ -1756,28 +1864,6 @@
             "nullable": true
           },
           "content": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "UpdateProfileDto": {
-        "type": "object",
-        "properties": {
-          "headline": {
-            "type": "string",
-            "nullable": true
-          },
-          "bio": {
-            "type": "string",
-            "nullable": true
-          },
-          "location": {
-            "type": "string",
-            "nullable": true
-          },
-          "profilePicture": {
             "type": "string",
             "nullable": true
           }

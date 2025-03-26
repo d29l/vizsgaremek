@@ -42,15 +42,15 @@ namespace ProjektBackend.Controllers
         (
         string Headline, 
         string Bio, 
-        string Location, 
-        string ProfilePicture
+        string Location,
+        IFormFile ProfilePicture
         );
     public record UpdateProfileDto
         (
         string Headline,
         string Bio,
         string Location,
-        string ProfilePicture
+        IFormFile ProfilePicture
         );
 
     public record CreateEmployerDto
@@ -92,6 +92,16 @@ namespace ProjektBackend.Controllers
         );
 
     public record RefreshTokenDto
+        (
+        string RefreshToken
+        );
+
+    public record LogoutRequestDto
+        (
+        string RefreshToken
+        );
+
+    public record RevokeTokenRequestDto
         (
         string RefreshToken
         );

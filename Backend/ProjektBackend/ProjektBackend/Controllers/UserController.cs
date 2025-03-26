@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using ProjektBackend.Models;
@@ -14,6 +15,7 @@ using System.Text.RegularExpressions;
 
 #pragma warning disable CS8604
 #pragma warning disable CS8602
+#pragma warning disable CS8600
 #pragma warning disable CS0168
 
 namespace ProjektBackend.Controllers
@@ -31,7 +33,7 @@ namespace ProjektBackend.Controllers
             _configuration = configuration;
         }
 
-        string letterOnlyPattern = @"^[a-zA-Z]+$";
+        string letterOnlyPattern = @"^[a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ]+$";
 
         [Authorize(Policy = "AdminOnly")]
         [HttpGet("fetchUsers")]
@@ -156,7 +158,6 @@ namespace ProjektBackend.Controllers
                 return StatusCode(500, "An error occurred while registering the user.");
             }
         }
-
         [HttpPost("loginUser")]
         public async Task<ActionResult<string>> LoginUser(LoginUserDto loginUserDto)
         {
@@ -274,6 +275,75 @@ namespace ProjektBackend.Controllers
             return Convert.ToBase64String(randomNumber);
         }
 
+        [HttpPost("logout")]
+        public async Task<ActionResult> Logout([FromBody] LogoutRequestDto logoutRequestDto)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(logoutRequestDto.RefreshToken))
+                {
+                    return StatusCode(400, "Refresh token is required.");
+                }
+
+                var user = await _context.Users.FirstOrDefaultAsync(u => u.RefreshToken == logoutRequestDto.RefreshToken);
+
+                if (user == null)
+                {
+                    return StatusCode(404, "Invalid refresh token.");
+                }
+
+                user.RefreshToken = string.Empty;
+                _context.Update(user);
+                await _context.SaveChangesAsync();
+
+                return StatusCode(200, "Logout successful.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred during logout.");
+            }
+        }
+
+        [Authorize(Policy = "AdminOnly")]
+        [HttpPost("revokeToken")]
+        public async Task<ActionResult> RevokeToken([FromBody] RevokeTokenRequestDto revokeTokenRequestDto, int? userId = null)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(revokeTokenRequestDto.RefreshToken) && !userId.HasValue)
+                {
+                    return StatusCode(400, "Either refresh token or user ID is required.");
+                }
+
+                User user = null;
+
+                if (!string.IsNullOrEmpty(revokeTokenRequestDto.RefreshToken))
+                {
+                    user = await _context.Users.FirstOrDefaultAsync(u => u.RefreshToken == revokeTokenRequestDto.RefreshToken);
+                }
+                else if (userId.HasValue)
+                {
+                    user = await _context.Users.FirstOrDefaultAsync(u => u.UserId == userId.Value);
+                }
+
+                if (user == null)
+                {
+                    return StatusCode(404, "User not found.");
+                }
+
+                user.RefreshToken = string.Empty;
+                _context.Update(user);
+                await _context.SaveChangesAsync();
+
+                return StatusCode(200, "Token successfully revoked.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while revoking the token.");
+            }
+        }
+
+
         [Authorize(Policy = "AdminOnly")]
         [HttpPut("updateUserRole/{userId}")]
         public async Task<ActionResult> UpdateUserRole(int userId, string Role)
@@ -333,9 +403,9 @@ namespace ProjektBackend.Controllers
 
                 if (existingUser != null)
                 {
-                    existingUser.FirstName = updateUserDto.FirstName;
-                    existingUser.LastName = updateUserDto.LastName;
-                    existingUser.Email = updateUserDto.Email;
+                    existingUser.FirstName = updateUserDto.FirstName ?? existingUser.FirstName;
+                    existingUser.LastName = updateUserDto.LastName ?? existingUser.LastName;
+                    existingUser.Email = updateUserDto.Email ?? existingUser.Email;
                     if (!updateUserDto.Email.Contains("@"))
                     {
                         return StatusCode(418, "Invalid Email address.");

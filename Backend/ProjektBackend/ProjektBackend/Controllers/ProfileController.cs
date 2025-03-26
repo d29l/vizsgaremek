@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using ProjektBackend.Models;
 using System.Security.Claims;
@@ -15,10 +16,17 @@ namespace ProjektBackend.Controllers
     public class ProfileController : ControllerBase
     {
         private readonly ProjektContext _context;
+        private readonly string _storagePath = Path.Combine(Directory.GetCurrentDirectory(), "Storage", "Images");
 
         public ProfileController(ProjektContext context)
         {
             _context = context;
+
+            // Ensure Storage/Images directory exists
+            if (!Directory.Exists(_storagePath))
+            {
+                Directory.CreateDirectory(_storagePath);
+            }
         }
 
         [Authorize(Policy = "AdminOnly")]
@@ -79,7 +87,7 @@ namespace ProjektBackend.Controllers
 
         [Authorize(Policy = "SelfOrAdmin")]
         [HttpPost("createProfile")]
-        public async Task<ActionResult<Profile>> CreateProfile(CreateProfileDto createProfileDto, int? userId = null)
+        public async Task<ActionResult<Profile>> CreateProfile([FromForm] CreateProfileDto? createProfileDto, int? userId = null)
         {
             try
             {
@@ -104,8 +112,12 @@ namespace ProjektBackend.Controllers
 
                 if (existingProfile != null)
                 {
-                    return Conflict(new { Message = "A profile already exists for this user." });
+                    return StatusCode(409, "A profile already exists for this user.");
                 }
+
+                string profilePictureUrl = createProfileDto.ProfilePicture != null
+                    ? await SaveImageAsync(createProfileDto.ProfilePicture)
+                    : "/Storage/Images/default.png";
 
                 var profile = new Profile
                 {
@@ -113,16 +125,13 @@ namespace ProjektBackend.Controllers
                     Headline = createProfileDto.Headline ?? null,
                     Bio = createProfileDto.Bio ?? null,
                     Location = createProfileDto.Location ?? null,
-                    ProfilePicture = "https://shorturl.at/Z5xgu"
+                    ProfilePicture = profilePictureUrl
                 };
-                if (profile != null)
-                {
-                    _context.Profiles.Add(profile);
-                    await _context.SaveChangesAsync();
 
-                    return StatusCode(201, "Profile created successfully.");
-                }
-                return StatusCode(400, "Invalid data.");
+                _context.Add(profile);
+                await _context.SaveChangesAsync();
+
+                return StatusCode(201, "Profile created successfully.");
             }
             catch (DbUpdateException dbEx)
             {
@@ -136,7 +145,7 @@ namespace ProjektBackend.Controllers
 
         [Authorize(Policy = "SelfOrAdmin")]
         [HttpPut("updateProfile")]
-        public async Task<ActionResult<Profile>> UpdateProfile(UpdateProfileDto updateProfileDto, int? userId = null)
+        public async Task<ActionResult<Profile>> UpdateProfile([FromForm] UpdateProfileDto updateProfileDto, int? userId = null)
         {
             try
             {
@@ -164,7 +173,11 @@ namespace ProjektBackend.Controllers
                     profile.Headline = updateProfileDto.Headline ?? profile.Headline;
                     profile.Bio = updateProfileDto.Bio ?? profile.Bio;
                     profile.Location = updateProfileDto.Location ?? profile.Location;
-                    profile.ProfilePicture = updateProfileDto.ProfilePicture ?? profile.ProfilePicture;
+
+                    if (updateProfileDto.ProfilePicture != null)
+                    {
+                        profile.ProfilePicture = await SaveImageAsync(updateProfileDto.ProfilePicture);
+                    }
 
                     _context.Profiles.Update(profile);
                     await _context.SaveChangesAsync();
@@ -182,6 +195,19 @@ namespace ProjektBackend.Controllers
             {
                 return StatusCode(500, "An error occurred while updating the profile.");
             }
+        }
+
+        private async Task<string> SaveImageAsync(IFormFile imageFile)
+        {
+            string fileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
+            string filePath = Path.Combine(_storagePath, fileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await imageFile.CopyToAsync(stream);
+            }
+
+            return $"/Storage/Images/{fileName}";
         }
     }
 }

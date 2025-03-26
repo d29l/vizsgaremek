@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using ProjektBackend.Models;
 using System.Security.Claims;
@@ -39,7 +40,6 @@ namespace ProjektBackend.Controllers
                 return StatusCode(500, "An error occurred while fetching employers.");
             }
         }
-
         [Authorize(Policy = "EmployerSelfOrAdmin")]
         [HttpGet("fetchEmployer")]
         public async Task<ActionResult<Employer>> FetchEmployer(int? userId = null)
@@ -75,7 +75,6 @@ namespace ProjektBackend.Controllers
                 return StatusCode(500, "An error occurred while fetching the employer.");
             }
         }
-
         [Authorize(Policy = "AdminOnly")]
         [HttpPost("postEmployer")]
         public async Task<ActionResult> PostEmployer(CreateEmployerDto createEmployerDto, int? userId = null)
@@ -126,7 +125,6 @@ namespace ProjektBackend.Controllers
                 return StatusCode(500, "An error occurred while creating the employer.");
             }
         }
-
         [Authorize(Policy = "EmployerSelfOrAdmin")]
         [HttpPut("editEmployer")]
         public async Task<ActionResult> EditEmployer(UpdateEmployerDto updateEmployerDto, int? userId = null)
@@ -174,7 +172,6 @@ namespace ProjektBackend.Controllers
                 return StatusCode(500, "An error occurred while updating the employer.");
             }
         }
-
         [Authorize(Policy = "AdminOnly")]
         [HttpDelete("deleteEmployer")]
         public async Task<ActionResult> DeleteEmployer(int? userId = null)

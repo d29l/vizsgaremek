@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using ProjektBackend.Models;
 using System.Configuration;
@@ -20,7 +21,6 @@ namespace ProjektBackend.Controllers
         {
             _context = context;
         }
-
         [Authorize]
         [HttpGet("fetchPosts")]
         public async Task<ActionResult<Post>> FetchPosts()
@@ -39,7 +39,6 @@ namespace ProjektBackend.Controllers
                 return StatusCode(500, "An error occurred while fetching posts.");
             }
         }
-
         [Authorize]
         [HttpGet("fetchPost/{PostId}")]
         public async Task<ActionResult<Post>> FetchPost(int PostId)
@@ -60,7 +59,6 @@ namespace ProjektBackend.Controllers
                 return StatusCode(500, "An error occurred while fetching the post.");
             }
         }
-
         [Authorize(Policy = "EmployerSelfOrAdmin")]
         [HttpPost("newPost")]
         public async Task<ActionResult<Post>> NewPost(CreatePostDto createPostDto, int EmployerId, int? userId = null)
@@ -110,7 +108,6 @@ namespace ProjektBackend.Controllers
                 return StatusCode(500, "An error occurred while creating the post.");
             }
         }
-
         [Authorize(Policy = "EmployerSelfOrAdmin")]
         [HttpPut("editPost")]
         public async Task<ActionResult<Post>> EditPost(int PostId, int EmployerId, UpdatePostDto updatePostDto, int? userId = null)
@@ -157,7 +154,6 @@ namespace ProjektBackend.Controllers
                 return StatusCode(500, "An error occurred while updating the post.");
             }
         }
-
         [Authorize(Policy = "EmployerSelfOrAdmin")]
         [HttpDelete("deletePost")]
         public async Task<ActionResult> DeletePost(int PostId, int EmployerId, int? userId = null)

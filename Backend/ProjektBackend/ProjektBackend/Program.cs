@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -57,7 +58,7 @@ namespace ProjektBackend
                         factory: partition => new FixedWindowRateLimiterOptions
                         {
                             AutoReplenishment = true,
-                            PermitLimit = 50,
+                            PermitLimit = 100,
                             QueueLimit = 0,
                             Window = TimeSpan.FromMinutes(1)
                         }));
@@ -227,8 +228,6 @@ namespace ProjektBackend
             app.UseAuthorization();
 
             app.MapControllers();
-
-            
 
 
             app.Run();
