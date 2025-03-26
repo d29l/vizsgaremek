@@ -79,18 +79,19 @@ export default function LoginPage() {
         console.error("Profile doesn't exist");
         console.log("Attempting to create profile");
         try {
+
           const createResponse = await axios.post(
             `https://localhost:7077/api/profiles/createProfile?userId=${userId}`,
             {
               headline,
               bio: "Bio not filled in yet",
               location: "Location not filled in yet",
-              profilePicture,
+              profilePicture
             },
             {
               headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
-              },
+              }
             },
           );
         } catch (err) {

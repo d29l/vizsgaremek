@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { getUserId } from "../getUserId";
 import Navbar from "../Components/Navbar";
 import axios from "axios";
-import { getUserId } from "../getUserId";
-import { FaEdit } from "react-icons/fa";
 
 export default function SettingsPage() {
   const [currentPage, setCurrentPage] = useState("Account");
@@ -54,6 +54,7 @@ const AccountSettings = () => {
 
   const [accountDetailsPopout, setAccountDetailsPopout] = useState(false);
   const [passwordPopout, setPasswordPopout] = useState(false);
+  const [deletionPopout, setDeletionPopout] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -110,14 +111,23 @@ const AccountSettings = () => {
         </div>
       </div>
 
-      <label className="pb-2 font-bold text-lavender">Password</label>
-      <div class="mb-4 w-full rounded-lg border-[1px] border-surface1 p-5">
-        <label
-          className="mb-2 cursor-pointer text-sm font-bold text-red hover:underline"
+      <label className="pb-2 font-bold text-lavender">Danger zone</label>
+      <div class="mb-4 flex w-full flex-col space-y-4 rounded-lg border-[1px] border-red p-5">
+        <button
+          type="submit"
+          className="w-[12rem] rounded-lg border-[2px] border-red py-2 font-bold text-red hover:bg-red hover:text-mantle"
           onClick={() => setPasswordPopout(true)}
         >
           Change password
-        </label>
+        </button>
+
+        <button
+          type="submit"
+          className="w-[12rem] rounded-lg border-[2px] border-red py-2 font-bold text-red hover:bg-red hover:text-mantle"
+          onClick={() => setDeletionPopout(true)}
+        >
+          Delete account
+        </button>
       </div>
 
       {accountDetailsPopout && (
@@ -131,6 +141,10 @@ const AccountSettings = () => {
 
       {passwordPopout && (
         <PasswordPopout onClose={() => setPasswordPopout(false)} />
+      )}
+
+      {deletionPopout && (
+        <AccountDeletionPopout onClose={() => setDeletionPopout(false)} />
       )}
     </div>
   );
@@ -333,10 +347,99 @@ const PasswordPopout = ({ onClose }) => {
 
           <button
             type="submit"
-            className="mt-4 w-full rounded-lg bg-red py-2 font-bold text-mantle hover:bg-lavender/90"
+            className="mt-4 w-full rounded-lg bg-lavender py-2 font-bold text-mantle hover:bg-lavender/90"
           >
             Save Changes
           </button>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+const AccountDeletionPopout = ({ onClose }) => {
+  const [secondStage, setSecondStage] = useState(false);
+
+  const navigate = useNavigate();
+
+  const handleDeletion = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.delete(
+        `https://localhost:7077/api/users/deleteUser`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        },
+      );
+
+      if (response.status === 200) {
+        localStorage.clear();
+        navigate("/login");
+      }
+    } catch (err) {
+      console.error("Failed to delete account: ", err);
+    }
+  };
+
+  const handleStageTwoCancel = () => {
+    setSecondStage(false);
+    onClose();
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-crust/80">
+      <div className="relative mx-5 w-full max-w-md rounded-lg bg-base p-6 shadow-xl">
+        <button
+          onClick={onClose}
+          className="absolute right-4 top-4 text-3xl text-lavender"
+        >
+          ×
+        </button>
+        <h2 className="mb-4 text-2xl font-bold text-text">Delete Account</h2>
+
+        <form className="flex flex-col space-y-4" onSubmit={handleDeletion}>
+          {!secondStage && (
+            <button
+              type="submit"
+              className="w-full rounded-lg border-[2px] border-red py-2 font-bold text-red hover:bg-red hover:text-mantle"
+              onClick={() => setSecondStage(true)}
+            >
+              Delete account
+            </button>
+          )}
+
+          {secondStage && (
+            <div class="text-center">
+              <div className="flex flex-col">
+                <label className="text-xl font-bold text-text">
+                  Are you sure?
+                </label>
+                <label className="mb-6 text-sm text-subtext0">
+                  This is irreversible
+                </label>
+              </div>
+
+              <div class="flex flex-row items-center justify-between px-12">
+                <button
+                  type="submit"
+                  className="w-[8rem] rounded-lg border-[2px] border-red py-2 font-bold text-red hover:bg-red hover:text-mantle"
+                  onClick={handleDeletion}
+                >
+                  Confirm
+                </button>
+                <button
+                  type="submit"
+                  className="w-[8rem] rounded-lg bg-lavender py-2 font-bold text-mantle hover:bg-lavender/90"
+                  onClick={handleStageTwoCancel}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
         </form>
       </div>
     </div>
