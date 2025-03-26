@@ -7,7 +7,7 @@
       Title="Dashboard"
       FontFamily="Open Sans"
       Background="#2A2A3F">
-    <!-- Matching quick stats background -->
+    
 
     <Page.Resources>
         <!-- Button Style for Dashboard Buttons -->

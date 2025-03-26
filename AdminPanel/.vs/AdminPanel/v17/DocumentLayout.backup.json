@@ -3,40 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\ablonczya\\Desktop\\vizsgaremek\\vizsgaremek\\desktop\\AdminPanel\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{46F0E081-A9A6-4112-ABC1-F5FDA48E94E7}|AdminPanel\\AdminPanel.csproj|C:\\Users\\ablonczya\\Desktop\\vizsgaremek\\vizsgaremek\\desktop\\AdminPanel\\adminpanel\\dashboard.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{46F0E081-A9A6-4112-ABC1-F5FDA48E94E7}|AdminPanel\\AdminPanel.csproj|solutionrelative:adminpanel\\dashboard.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{46F0E081-A9A6-4112-ABC1-F5FDA48E94E7}|AdminPanel\\AdminPanel.csproj|C:\\Users\\ablonczya\\Desktop\\vizsgaremek\\vizsgaremek\\desktop\\AdminPanel\\adminpanel\\userspage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{46F0E081-A9A6-4112-ABC1-F5FDA48E94E7}|AdminPanel\\AdminPanel.csproj|solutionrelative:adminpanel\\userspage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{46F0E081-A9A6-4112-ABC1-F5FDA48E94E7}|AdminPanel\\AdminPanel.csproj|C:\\Users\\ablonczya\\Desktop\\vizsgaremek\\vizsgaremek\\desktop\\AdminPanel\\adminpanel\\dashboard.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{46F0E081-A9A6-4112-ABC1-F5FDA48E94E7}|AdminPanel\\AdminPanel.csproj|solutionrelative:adminpanel\\dashboard.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{46F0E081-A9A6-4112-ABC1-F5FDA48E94E7}|AdminPanel\\AdminPanel.csproj|C:\\Users\\ablonczya\\Desktop\\vizsgaremek\\vizsgaremek\\desktop\\AdminPanel\\adminpanel\\postspage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{46F0E081-A9A6-4112-ABC1-F5FDA48E94E7}|AdminPanel\\AdminPanel.csproj|solutionrelative:adminpanel\\postspage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{46F0E081-A9A6-4112-ABC1-F5FDA48E94E7}|AdminPanel\\AdminPanel.csproj|c:\\users\\ablonczya\\desktop\\vizsgaremek\\vizsgaremek\\desktop\\adminpanel\\adminpanel\\postspage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{46F0E081-A9A6-4112-ABC1-F5FDA48E94E7}|AdminPanel\\AdminPanel.csproj|solutionrelative:adminpanel\\postspage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{46F0E081-A9A6-4112-ABC1-F5FDA48E94E7}|AdminPanel\\AdminPanel.csproj|C:\\Users\\ablonczya\\Desktop\\vizsgaremek\\vizsgaremek\\desktop\\AdminPanel\\adminpanel\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{46F0E081-A9A6-4112-ABC1-F5FDA48E94E7}|AdminPanel\\AdminPanel.csproj|solutionrelative:adminpanel\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{46F0E081-A9A6-4112-ABC1-F5FDA48E94E7}|AdminPanel\\AdminPanel.csproj|C:\\Users\\ablonczya\\Desktop\\vizsgaremek\\vizsgaremek\\desktop\\AdminPanel\\adminpanel\\apiclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{46F0E081-A9A6-4112-ABC1-F5FDA48E94E7}|AdminPanel\\AdminPanel.csproj|solutionrelative:adminpanel\\apiclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{46F0E081-A9A6-4112-ABC1-F5FDA48E94E7}|AdminPanel\\AdminPanel.csproj|c:\\users\\ablonczya\\desktop\\vizsgaremek\\vizsgaremek\\desktop\\adminpanel\\adminpanel\\loginpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{46F0E081-A9A6-4112-ABC1-F5FDA48E94E7}|AdminPanel\\AdminPanel.csproj|solutionrelative:adminpanel\\loginpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{46F0E081-A9A6-4112-ABC1-F5FDA48E94E7}|AdminPanel\\AdminPanel.csproj|C:\\Users\\ablonczya\\Desktop\\vizsgaremek\\vizsgaremek\\desktop\\AdminPanel\\adminpanel\\loginpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{46F0E081-A9A6-4112-ABC1-F5FDA48E94E7}|AdminPanel\\AdminPanel.csproj|solutionrelative:adminpanel\\loginpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{46F0E081-A9A6-4112-ABC1-F5FDA48E94E7}|AdminPanel\\AdminPanel.csproj|C:\\Users\\ablonczya\\Desktop\\vizsgaremek\\vizsgaremek\\desktop\\AdminPanel\\adminpanel\\employerrequestspage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{46F0E081-A9A6-4112-ABC1-F5FDA48E94E7}|AdminPanel\\AdminPanel.csproj|solutionrelative:adminpanel\\employerrequestspage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -46,121 +18,31 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "PostsPage.xaml.cs",
-              "DocumentMoniker": "C:\\Users\\ablonczya\\Desktop\\vizsgaremek\\vizsgaremek\\desktop\\AdminPanel\\AdminPanel\\PostsPage.xaml.cs",
-              "RelativeDocumentMoniker": "AdminPanel\\PostsPage.xaml.cs",
-              "ToolTip": "C:\\Users\\ablonczya\\Desktop\\vizsgaremek\\vizsgaremek\\desktop\\AdminPanel\\AdminPanel\\PostsPage.xaml.cs",
-              "RelativeToolTip": "AdminPanel\\PostsPage.xaml.cs",
-              "ViewState": "AgIAAEgAAAAAAAAAAAAowIoAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-26T09:06:39.094Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Dashboard.xaml",
-              "DocumentMoniker": "C:\\Users\\ablonczya\\Desktop\\vizsgaremek\\vizsgaremek\\desktop\\AdminPanel\\AdminPanel\\Dashboard.xaml",
-              "RelativeDocumentMoniker": "AdminPanel\\Dashboard.xaml",
-              "ToolTip": "C:\\Users\\ablonczya\\Desktop\\vizsgaremek\\vizsgaremek\\desktop\\AdminPanel\\AdminPanel\\Dashboard.xaml",
-              "RelativeToolTip": "AdminPanel\\Dashboard.xaml",
+              "Title": "LoginPage.xaml",
+              "DocumentMoniker": "C:\\Users\\ablonczya\\Desktop\\vizsgaremek\\vizsgaremek\\desktop\\AdminPanel\\AdminPanel\\LoginPage.xaml",
+              "RelativeDocumentMoniker": "AdminPanel\\LoginPage.xaml",
+              "ToolTip": "C:\\Users\\ablonczya\\Desktop\\vizsgaremek\\vizsgaremek\\desktop\\AdminPanel\\AdminPanel\\LoginPage.xaml",
+              "RelativeToolTip": "AdminPanel\\LoginPage.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-03-03T08:35:26.026Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Dashboard.xaml.cs",
-              "DocumentMoniker": "C:\\Users\\ablonczya\\Desktop\\vizsgaremek\\vizsgaremek\\desktop\\AdminPanel\\AdminPanel\\Dashboard.xaml.cs",
-              "RelativeDocumentMoniker": "AdminPanel\\Dashboard.xaml.cs",
-              "ToolTip": "C:\\Users\\ablonczya\\Desktop\\vizsgaremek\\vizsgaremek\\desktop\\AdminPanel\\AdminPanel\\Dashboard.xaml.cs",
-              "RelativeToolTip": "AdminPanel\\Dashboard.xaml.cs",
-              "ViewState": "AgIAACIAAAAAAAAAAAAkwHAAAAAgAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-03T08:35:44.323Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "ApiClient.cs",
-              "DocumentMoniker": "C:\\Users\\ablonczya\\Desktop\\vizsgaremek\\vizsgaremek\\desktop\\AdminPanel\\AdminPanel\\ApiClient.cs",
-              "RelativeDocumentMoniker": "AdminPanel\\ApiClient.cs",
-              "ToolTip": "C:\\Users\\ablonczya\\Desktop\\vizsgaremek\\vizsgaremek\\desktop\\AdminPanel\\AdminPanel\\ApiClient.cs",
-              "RelativeToolTip": "AdminPanel\\ApiClient.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-06T10:04:35.16Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "PostsPage.xaml",
-              "DocumentMoniker": "C:\\Users\\ablonczya\\Desktop\\vizsgaremek\\vizsgaremek\\desktop\\AdminPanel\\AdminPanel\\PostsPage.xaml",
-              "RelativeDocumentMoniker": "AdminPanel\\PostsPage.xaml",
-              "ToolTip": "C:\\Users\\ablonczya\\Desktop\\vizsgaremek\\vizsgaremek\\desktop\\AdminPanel\\AdminPanel\\PostsPage.xaml",
-              "RelativeToolTip": "AdminPanel\\PostsPage.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-03-20T08:19:08.237Z",
+              "WhenOpened": "2025-03-26T10:09:08.9Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "UsersPage.xaml.cs",
-              "DocumentMoniker": "C:\\Users\\ablonczya\\Desktop\\vizsgaremek\\vizsgaremek\\desktop\\AdminPanel\\AdminPanel\\UsersPage.xaml.cs",
-              "RelativeDocumentMoniker": "AdminPanel\\UsersPage.xaml.cs",
-              "ToolTip": "C:\\Users\\ablonczya\\Desktop\\vizsgaremek\\vizsgaremek\\desktop\\AdminPanel\\AdminPanel\\UsersPage.xaml.cs",
-              "RelativeToolTip": "AdminPanel\\UsersPage.xaml.cs",
-              "ViewState": "AgIAAFgAAAAAAAAAAAAAAHEAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-06T08:16:44.045Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "User.cs",
-              "DocumentMoniker": "C:\\Users\\ablonczya\\Desktop\\vizsgaremek\\vizsgaremek\\desktop\\AdminPanel\\AdminPanel\\User.cs",
-              "RelativeDocumentMoniker": "AdminPanel\\User.cs",
-              "ToolTip": "C:\\Users\\ablonczya\\Desktop\\vizsgaremek\\vizsgaremek\\desktop\\AdminPanel\\AdminPanel\\User.cs",
-              "RelativeToolTip": "AdminPanel\\User.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAkwCAAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-06T08:18:22.124Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
               "Title": "LoginPage.xaml.cs",
               "DocumentMoniker": "C:\\Users\\ablonczya\\Desktop\\vizsgaremek\\vizsgaremek\\desktop\\AdminPanel\\AdminPanel\\LoginPage.xaml.cs",
               "RelativeDocumentMoniker": "AdminPanel\\LoginPage.xaml.cs",
               "ToolTip": "C:\\Users\\ablonczya\\Desktop\\vizsgaremek\\vizsgaremek\\desktop\\AdminPanel\\AdminPanel\\LoginPage.xaml.cs",
               "RelativeToolTip": "AdminPanel\\LoginPage.xaml.cs",
-              "ViewState": "AgIAACEAAAAAAAAAAAAxwDsAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAADcAAAAAAAAAAAAkwFwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-03T09:44:36.588Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "EmployerRequestsPage.xaml.cs",
-              "DocumentMoniker": "C:\\Users\\ablonczya\\Desktop\\vizsgaremek\\vizsgaremek\\desktop\\AdminPanel\\AdminPanel\\EmployerRequestsPage.xaml.cs",
-              "RelativeDocumentMoniker": "AdminPanel\\EmployerRequestsPage.xaml.cs",
-              "ToolTip": "C:\\Users\\ablonczya\\Desktop\\vizsgaremek\\vizsgaremek\\desktop\\AdminPanel\\AdminPanel\\EmployerRequestsPage.xaml.cs",
-              "RelativeToolTip": "AdminPanel\\EmployerRequestsPage.xaml.cs",
-              "ViewState": "AgIAAK0AAAAAAAAAAAA0wL4AAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-13T09:46:36.417Z",
               "EditorCaption": ""
             }
           ]

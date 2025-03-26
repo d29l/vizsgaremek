@@ -7,7 +7,7 @@
       mc:Ignorable="d"
       Title="LoginPage">
 
-    <Grid Background="#1E1E2E">
+    <Grid Background="#313244">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
@@ -24,14 +24,23 @@
                 BorderBrush="#585B70"
                 BorderThickness="1"
                 Effect="{StaticResource ShadowEffect}">
-
+            <!-- Increase RowDefinitions to accommodate the Show Password toggle and inline message -->
             <Grid Margin="30">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
+                    <!-- Header -->
                     <RowDefinition Height="Auto"/>
+                    <!-- Username Field -->
                     <RowDefinition Height="Auto"/>
+                    <!-- Password Field -->
                     <RowDefinition Height="Auto"/>
+                    <!-- Show Password Toggle -->
                     <RowDefinition Height="Auto"/>
+                    <!-- Login Button -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- Inline Message -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- Loading Indicator -->
                 </Grid.RowDefinitions>
 
                 <!-- Header -->
@@ -67,7 +76,8 @@
                                    Style="{StaticResource TextBoxPlaceholderStyle}"
                                    Visibility="{Binding Text, ElementName=userName, Converter={StaticResource StringToVisibilityConverter}}"
                                    Margin="12,0" 
-                                   VerticalAlignment="Center"/>
+                                   VerticalAlignment="Center"
+                                   IsHitTestVisible="False"/>
                     </Grid>
                 </Border>
 
@@ -75,8 +85,9 @@
                 <Border Grid.Row="2" 
                         CornerRadius="8" 
                         Background="#45475A"
-                        Margin="0,0,0,25">
+                        Margin="0,0,0,15">
                     <Grid>
+                        <!-- Hidden PasswordBox -->
                         <PasswordBox Name="Password" 
                                      Background="Transparent"
                                      Foreground="#CDD6F4"
@@ -86,18 +97,39 @@
                                      CaretBrush="#CDD6F4"
                                      PasswordChanged="Password_PasswordChanged"
                                      HorizontalAlignment="Stretch"/>
+                        <!-- Plain text TextBox (initially collapsed) -->
+                        <TextBox Name="plainPassword"
+                                 Background="Transparent"
+                                 Foreground="#CDD6F4"
+                                 BorderThickness="0"
+                                 Padding="12,10"
+                                 FontSize="14"
+                                 Visibility="Collapsed"
+                                 HorizontalAlignment="Stretch"
+                                 TextChanged="PlainPassword_TextChanged"/>
                         <TextBlock x:Name="PasswordPlaceholder" 
                                    Text="Enter your password" 
                                    Foreground="#7F849C"
                                    Style="{StaticResource PasswordBoxPlaceholderStyle}"
-                                   Visibility="Visible"
+                                   Visibility="{Binding ElementName=Password, Path=Password, Converter={StaticResource StringToVisibilityConverter}}"
                                    Margin="12,0" 
-                                   VerticalAlignment="Center"/>
+                                   VerticalAlignment="Center"
+                                   IsHitTestVisible="False"/>
                     </Grid>
                 </Border>
 
+                <!-- Show Password Toggle -->
+                <CheckBox Grid.Row="3"
+                          Content="Show Password"
+                          Foreground="#CDD6F4"
+                          FontSize="14"
+                          HorizontalAlignment="Left"
+                          Margin="0,0,0,15"
+                          Checked="ShowPassword_Checked"
+                          Unchecked="ShowPassword_Unchecked"/>
+
                 <!-- Login Button -->
-                <Button Grid.Row="3" 
+                <Button Grid.Row="4" 
                         Content="Sign In" 
                         Click="SignIn_Click"
                         Background="#CBA6F7"
@@ -132,8 +164,18 @@
                     </Button.Style>
                 </Button>
 
+                <!-- Inline Message (for login success/error) -->
+                <TextBlock Grid.Row="5" 
+                           Name="InlineMessage" 
+                           Text="" 
+                           FontSize="14" 
+                           FontWeight="SemiBold" 
+                           TextAlignment="Center"
+                           Margin="0,10,0,0"
+                           Foreground="White"/>
+
                 <!-- Loading Indicator -->
-                <ProgressBar Grid.Row="4" 
+                <ProgressBar Grid.Row="6" 
                              Height="4"
                              Margin="0,15,0,0"
                              IsIndeterminate="True"
