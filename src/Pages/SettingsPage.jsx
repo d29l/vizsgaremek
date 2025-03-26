@@ -52,7 +52,8 @@ const AccountSettings = () => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
 
-  const [popoutOpen, setPopoutOpen] = useState(false);
+  const [accountDetailsPopout, setAccountDetailsPopout] = useState(false);
+  const [passwordPopout, setPasswordPopout] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -78,30 +79,12 @@ const AccountSettings = () => {
     fetchUser();
   }, []);
 
-  const saveAccountDetails = (e) => {
-    const userId = getUserId();
-    e.preventDefault();
-
-    const response = axios.put(
-      `https://localhost:7077/api/users/updateUser/${userId}`,
-      {
-        firstName,
-        lastName,
-        email,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      },
-    );
-  };
   return (
     <div class="flex w-full flex-col">
       {/* Account details */}
       <label className="pb-2 font-bold text-lavender">Account details</label>
       <div class="mb-4 w-full rounded-lg border-[1px] border-surface1 p-5">
-        <form class="flex flex-col" onSubmit={saveAccountDetails}>
+        <div class="flex flex-col">
           <div class="flex flex-row items-center">
             <label className="mb-2 font-bold text-text">First Name: </label>
             <label className="mb-2 ml-2 text-subtext0">{firstName}</label>
@@ -120,19 +103,34 @@ const AccountSettings = () => {
 
           <label
             className="mb-2 cursor-pointer text-sm text-lavender hover:underline"
-            onClick={() => setPopoutOpen(true)}
+            onClick={() => setAccountDetailsPopout(true)}
           >
             Edit
           </label>
-        </form>
+        </div>
       </div>
-      {popoutOpen && (
+
+      <label className="pb-2 font-bold text-lavender">Password</label>
+      <div class="mb-4 w-full rounded-lg border-[1px] border-surface1 p-5">
+        <label
+          className="mb-2 cursor-pointer text-sm font-bold text-red hover:underline"
+          onClick={() => setPasswordPopout(true)}
+        >
+          Change password
+        </label>
+      </div>
+
+      {accountDetailsPopout && (
         <AccountDetailsPopout
-          onClose={() => setPopoutOpen(false)}
+          onClose={() => setAccountDetailsPopout(false)}
           firstName={firstName}
           lastName={lastName}
           email={email}
         />
+      )}
+
+      {passwordPopout && (
+        <PasswordPopout onClose={() => setPasswordPopout(false)} />
       )}
     </div>
   );
@@ -237,6 +235,105 @@ const AccountDetailsPopout = ({ onClose, firstName, lastName, email }) => {
           <button
             type="submit"
             className="mt-4 w-full rounded-lg bg-lavender py-2 font-bold text-mantle hover:bg-lavender/90"
+          >
+            Save Changes
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+const PasswordPopout = ({ onClose }) => {
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
+
+  const [showPass, setShowPass] = useState(false);
+
+  const handleSave = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.put(
+        `https://localhost:7077/api/users/changePassword`,
+        {
+          currentPassword,
+          newPassword,
+          confirmNewPassword,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        },
+      );
+
+      if (response.status === 200) {
+        window.location.reload();
+      }
+    } catch (err) {
+      console.error("Failed to change password: ", err);
+    }
+  };
+
+  const handleShowPassword = (e) => {
+    const checked = e.target.checked;
+    setShowPass(checked);
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-crust/80">
+      <div className="relative mx-5 w-full max-w-md rounded-lg bg-base p-6 shadow-xl">
+        <button
+          onClick={onClose}
+          className="absolute right-4 top-4 text-3xl text-lavender"
+        >
+          ×
+        </button>
+        <h2 className="mb-4 text-2xl font-bold text-text">Change Password</h2>
+
+        <form className="flex flex-col space-y-4" onSubmit={handleSave}>
+          <div>
+            <label className="mb-2 block text-text">Current Password</label>
+            <input
+              type={showPass ? "text" : "password"}
+              onChange={(e) => setCurrentPassword(e.target.value)}
+              className="h-8 w-full rounded-lg bg-mantle px-2 text-subtext0 placeholder-surface2 focus:border-2 focus:border-lavender focus:outline-none"
+            />
+          </div>
+
+          <div>
+            <label className="mb-2 block text-text">New Password</label>
+            <input
+              type={showPass ? "text" : "password"}
+              onChange={(e) => setNewPassword(e.target.value)}
+              className="h-8 w-full rounded-lg bg-mantle px-2 text-subtext0 placeholder-surface2 focus:border-2 focus:border-lavender focus:outline-none"
+            />
+          </div>
+
+          <div>
+            <label className="mb-2 block text-text">Confirm New Password</label>
+            <input
+              type={showPass ? "text" : "password"}
+              onChange={(e) => setConfirmNewPassword(e.target.value)}
+              className="h-8 w-full rounded-lg bg-mantle px-2 text-subtext0 placeholder-surface2 focus:border-2 focus:border-lavender focus:outline-none"
+            />
+          </div>
+
+          <div>
+            <input
+              type="checkbox"
+              className="h-4 w-4 cursor-pointer appearance-none rounded border-2 border-subtext1 transition-colors duration-200 checked:bg-lavender focus:outline-none"
+              onChange={handleShowPassword}
+            />
+            <label className="ml-2 cursor-pointer select-none text-subtext1">
+              Show password
+            </label>
+          </div>
+
+          <button
+            type="submit"
+            className="mt-4 w-full rounded-lg bg-red py-2 font-bold text-mantle hover:bg-lavender/90"
           >
             Save Changes
           </button>
