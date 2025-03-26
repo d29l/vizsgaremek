@@ -22,7 +22,6 @@ namespace ProjektBackend.Controllers
         {
             _context = context;
 
-            // Ensure Storage/Images directory exists
             if (!Directory.Exists(_storagePath))
             {
                 Directory.CreateDirectory(_storagePath);
@@ -115,16 +114,14 @@ namespace ProjektBackend.Controllers
                     return StatusCode(409, "A profile already exists for this user.");
                 }
 
-                string profilePictureUrl = createProfileDto.ProfilePicture != null
-                    ? await SaveImageAsync(createProfileDto.ProfilePicture)
-                    : "/Storage/Images/default.png";
+                string profilePictureUrl = "/Storage/Images/default.png";
 
                 var profile = new Profile
                 {
                     UserId = targetUserId,
-                    Headline = createProfileDto.Headline ?? null,
-                    Bio = createProfileDto.Bio ?? null,
-                    Location = createProfileDto.Location ?? null,
+                    Headline = null,
+                    Bio = null,
+                    Location =  null,
                     ProfilePicture = profilePictureUrl
                 };
 

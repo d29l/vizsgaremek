@@ -10,10 +10,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitignore = .gitignore
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Storage", "Storage", "{491FEA09-0BFD-4AD7-A7CC-5E364453408A}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{38624948-86B6-4EF4-A0C6-D620357BE89B}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,10 +23,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{491FEA09-0BFD-4AD7-A7CC-5E364453408A} = {794770C4-BC38-4108-B923-0E083D4E5706}
-		{38624948-86B6-4EF4-A0C6-D620357BE89B} = {491FEA09-0BFD-4AD7-A7CC-5E364453408A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {70887728-7C7A-48BA-A09C-5E84B2FFA400}
