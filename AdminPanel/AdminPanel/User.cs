@@ -30,4 +30,5 @@ namespace AdminPanel
         [JsonPropertyName("isActive")]
         public bool IsActive { get; set; }
     }
+   
 }

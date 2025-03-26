@@ -7,7 +7,6 @@
       Title="Dashboard"
       FontFamily="Open Sans"
       Background="#2A2A3F">
-    
 
     <Page.Resources>
         <!-- Button Style for Dashboard Buttons -->
@@ -89,17 +88,15 @@
     </Page.Resources>
 
     <Grid Background="#2A2A3F">
-        <!-- Matching background -->
         <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="20">
             <StackPanel Orientation="Vertical" 
                        HorizontalAlignment="Center" 
                        VerticalAlignment="Center"
                        MaxWidth="800"
                        Margin="0,20,0,20">
-                <!-- Added vertical margin -->
-
-                <!-- Header -->
-                <TextBlock Text="Welcome to the Dashboard!" 
+                <!-- Header: Now displays "Welcome [username]" -->
+                <TextBlock x:Name="WelcomeText" 
+                           Text="Welcome" 
                            HorizontalAlignment="Center" 
                            FontSize="24"
                            FontWeight="SemiBold"

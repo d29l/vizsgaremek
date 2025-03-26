@@ -69,9 +69,9 @@ namespace AdminPanel
 
                 if (result == "Login successful")
                 {
+                    CurrentUser.UserName = userName.Text;  
                     InlineMessage.Foreground = new SolidColorBrush(Colors.LightGreen);
                     InlineMessage.Text = "Login successful.";
-                    // Navigate to Dashboard after a short delay (if desired)
                     await System.Threading.Tasks.Task.Delay(1000);
                     NavigationService.Navigate(new Dashboard());
                 }

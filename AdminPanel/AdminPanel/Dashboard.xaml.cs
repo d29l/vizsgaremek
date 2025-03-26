@@ -58,6 +58,9 @@ namespace AdminPanel
             InitializeComponent();
             DataContext = this;
             LoadCounts();
+
+            
+            WelcomeText.Text = "Welcome " + CurrentUser.UserName;
         }
 
         private async void LoadCounts()
