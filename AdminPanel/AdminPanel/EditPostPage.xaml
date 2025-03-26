@@ -4,11 +4,19 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d"
-      Title="EditPostPage" Height="450" Width="800">
+      Title="EditPostPage">
 
     <Grid Background="#1E1E2E">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Back button -->
+            <RowDefinition Height="*"/>
+            <!-- Main content -->
+        </Grid.RowDefinitions>
+
         <!-- Back Button -->
         <Button Content="Back"
+                Grid.Row="0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Margin="10,10,0,0"
@@ -35,19 +43,32 @@
             </Button.Style>
         </Button>
 
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock Text="Edit Post" FontSize="24" Foreground="#CDD6F4" Margin="0,20,0,20"/>
+        <!-- Main Content Grid -->
+        <Grid Grid.Row="1" Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <!-- Header -->
+                <RowDefinition Height="Auto"/>
+                <!-- Title label -->
+                <RowDefinition Height="Auto"/>
+                <!-- Title textbox -->
+                <RowDefinition Height="Auto"/>
+                <!-- Content label -->
+                <RowDefinition Height="Auto"/>
+                <!-- Content textbox -->
+                <RowDefinition Height="Auto"/>
+                <!-- Buttons -->
+            </Grid.RowDefinitions>
 
-            <TextBlock Text="Title:" Foreground="#CDD6F4"/>
-            <TextBox x:Name="TitleTextBox" Width="400" Margin="0,0,0,10"/>
-
-            <TextBlock Text="Content:" Foreground="#CDD6F4"/>
-            <TextBox x:Name="ContentTextBox" Width="400" Height="200" TextWrapping="Wrap" AcceptsReturn="True" Margin="0,0,0,10"/>
-
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <TextBlock Grid.Row="0" Text="Edit Post" FontSize="24" Foreground="#CDD6F4" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+            <TextBlock Grid.Row="1" Text="Title:" Foreground="#CDD6F4" Margin="0,0,0,5"/>
+            <TextBox Grid.Row="2" x:Name="TitleTextBox" HorizontalAlignment="Stretch" Margin="0,0,0,10"/>
+            <TextBlock Grid.Row="3" Text="Content:" Foreground="#CDD6F4" Margin="0,0,0,5"/>
+            <TextBox Grid.Row="4" x:Name="ContentTextBox" HorizontalAlignment="Stretch" Height="200" TextWrapping="Wrap" AcceptsReturn="True" Margin="0,0,0,10"/>
+            <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Content="Save" Click="Save_Click" Margin="10,0,10,0" Padding="10,5" Background="#A6E3A1" Foreground="#1E1E2E"/>
                 <Button Content="Cancel" Click="Cancel_Click" Margin="10,0,10,0" Padding="10,5" Background="#F38BA8" Foreground="#1E1E2E"/>
             </StackPanel>
-        </StackPanel>
+        </Grid>
     </Grid>
 </Page>

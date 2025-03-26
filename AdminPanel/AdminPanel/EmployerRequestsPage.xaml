@@ -4,13 +4,19 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d"
-      Title="EmployerRequestsPage" 
-      Height="450" 
-      Width="800">
+      Title="EmployerRequestsPage">
 
     <Grid Background="#1E1E2E">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Back button -->
+            <RowDefinition Height="*"/>
+            <!-- Main content -->
+        </Grid.RowDefinitions>
+
         <!-- Back Button -->
         <Button Content="Back"
+                Grid.Row="0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Margin="10,10,0,0"
@@ -37,9 +43,18 @@
             </Button.Style>
         </Button>
 
-        <StackPanel HorizontalAlignment="Center" Margin="0,50,0,0">
+        <!-- Main Content Grid -->
+        <Grid Grid.Row="1" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <!-- Header -->
+                <RowDefinition Height="*"/>
+                <!-- ListView -->
+            </Grid.RowDefinitions>
+
             <!-- Header -->
             <TextBlock Text="Employer Requests" 
+                       Grid.Row="0"
                        HorizontalAlignment="Center"
                        FontSize="24"
                        Foreground="#CDD6F4"
@@ -47,7 +62,9 @@
 
             <!-- Requests List -->
             <ListView x:Name="RequestsListView"
-                      Width="700"
+                      Grid.Row="1"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch"
                       Background="#313244"
                       BorderBrush="#585B70"
                       BorderThickness="1">
@@ -83,6 +100,6 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-        </StackPanel>
+        </Grid>
     </Grid>
 </Page>

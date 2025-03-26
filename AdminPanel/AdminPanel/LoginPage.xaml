@@ -5,20 +5,22 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:local="clr-namespace:AdminPanel"
       mc:Ignorable="d"
-      Title="LoginPage" 
-      Height="450" 
-      Width="800">
+      Title="LoginPage">
 
+    <Grid Background="#1E1E2E">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-    <Grid>
-        
-
-        <Border Background="#313244" 
+        <Border Grid.Column="1"
+                Background="#313244"
                 CornerRadius="15"
-                Width="350"
-                Height="400"
-                VerticalAlignment="Center"
+                MinWidth="300"
+                MaxWidth="400"
                 HorizontalAlignment="Center"
+                VerticalAlignment="Center"
                 BorderBrush="#585B70"
                 BorderThickness="1"
                 Effect="{StaticResource ShadowEffect}">
@@ -58,7 +60,8 @@
                                  BorderThickness="0"
                                  Padding="12,10"
                                  FontSize="14"
-                                 CaretBrush="#CDD6F4"/>
+                                 CaretBrush="#CDD6F4"
+                                 HorizontalAlignment="Stretch"/>
                         <TextBlock Text="Enter your username" 
                                    Foreground="#7F849C"
                                    Style="{StaticResource TextBoxPlaceholderStyle}"
@@ -81,7 +84,8 @@
                                      Padding="12,10"
                                      FontSize="14"
                                      CaretBrush="#CDD6F4"
-                                     PasswordChanged="Password_PasswordChanged"/>
+                                     PasswordChanged="Password_PasswordChanged"
+                                     HorizontalAlignment="Stretch"/>
                         <TextBlock x:Name="PasswordPlaceholder" 
                                    Text="Enter your password" 
                                    Foreground="#7F849C"
@@ -102,7 +106,8 @@
                         Padding="20,12"
                         FontSize="14"
                         FontWeight="SemiBold"
-                        Cursor="Hand">
+                        Cursor="Hand"
+                        HorizontalAlignment="Stretch">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Border CornerRadius="8"
@@ -135,7 +140,8 @@
                              Visibility="Collapsed"
                              x:Name="LoadingIndicator"
                              Foreground="#89DCEB"
-                             Background="Transparent"/>
+                             Background="Transparent"
+                             HorizontalAlignment="Stretch"/>
             </Grid>
         </Border>
     </Grid>

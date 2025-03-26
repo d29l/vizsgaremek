@@ -98,6 +98,22 @@ namespace AdminPanel
         {
             this.NavigationService.Navigate(new Dashboard());
         }
+        private void PostsListView_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            var gridView = PostsListView.View as GridView;
+            if (gridView != null)
+            {
+                double totalWidth = PostsListView.ActualWidth - SystemParameters.VerticalScrollBarWidth;
+                double availableWidth = totalWidth - 20; 
+
+                
+                double[] proportions = { 0.05, 0.2, 0.3, 0.15, 0.05, 0.15, 0.1 }; 
+                for (int i = 0; i < gridView.Columns.Count; i++)
+                {
+                    gridView.Columns[i].Width = availableWidth * proportions[i];
+                }
+            }
+        }
     }
 
     public class Post
