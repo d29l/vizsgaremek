@@ -13,6 +13,10 @@ public partial class Employer
 
     public string? CompanyAddress { get; set; }
 
+    public string CompanyEmail { get; set; } = null!;
+
+    public int CompanyPhoneNumber { get; set; }
+
     public string? Industry { get; set; }
 
     public string? CompanyWebsite { get; set; }

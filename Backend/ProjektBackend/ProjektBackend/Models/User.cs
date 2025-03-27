@@ -32,9 +32,9 @@ public partial class User
 
     public virtual ICollection<Connection> ConnectionRequesters { get; set; } = new List<Connection>();
 
-    public virtual Employerrequest? Employerrequest { get; set; }
+    public virtual Employer? Employers { get; set; }
 
-    public virtual ICollection<Employer> Employers { get; set; } = new List<Employer>();
+    public virtual Employerrequest? Employerrequest { get; set; }
 
     public virtual ICollection<Message> MessageReceivers { get; set; } = new List<Message>();
 

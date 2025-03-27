@@ -5,14 +5,18 @@ namespace ProjektBackend.Controllers
     // Post
     public record CreatePostDto
         (
-        string Title, 
-        string Content
+        string Title,
+        string Content,
+        string Category,
+        string Location
         );
 
     public record UpdatePostDto
         (
         string Title,
-        string Content
+        string Content,
+        string Category,
+        string Location
         );
 
     // User
@@ -38,16 +42,9 @@ namespace ProjektBackend.Controllers
         string Email
         );
 
-    public record CreateProfileDto
-        (
-        string Headline, 
-        string Bio, 
-        string Location,
-        IFormFile ProfilePicture
-        );
     public record UpdateProfileDto
         (
-        string Headline,
+        IFormFile Banner,
         string Bio,
         string Location,
         IFormFile ProfilePicture
@@ -57,6 +54,8 @@ namespace ProjektBackend.Controllers
         (
         string CompanyName,
         string CompanyAddress,
+        string CompanyEmail,
+        int CompanyPhoneNumber,
         string Industry,
         string CompanyWebsite,
         string CompanyDescription,
@@ -66,6 +65,8 @@ namespace ProjektBackend.Controllers
         (
         string CompanyName,
         string CompanyAddress,
+        string CompanyEmail,
+        int? CompanyPhoneNumber,
         string Industry,
         string CompanyWebsite,
         string CompanyDescription,
@@ -76,6 +77,8 @@ namespace ProjektBackend.Controllers
         (
         string CompanyName,
         string CompanyAddress,
+        string CompanyEmail,
+        int CompanyPhoneNumber,
         string Industry,
         string CompanyWebsite,
         string CompanyDescription,
@@ -85,6 +88,8 @@ namespace ProjektBackend.Controllers
         (
         string CompanyName,
         string CompanyAddress,
+        string CompanyEmail,
+        int CompanyPhoneNumber,
         string Industry,
         string CompanyWebsite,
         string CompanyDescription,

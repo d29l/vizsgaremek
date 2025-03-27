@@ -862,44 +862,6 @@
             }
           }
         ],
-        "requestBody": {
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "Headline": {
-                    "type": "string"
-                  },
-                  "Bio": {
-                    "type": "string"
-                  },
-                  "Location": {
-                    "type": "string"
-                  },
-                  "ProfilePicture": {
-                    "type": "string",
-                    "format": "binary"
-                  }
-                }
-              },
-              "encoding": {
-                "Headline": {
-                  "style": "form"
-                },
-                "Bio": {
-                  "style": "form"
-                },
-                "Location": {
-                  "style": "form"
-                },
-                "ProfilePicture": {
-                  "style": "form"
-                }
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "Success",
@@ -1889,13 +1851,6 @@
         "additionalProperties": false
       },
       "User": {
-        "required": [
-          "email",
-          "firstName",
-          "lastName",
-          "password",
-          "role"
-        ],
         "type": "object",
         "properties": {
           "userId": {
@@ -1903,31 +1858,31 @@
             "format": "int32"
           },
           "firstName": {
-            "minLength": 1,
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "lastName": {
-            "minLength": 1,
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "email": {
-            "minLength": 1,
             "type": "string",
-            "format": "email"
+            "format": "email",
+            "nullable": true
           },
           "password": {
-            "minLength": 1,
             "type": "string",
-            "format": "password"
+            "format": "password",
+            "nullable": true
           },
           "refreshToken": {
             "type": "string",
             "nullable": true
           },
           "role": {
-            "minLength": 1,
             "pattern": "^(Employee|Employer|Admin)$",
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "createdAt": {
             "type": "string",

@@ -9,7 +9,7 @@ public partial class Profile
 
     public int UserId { get; set; }
 
-    public string? Headline { get; set; }
+    public string? Banner { get; set; }
 
     public string? Bio { get; set; }
 

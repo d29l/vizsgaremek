@@ -40,7 +40,7 @@ namespace ProjektBackend.Controllers
                 return StatusCode(500, "An error occurred while fetching employers.");
             }
         }
-        [Authorize(Policy = "EmployerSelfOrAdmin")]
+        [Authorize]
         [HttpGet("fetchEmployer")]
         public async Task<ActionResult<Employer>> FetchEmployer(int? userId = null)
         {
@@ -102,6 +102,8 @@ namespace ProjektBackend.Controllers
                     UserId = targetUserId,
                     CompanyName = createEmployerDto.CompanyName,
                     CompanyAddress = createEmployerDto.CompanyAddress,
+                    CompanyEmail = createEmployerDto.CompanyEmail,
+                    CompanyPhoneNumber = createEmployerDto.CompanyPhoneNumber,
                     Industry = createEmployerDto.Industry,
                     CompanyWebsite = createEmployerDto.CompanyWebsite,
                     CompanyDescription = createEmployerDto.CompanyDescription,
@@ -153,6 +155,8 @@ namespace ProjektBackend.Controllers
                 {
                     existingEmployer.CompanyName = updateEmployerDto.CompanyName ?? existingEmployer.CompanyName;
                     existingEmployer.CompanyAddress = updateEmployerDto.CompanyAddress ?? existingEmployer.CompanyAddress;
+                    existingEmployer.CompanyEmail = updateEmployerDto.CompanyEmail ?? existingEmployer.CompanyEmail;
+                    existingEmployer.CompanyPhoneNumber = updateEmployerDto.CompanyPhoneNumber ?? existingEmployer.CompanyPhoneNumber;
                     existingEmployer.Industry = updateEmployerDto.Industry ?? existingEmployer.Industry;
                     existingEmployer.CompanyWebsite = updateEmployerDto.CompanyWebsite ?? existingEmployer.CompanyWebsite;
                     existingEmployer.CompanyDescription = updateEmployerDto.CompanyDescription ?? existingEmployer.CompanyDescription;

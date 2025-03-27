@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using ProjektBackend.Models;
 using System.Configuration;
 using System.Security.Claims;
+using static Google.Protobuf.Reflection.SourceCodeInfo.Types;
 
 #pragma warning disable CS0168
 
@@ -87,8 +88,9 @@ namespace ProjektBackend.Controllers
                     UserId = targetUserId,
                     Title = createPostDto.Title,
                     Content = createPostDto.Content,
-                    CreatedAt = DateTime.Now,
-                    Likes = 0
+                    Category = createPostDto.Category,
+                    Location = createPostDto.Location,
+                    CreatedAt = DateTime.Now
                 };
 
                 if (string.IsNullOrEmpty(createPostDto.Title) || string.IsNullOrEmpty(createPostDto.Content))
@@ -135,6 +137,8 @@ namespace ProjektBackend.Controllers
                 {
                     existingPost.Title = updatePostDto.Title ?? existingPost.Title;
                     existingPost.Content = updatePostDto.Content ?? existingPost.Content;
+                    existingPost.Category = updatePostDto.Category ?? existingPost.Category;
+                    existingPost.Location = updatePostDto.Location ?? existingPost.Location;
 
                     existingPost.CreatedAt = DateTime.Now;
 

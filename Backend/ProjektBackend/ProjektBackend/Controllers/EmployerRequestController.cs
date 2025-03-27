@@ -89,6 +89,8 @@ namespace ProjektBackend.Controllers
                     UserId = targetUserId,
                     CompanyName = createRequestDto.CompanyName,
                     CompanyAddress = createRequestDto.CompanyAddress,
+                    CompanyEmail = createRequestDto.CompanyEmail,
+                    CompanyPhoneNumber = createRequestDto.CompanyPhoneNumber,
                     Industry = createRequestDto.Industry,
                     CompanyWebsite = createRequestDto.CompanyWebsite,
                     CompanyDescription = createRequestDto.CompanyDescription,

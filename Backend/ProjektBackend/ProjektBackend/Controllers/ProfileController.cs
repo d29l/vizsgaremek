@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using ProjektBackend.Models;
+using System.Linq;
 using System.Security.Claims;
 
 #pragma warning disable CS8604
@@ -48,29 +49,29 @@ namespace ProjektBackend.Controllers
             }
         }
 
-        [Authorize(Policy = "SelfOrAdmin")]
+        [Authorize]
         [HttpGet("fetchProfile")]
         public async Task<ActionResult<Profile>> FetchProfile(int? userId = null)
         {
             try
             {
-                int targetUserId;
-                bool isAdmin = User.IsInRole("Admin");
 
-                if (userId.HasValue && isAdmin)
-                {
-                    targetUserId = userId.Value;
-                }
-                else
-                {
-                    var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-                    if (userIdClaim == null)
-                        return StatusCode(401, "User ID not found in token.");
-
-                    targetUserId = int.Parse(userIdClaim.Value);
-                }
-
-                var profile = await _context.Profiles.FirstOrDefaultAsync(x => x.UserId == targetUserId);
+                var profile = await _context.Profiles
+                    .Include(x => x.User)
+                    .Where(p => p.UserId == userId)
+                    .Select(p => new
+                    {
+                        p.UserId,
+                        p.User.FirstName,
+                        p.User.LastName,
+                        p.User.Role,
+                        p.User.CreatedAt,
+                        p.Banner,
+                        p.Bio,
+                        p.ProfilePicture,
+                        p.Location,
+                    })
+                    .FirstOrDefaultAsync(x => x.UserId == userId);
 
                 if (profile != null)
                 {
@@ -86,7 +87,7 @@ namespace ProjektBackend.Controllers
 
         [Authorize(Policy = "SelfOrAdmin")]
         [HttpPost("createProfile")]
-        public async Task<ActionResult<Profile>> CreateProfile([FromForm] CreateProfileDto? createProfileDto, int? userId = null)
+        public async Task<ActionResult<Profile>> CreateProfile( int? userId = null)
         {
             try
             {
@@ -115,13 +116,14 @@ namespace ProjektBackend.Controllers
                 }
 
                 string profilePictureUrl = "/Storage/Images/default.png";
+                string BannerUrl = "/Storage/Banners/default_banner.png";
 
                 var profile = new Profile
                 {
                     UserId = targetUserId,
-                    Headline = null,
-                    Bio = null,
-                    Location =  null,
+                    Banner = BannerUrl,
+                    Bio = string.Empty,
+                    Location =  string.Empty,
                     ProfilePicture = profilePictureUrl
                 };
 
@@ -167,13 +169,17 @@ namespace ProjektBackend.Controllers
 
                 if (profile != null)
                 {
-                    profile.Headline = updateProfileDto.Headline ?? profile.Headline;
                     profile.Bio = updateProfileDto.Bio ?? profile.Bio;
                     profile.Location = updateProfileDto.Location ?? profile.Location;
 
                     if (updateProfileDto.ProfilePicture != null)
                     {
                         profile.ProfilePicture = await SaveImageAsync(updateProfileDto.ProfilePicture);
+                    }
+
+                    if (updateProfileDto.Banner != null)
+                    {
+                        profile.Banner = await SaveImageAsync(updateProfileDto.Banner);
                     }
 
                     _context.Profiles.Update(profile);
