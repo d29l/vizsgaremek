@@ -10,16 +10,16 @@ import SettingsPage from "./Pages/SettingsPage";
 
 function App() {
   return (
-    <div class="macchiato">
-      <div className="bg-mantle overflow-hidden min-h-screen">
+    <div class="macchiato bg-mantle">
+      <div className="min-h-screen overflow-hidden bg-mantle">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/posts/:postId" element={<PostPage />} />
-          <Route path="/signup" element={<RegisterPage/>} />
-          <Route path="/login" element={<LoginPage/>} />
-          <Route path="/profiles/:userId" element={<ProfilePage/>} />
-          <Route path="/create-post" element={<CreatePost/>} />
-          <Route path="/settings" element={<SettingsPage/>} />
+          <Route path="/signup" element={<RegisterPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/profiles/:userId" element={<ProfilePage />} />
+          <Route path="/create-post" element={<CreatePost />} />
+          <Route path="/settings" element={<SettingsPage />} />
         </Routes>
       </div>
     </div>

@@ -9,30 +9,25 @@ export default function Navbar() {
   const navigate = useNavigate();
 
   const [profileClicked, setProfileClicked] = useState(false);
-  const [isEmployer, setIsEmployer] = useState(false);
   const [profilePicture, setProfilePicture] = useState("");
 
   useEffect(() => {
     const userId = getUserId();
-    const role = getRole();
-
-    if (role === "Employer") {
-      setIsEmployer(true);
-    }
     fetchProfile(userId);
   });
 
   const fetchProfile = async (userId) => {
     const response = await axios.get(
-      `https://localhost:7077/api/profiles/fetchProfile?${getUserId}`,
+      `https://localhost:7077/api/profiles/fetchProfile?`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
+        params: { userId }
       },
     );
 
-    setProfilePicture(response.data.profilePicture);
+    setProfilePicture("https://localhost:7077" + response.data.profilePicture);
   };
 
   const handleLogout = () => {
@@ -51,10 +46,6 @@ export default function Navbar() {
   const handleProfileLink = () => {
     const userId = getUserId();
     navigate(`/profiles/${userId}`);
-  };
-
-  const handleCreatePostClick = () => {
-    navigate("/create-post");
   };
 
   const handleHome = () => {
@@ -78,17 +69,8 @@ export default function Navbar() {
         </div>
 
         <div className="relative flex flex-row items-center">
-          {isEmployer && (
-            <h2
-              class="mr-4 cursor-pointer text-subtext1 hover:text-lavender hover:underline"
-              onClick={handleCreatePostClick}
-            >
-              New Post{" "}
-            </h2>
-          )}
-
           <div
-            className="mr-4 flex size-10 cursor-pointer items-center overflow-hidden rounded-full bg-surface0"
+            className="mr-4 flex size-10 cursor-pointer items-center overflow-hidden rounded-full bg-surface0 shadow-md border-2 border-lavender/45 shadow-crust"
             onClick={handleProfileClick}
           >
             <img src={profilePicture}></img>

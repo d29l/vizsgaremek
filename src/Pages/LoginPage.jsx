@@ -11,7 +11,7 @@ export default function LoginPage() {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
-  const [headline, setHeadline] = useState("");
+  const [banner, setBanner] = useState("");
   const [bio, setBio] = useState("");
   const [location, setLocation] = useState("");
   const [profilePicture, setProfilePicture] = useState("");
@@ -67,11 +67,12 @@ export default function LoginPage() {
   const fetchUserProfile = async (userId) => {
     try {
       const response = await axios.get(
-        `https://localhost:7077/api/profiles/fetchProfile?userId=${userId}`,
+        `https://localhost:7077/api/profiles/fetchProfile`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
+          params: { userId }
         },
       );
     } catch (err) {
@@ -81,9 +82,9 @@ export default function LoginPage() {
         try {
 
           const createResponse = await axios.post(
-            `https://localhost:7077/api/profiles/createProfile?userId=${userId}`,
+            `https://localhost:7077/api/profiles/createProfile`,
             {
-              headline,
+              banner,
               bio: "Bio not filled in yet",
               location: "Location not filled in yet",
               profilePicture
@@ -91,7 +92,8 @@ export default function LoginPage() {
             {
               headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
-              }
+              },
+              params: { userId: userId }
             },
           );
         } catch (err) {

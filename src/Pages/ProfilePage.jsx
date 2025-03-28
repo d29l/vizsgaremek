@@ -19,42 +19,36 @@ export default function ProfilePage() {
   const [editPopoutOpen, setEditPopoutOpen] = useState(false);
 
   useEffect(() => {
-    const fetchUser = async () => {
-      const response = await axios.get(
-        `https://localhost:7077/api/users/fetchUser/`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        },
-      );
-
-      const date = response.data.createdAt.split("T")[0];
-      const [year, month, day] = date.split("-");
-
-      setFirstName(response.data.firstName);
-      setLastName(response.data.lastName);
-      setCreationDate(`${year} ${month}/${day}`);
-      setRole(response.data.role);
-    };
-
     const fetchProfile = async (userId) => {
-      const response = await axios.get(
-        `https://localhost:7077/api/profiles/fetchProfile?${getUserId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+      try {
+        const response = await axios.get(
+          `https://localhost:7077/api/profiles/fetchProfile`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+            params: { userId: userId },
           },
-        },
-      );
+        );
 
-      setProfilePicture(response.data.profilePicture);
-      setBio(response.data.bio);
-      setLocation(response.data.location);
+        const date = response.data.createdAt.split("T")[0];
+        const [year, month, day] = date.split("-");
+
+        setProfilePicture(
+          "https://localhost:7077" + response.data.profilePicture,
+        );
+        setBio(response.data.bio);
+        setLocation(response.data.location);
+        setFirstName(response.data.firstName);
+        setLastName(response.data.lastName);
+        setCreationDate(`${year} ${month}/${day}`);
+        setRole(response.data.role);
+      } catch (err) {
+        console.error("There was an error fetching the profile: ", err);
+      }
     };
 
-    fetchUser();
-    fetchProfile();
+    fetchProfile(userId);
   }, [userId]);
 
   return (
@@ -63,10 +57,13 @@ export default function ProfilePage() {
       <div class="flex justify-center">
         <div class="m-5 flex min-h-[87.5vh] w-[52rem] flex-col items-center overflow-hidden rounded-lg bg-base p-8 shadow-lg">
           <div className="relative flex w-full justify-end">
-            <FaEdit className="absolute cursor-pointer text-xl text-text hover:text-lavender" onClick={() => setEditPopoutOpen(true)}/>
+            <FaEdit
+              className="absolute cursor-pointer text-xl text-text hover:text-lavender"
+              onClick={() => setEditPopoutOpen(true)}
+            />
           </div>
 
-          <div className="size-32 flex items-center overflow-hidden rounded-full bg-surface0">
+          <div className="flex size-32 items-center overflow-hidden rounded-full border-2 border-lavender/45 bg-surface0 shadow-md shadow-crust">
             <img src={profilePicture}></img>
           </div>
 
@@ -74,7 +71,7 @@ export default function ProfilePage() {
             {firstName} {lastName}
           </h1>
 
-          <p class="text-subtext1 text-md">{location}</p>
+          <p class="text-md text-subtext1">{location}</p>
           <p class="text-sm text-subtext0">({role})</p>
           <p class="text-md my-10 w-96 text-center text-text">{bio}</p>
           <p class="text-surface2">Created at: {creationDate}</p>
@@ -148,7 +145,7 @@ const ProfileEditPopout = ({ onClose, location, bio, profilePicture }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-crust/80">
-      <div className="relative w-full max-w-md rounded-lg bg-base p-6 shadow-xl mx-5">
+      <div className="relative mx-5 w-full max-w-md rounded-lg bg-base p-6 shadow-xl">
         <button
           onClick={onClose}
           className="absolute right-4 top-4 text-3xl text-lavender"
