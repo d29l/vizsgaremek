@@ -133,7 +133,10 @@ namespace AdminPanel
                                "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
         private async void Delete_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button button && button.Tag is int applicantId)

@@ -15,6 +15,10 @@ namespace AdminPanel
             LoadUsers();
         }
 
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
         private async void LoadUsers()
         {
             try

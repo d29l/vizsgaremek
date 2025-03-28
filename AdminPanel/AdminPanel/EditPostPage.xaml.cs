@@ -66,6 +66,10 @@ namespace AdminPanel
         {
             this.NavigationService.GoBack();
         }
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
     }
 
     public class UpdatePostDto

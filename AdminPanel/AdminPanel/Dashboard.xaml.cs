@@ -46,6 +46,7 @@ namespace AdminPanel
                 OnPropertyChanged(nameof(postCount));
             }
         }
+        
 
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)
@@ -63,6 +64,7 @@ namespace AdminPanel
             WelcomeText.Text = "Welcome " + CurrentUser.UserName;
         }
 
+        
         private async void LoadCounts()
         {
             try
@@ -120,7 +122,10 @@ namespace AdminPanel
                                 "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
         private void ManageRequests_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new EmployerRequestsPage());

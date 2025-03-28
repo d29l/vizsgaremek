@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:AdminPanel"
         mc:Ignorable="d"
         Background="#1E1E2E"
-        Title="Login Page" Height="450" Width="800">
+        WindowStyle="None"
+        Title="Admin Panel" Height="450" Width="800">
 
     <Grid>
         <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"/>

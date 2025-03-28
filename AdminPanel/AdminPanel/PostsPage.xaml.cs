@@ -81,7 +81,10 @@ namespace AdminPanel
             }
         }
 
-
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
         private void Edit_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button button)

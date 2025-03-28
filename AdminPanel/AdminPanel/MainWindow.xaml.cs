@@ -9,6 +9,7 @@ namespace AdminPanel
         public MainWindow()
         {
             InitializeComponent();
+            WindowState = WindowState.Maximized;
 
             MainFrame.Navigate(new LoginPage());
         }
