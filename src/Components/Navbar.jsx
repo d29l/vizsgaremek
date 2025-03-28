@@ -23,7 +23,7 @@ export default function Navbar() {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        params: { userId }
+        params: { userId },
       },
     );
 
@@ -70,10 +70,10 @@ export default function Navbar() {
 
         <div className="relative flex flex-row items-center">
           <div
-            className="mr-4 flex size-10 cursor-pointer items-center overflow-hidden rounded-full bg-surface0 shadow-md border-2 border-lavender/45 shadow-crust"
+            className="mr-4 flex size-10 cursor-pointer items-center overflow-hidden rounded-full border-2 border-lavender/45 bg-surface0 shadow-md shadow-crust"
             onClick={handleProfileClick}
           >
-            <img src={profilePicture}></img>
+            <img src={profilePicture} class="h-full w-full object-cover"></img>
           </div>
 
           {profileClicked && (

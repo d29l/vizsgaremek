@@ -16,6 +16,7 @@ export default function ProfilePage() {
   const [bio, setBio] = useState("");
   const [location, setLocation] = useState("");
   const [profilePicture, setProfilePicture] = useState("");
+  const [banner, setBanner] = useState("");
   const [editPopoutOpen, setEditPopoutOpen] = useState(false);
 
   useEffect(() => {
@@ -37,6 +38,7 @@ export default function ProfilePage() {
         setProfilePicture(
           "https://localhost:7077" + response.data.profilePicture,
         );
+        setBanner("https://localhost:7077" + response.data.banner)
         setBio(response.data.bio);
         setLocation(response.data.location);
         setFirstName(response.data.firstName);
@@ -55,7 +57,22 @@ export default function ProfilePage() {
     <div>
       <Navbar />
       <div class="flex justify-center">
-        <div class="m-5 flex min-h-[87.5vh] w-[52rem] flex-col items-center overflow-hidden rounded-lg bg-base p-8 shadow-lg">
+        <div class="m-5 flex min-h-[87.5vh] w-[52rem] flex-col items-center rounded-lg bg-base p-8 shadow-lg">
+
+          <div class="relative h-auto w-full mb-[3rem]">
+            <div class="h-[14rem] w-full bg-mantle rounded-lg flex overflow-hidden">
+              <img class="h-full w-full" src={banner}></img>
+            </div>
+
+            <div className="absolute left-1/2 flex size-32 -translate-x-1/2 -translate-y-[6rem] items-center overflow-hidden rounded-full border-2 border-lavender/45 bg-surface0 shadow-md shadow-crust">
+              <img
+                src={profilePicture}
+                className="h-full w-full object-cover"
+                alt="Profile"
+              />
+            </div>
+          </div>
+
           <div className="relative flex w-full justify-end">
             <FaEdit
               className="absolute cursor-pointer text-xl text-text hover:text-lavender"
@@ -63,11 +80,7 @@ export default function ProfilePage() {
             />
           </div>
 
-          <div className="flex size-32 items-center overflow-hidden rounded-full border-2 border-lavender/45 bg-surface0 shadow-md shadow-crust">
-            <img src={profilePicture}></img>
-          </div>
-
-          <h1 class="mt-4 text-3xl font-bold text-lavender">
+          <h1 class="text-3xl font-bold text-lavender">
             {firstName} {lastName}
           </h1>
 
@@ -207,7 +220,9 @@ const ProfileEditPopout = ({ onClose, location, bio, profilePicture }) => {
               Upload
             </label>
             <label className="mb-2 ml-2 mt-1 block text-text">
-              {selectedProfilePicture ? `${selectedProfilePicture.name}` : "No file selected"}
+              {selectedProfilePicture
+                ? `${selectedProfilePicture.name}`
+                : "No file selected"}
             </label>
           </div>
 
