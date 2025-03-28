@@ -85,7 +85,7 @@ export default function ProfilePage() {
           </h1>
 
           <p class="text-md text-subtext1">{location}</p>
-          <p class="text-sm text-subtext0">({role})</p>
+          <p class="text-sm text-subtext0">{role}</p>
           <p class="text-md my-10 w-96 text-center text-text">{bio}</p>
           <p class="text-surface2">Created at: {creationDate}</p>
         </div>

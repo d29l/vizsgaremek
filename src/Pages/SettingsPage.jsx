@@ -3,11 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { getUserId } from "../getUserId";
 import Navbar from "../Components/Navbar";
 import axios from "axios";
+import { getRole } from "../getRole";
 
 export default function SettingsPage() {
   const [currentPage, setCurrentPage] = useState("Account");
 
-  const tabs = ["Account"];
+  const tabs = ["Account", "Career"];
 
   const handlePageSwitch = (tab) => {
     setCurrentPage(tab);
@@ -40,6 +41,7 @@ export default function SettingsPage() {
           </div>
           <div className="flex flex-col items-start px-4 pt-8">
             {currentPage === "Account" && <AccountSettings />}
+            {currentPage === "Career" && <CareerSettings />}
           </div>
         </div>
       </div>
@@ -145,6 +147,59 @@ const AccountSettings = () => {
 
       {deletionPopout && (
         <AccountDeletionPopout onClose={() => setDeletionPopout(false)} />
+      )}
+    </div>
+  );
+};
+
+const CareerSettings = () => {
+  const [employerPopout, setEmployerPopout] = useState(false);
+  const role = getRole();
+
+  return (
+    <div class="flex w-full flex-col">
+      {/* Employer request */}
+      {role === "Employee" && (
+        <div>
+          <label className="pb-2 font-bold text-lavender">
+            Become an employer
+          </label>
+          <div class="mb-4 w-full rounded-lg border-[1px] border-surface1 p-5">
+            <div class="flex flex-col">
+              <label className="mb-2 font-bold text-text">
+                Join Our Network of Employers!
+              </label>
+
+              <p class="w-1/2 text-subtext1">
+                Looking for top talent to grow your team?
+                <br />
+                Partner with us and connect with skilled professionals ready to
+                make an impact.
+                <br />
+                Post jobs, find candidates, and build your dream workforce
+                effortlessly.
+              </p>
+
+              <button
+                type="submit"
+                className="mt-4 w-[12rem] rounded-lg border-[2px] border-lavender py-2 font-bold text-lavender hover:bg-lavender hover:text-mantle"
+                onClick={() => {
+                  setEmployerPopout(true);
+                }}
+              >
+                Get Started Today
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {employerPopout && (
+        <EmployerPopout
+          onClose={() => {
+            setEmployerPopout(false);
+          }}
+        />
       )}
     </div>
   );
@@ -440,6 +495,156 @@ const AccountDeletionPopout = ({ onClose }) => {
               </div>
             </div>
           )}
+        </form>
+      </div>
+    </div>
+  );
+};
+
+const EmployerPopout = ({ onClose }) => {
+  const [companyName, setCompanyName] = useState("");
+  const [companyAddress, setCompanyAddress] = useState("");
+  const [companyEmail, setCompanyEmail] = useState("");
+  const [companyPhoneNumber, setCompanyPhoneNumber] = useState(0);
+  const [industry, setIndustry] = useState("");
+  const [companyWebsite, setCompanyWebsite] = useState("");
+  const [companyDescription, setCompanyDescription] = useState("");
+  const [establishedYear, setEstablishedYear] = useState(0);
+
+  const userId = getUserId();
+
+  const handleRequest = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post(
+        "https://localhost:7077/api/employerrequests/postRequest",
+        {
+          companyName,
+          companyAddress,
+          companyEmail,
+          companyPhoneNumber,
+          industry,
+          companyWebsite,
+          companyDescription,
+          establishedYear,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          params: { userId },
+        },
+      );
+      
+      if (response.status === 201) {
+        window.location.reload();
+      }
+    } catch (err) {
+      console.error("Failed to make employer request: ", err);
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-crust/80">
+      <div className="relative mx-5 w-full max-w-4xl rounded-lg bg-base p-6 shadow-xl">
+        <button
+          onClick={onClose}
+          className="absolute right-4 top-4 text-3xl text-lavender"
+        >
+          ×
+        </button>
+        <h2 className="mb-4 text-2xl font-bold text-text">
+          Become an Employer
+        </h2>
+
+        <form className="flex flex-col space-y-4" onSubmit={handleRequest}>
+          <div>
+            <label className="mb-2 block text-text">Company Name</label>
+            <input
+              className="h-8 w-full rounded-lg bg-mantle px-2 text-subtext0 placeholder-surface2 focus:border-2 focus:border-lavender focus:outline-none"
+              onChange={(e) => {
+                setCompanyName(e.target.value);
+              }}
+            />
+          </div>
+
+          <div>
+            <label className="mb-2 block text-text">Company Address</label>
+            <input
+              className="h-8 w-full rounded-lg bg-mantle px-2 text-subtext0 placeholder-surface2 focus:border-2 focus:border-lavender focus:outline-none"
+              onChange={(e) => {
+                setCompanyAddress(e.target.value);
+              }}
+            />
+          </div>
+
+          <div>
+            <label className="mb-2 block text-text">Company Email</label>
+            <input
+              className="h-8 w-full rounded-lg bg-mantle px-2 text-subtext0 placeholder-surface2 focus:border-2 focus:border-lavender focus:outline-none"
+              onChange={(e) => {
+                setCompanyEmail(e.target.value);
+              }}
+            />
+          </div>
+
+          <div>
+            <label className="mb-2 block text-text">Company Phone Number</label>
+            <input
+              className="h-8 w-full rounded-lg bg-mantle px-2 text-subtext0 placeholder-surface2 focus:border-2 focus:border-lavender focus:outline-none"
+              onChange={(e) => {
+                setCompanyPhoneNumber(e.target.value);
+              }}
+            />
+          </div>
+
+          <div>
+            <label className="mb-2 block text-text">Industry</label>
+            <input
+              className="h-8 w-full rounded-lg bg-mantle px-2 text-subtext0 placeholder-surface2 focus:border-2 focus:border-lavender focus:outline-none"
+              onChange={(e) => {
+                setIndustry(e.target.value);
+              }}
+            />
+          </div>
+
+          <div>
+            <label className="mb-2 block text-text">Company Website</label>
+            <input
+              className="h-8 w-full rounded-lg bg-mantle px-2 text-subtext0 placeholder-surface2 focus:border-2 focus:border-lavender focus:outline-none"
+              onChange={(e) => {
+                setCompanyWebsite(e.target.value);
+              }}
+            />
+          </div>
+
+          <div>
+            <label className="mb-2 block text-text">Company Description</label>
+            <textarea
+              className="h-[8rem] w-full rounded-lg bg-mantle px-2 text-subtext0 placeholder-surface2 focus:border-2 focus:border-lavender focus:outline-none"
+              onChange={(e) => {
+                setCompanyDescription(e.target.value);
+              }}
+            />
+          </div>
+
+          <div>
+            <label className="mb-2 block text-text">Established Year</label>
+            <input
+              className="h-8 w-full rounded-lg bg-mantle px-2 text-subtext0 placeholder-surface2 focus:border-2 focus:border-lavender focus:outline-none"
+              onChange={(e) => {
+                setEstablishedYear(e.target.value);
+              }}
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="mt-4 w-full rounded-lg bg-lavender py-2 font-bold text-mantle hover:bg-lavender/90"
+          >
+            Register Company
+          </button>
         </form>
       </div>
     </div>
