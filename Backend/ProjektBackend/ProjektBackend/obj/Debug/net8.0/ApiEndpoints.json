@@ -545,8 +545,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "Headline",
-        "Type": "System.String",
+        "Name": "Banner",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
         "IsRequired": false
       },
       {

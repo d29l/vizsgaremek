@@ -60,7 +60,7 @@ namespace ProjektBackend
                         {
                             AutoReplenishment = true,
                             PermitLimit = 100,
-                            QueueLimit = 0,
+                            QueueLimit = 10,
                             Window = TimeSpan.FromMinutes(1)
                         }));
                 options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
@@ -237,6 +237,13 @@ namespace ProjektBackend
                 FileProvider = new PhysicalFileProvider(
                     Path.Combine(Directory.GetCurrentDirectory(), "Storage", "Images")),
                 RequestPath = "/Storage/Images"
+            });
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(), "Storage", "Banners")),
+                RequestPath = "/Storage/Banners"
             });
 
             app.Run();

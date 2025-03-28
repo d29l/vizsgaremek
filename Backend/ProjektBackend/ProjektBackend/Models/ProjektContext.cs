@@ -101,7 +101,7 @@ public partial class ProjektContext : DbContext
                 .HasColumnType("int(11)")
                 .HasColumnName("UserID");
 
-            entity.HasOne(d => d.User).WithOne(p => p.Employer)
+            entity.HasOne(d => d.User).WithOne(p => p.Employers)
                 .HasForeignKey<Employer>(d => d.UserId)
                 .HasConstraintName("employers_ibfk_1");
         });

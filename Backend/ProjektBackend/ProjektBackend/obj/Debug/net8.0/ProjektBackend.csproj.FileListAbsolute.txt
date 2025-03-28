@@ -826,3 +826,8 @@ C:\vizsgaremek\backend\Backend\ProjektBackend\ProjektBackend\bin\Debug\net8.0\Mi
 C:\vizsgaremek\backend\Backend\ProjektBackend\ProjektBackend\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions.dll
 C:\vizsgaremek\backend\Backend\ProjektBackend\ProjektBackend\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore.dll
 C:\vizsgaremek\backend\Backend\ProjektBackend\ProjektBackend\bin\Debug\net8.0\Microsoft.Extensions.Hosting.Abstractions.dll
+C:\Users\pozsgaim\Desktop\Projekt\backend\Backend\ProjektBackend\ProjektBackend\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.Abstractions.dll
+C:\Users\pozsgaim\Desktop\Projekt\backend\Backend\ProjektBackend\ProjektBackend\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.HealthChecks.dll
+C:\Users\pozsgaim\Desktop\Projekt\backend\Backend\ProjektBackend\ProjektBackend\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions.dll
+C:\Users\pozsgaim\Desktop\Projekt\backend\Backend\ProjektBackend\ProjektBackend\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore.dll
+C:\Users\pozsgaim\Desktop\Projekt\backend\Backend\ProjektBackend\ProjektBackend\bin\Debug\net8.0\Microsoft.Extensions.Hosting.Abstractions.dll
