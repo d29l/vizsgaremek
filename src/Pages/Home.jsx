@@ -5,6 +5,7 @@ import { fetchPosts } from "../fetchPosts";
 import { FaCirclePlus } from "react-icons/fa6";
 import axios from "axios";
 import { getUserId } from "../getUserId";
+import { getRole } from "../getRole";
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
@@ -13,6 +14,19 @@ export default function Home() {
   const [categoryToggled, setCategoryToggled] = useState(false);
 
   const [showNewPostPopout, setShowNewPostPopout] = useState(false);
+
+  const [isEmployer, setIsEmployer] = useState(false);
+
+  
+  const checkEmployer = () => {
+    const role = getRole();
+
+    if (role === "Employer" || role === "Admin") {
+      setIsEmployer(true);
+    } else {
+      setIsEmployer(false);
+    }
+  };
 
   const handleLocationToggle = () => {
     setLocationToggled(!locationToggled);
@@ -30,6 +44,7 @@ export default function Home() {
   useEffect(() => {}, [posts]);
   useEffect(() => {
     getPosts();
+    checkEmployer();
   }, []);
 
   return (
@@ -96,15 +111,17 @@ export default function Home() {
           <div class="flex h-[50px] items-center justify-between bg-base">
             <h2 class="ml-2 text-lg font-bold text-text">Jobs</h2>
 
-            <div class="flex flex-row">
-              <h2 class="ml-2 text-subtext1">New Post</h2>
-              <FaCirclePlus
-                class="ml-2 mr-4 cursor-pointer text-2xl text-text hover:text-lavender"
-                onClick={() => {
-                  setShowNewPostPopout(true);
-                }}
-              />
-            </div>
+            {isEmployer && (
+              <div class="flex flex-row">
+                <h2 class="ml-2 text-subtext1">New Post</h2>
+                <FaCirclePlus
+                  class="ml-2 mr-4 cursor-pointer text-2xl text-text hover:text-lavender"
+                  onClick={() => {
+                    setShowNewPostPopout(true);
+                  }}
+                />
+              </div>
+            )}
           </div>
 
           <div className="h-full overflow-y-auto rounded-xl bg-mantle p-4">
@@ -140,12 +157,15 @@ const NewPostPopout = ({ onClose }) => {
 
   const getEmployerId = async (userId) => {
     try {
-      const response = await axios.get("https://localhost:7077/api/employers/fetchEmployer", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+      const response = await axios.get(
+        "https://localhost:7077/api/employers/fetchEmployer",
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          params: { userId },
         },
-        params: { userId },
-      });
+      );
 
       if (response.status === 200) {
         const employerId = await response.data.employerId;

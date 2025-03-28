@@ -95,18 +95,21 @@ export default function ProfilePage() {
 
 const ProfileEditPopout = ({ onClose, location, bio, profilePicture }) => {
   const [formData, setFormData] = useState({
-    location: "",
-    bio: "",
-    profilePicture: "",
+    location: location || "",
+    bio: bio || "",
   });
+  const [selectedProfilePicture, setSelectedProfilePicture] = useState(null);
+  const [selectedBanner, setSelectedBanner] = useState(null);
 
-  useEffect(() => {
-    setFormData({
-      location: location || "",
-      bio: bio || "",
-      profilePicture: profilePicture || "",
-    });
-  }, [location, bio, profilePicture]);
+  const handleFileChange = (e, type) => {
+    e.preventDefault();
+    const file = e.target.files[0];
+    if (type === "profilePicture") {
+      setSelectedProfilePicture(file);
+    } else {
+      setSelectedBanner(file);
+    }
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -119,18 +122,27 @@ const ProfileEditPopout = ({ onClose, location, bio, profilePicture }) => {
   const handleSaveChanges = async (e) => {
     e.preventDefault();
     const userId = getUserId();
+
     try {
+      const formDataToSend = new FormData();
+
+      formDataToSend.append("Bio", formData.bio);
+      formDataToSend.append("Location", formData.location);
+
+      if (selectedProfilePicture) {
+        formDataToSend.append("ProfilePicture", selectedProfilePicture);
+      }
+      if (selectedBanner) {
+        formDataToSend.append("Banner", selectedBanner);
+      }
+
       const response = await axios.put(
-        `https://localhost:7077/api/profiles/updateProfile?userId=${userId}`,
-        {
-          headline: "",
-          bio: formData.bio,
-          location: formData.location,
-          profilePicture: formData.profilePicture,
-        },
+        "https://localhost:7077/api/profiles/updateProfile",
+        formDataToSend,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "multipart/form-data",
           },
         },
       );
@@ -156,14 +168,47 @@ const ProfileEditPopout = ({ onClose, location, bio, profilePicture }) => {
 
         <form className="flex flex-col space-y-4" onSubmit={handleSaveChanges}>
           <div>
-            <label className="mb-2 block text-text">Profile picture URL</label>
+            <label className="mb-2 block text-text">Banner Image</label>
+            <div className="relative flex flex-row items-center">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleFileChange(e, "banner")}
+                className="absolute inset-0 h-full w-[6rem] cursor-pointer opacity-0"
+                id="banner-upload"
+              />
+
+              <label
+                htmlFor="banner-upload"
+                className="flex w-[6rem] min-w-[6rem] cursor-pointer justify-center rounded-lg bg-lavender py-2 font-bold text-mantle hover:bg-lavender/90"
+              >
+                Upload
+              </label>
+              <label className="mb-2 ml-2 mt-1 block text-text">
+                {selectedBanner ? `${selectedBanner.name}` : "No file selected"}
+              </label>
+            </div>
+          </div>
+
+          <label className="mb-2 block text-text">Profile Picture</label>
+          <div className="relative flex flex-row items-center">
             <input
-              name="profilePicture"
-              value={formData.profilePicture}
-              onChange={handleInputChange}
-              placeholder="Enter image URL"
-              className="h-8 w-full rounded-lg bg-mantle px-2 text-subtext0 placeholder-surface2 focus:border-2 focus:border-lavender focus:outline-none"
+              type="file"
+              accept="image/*"
+              onChange={(e) => handleFileChange(e, "profilePicture")}
+              className="absolute inset-0 h-full w-[6rem] cursor-pointer opacity-0"
+              id="pfp-upload"
             />
+
+            <label
+              htmlFor="pfp-upload"
+              className="flex w-[6rem] min-w-[6rem] cursor-pointer justify-center rounded-lg bg-lavender py-2 font-bold text-mantle hover:bg-lavender/90"
+            >
+              Upload
+            </label>
+            <label className="mb-2 ml-2 mt-1 block text-text">
+              {selectedProfilePicture ? `${selectedProfilePicture.name}` : "No file selected"}
+            </label>
           </div>
 
           <div>
