@@ -104,10 +104,10 @@ namespace AdminPanel
             if (gridView != null)
             {
                 double totalWidth = PostsListView.ActualWidth - SystemParameters.VerticalScrollBarWidth;
-                double availableWidth = totalWidth - 20; 
+                double availableWidth = totalWidth - 20;
 
-                
-                double[] proportions = { 0.05, 0.2, 0.3, 0.15, 0.05, 0.15, 0.1 }; 
+
+                double[] proportions = { 0.05, 0.2, 0.1, 0.1, 0.2, 0.1, 0.1, 0.1 };
                 for (int i = 0; i < gridView.Columns.Count; i++)
                 {
                     gridView.Columns[i].Width = availableWidth * proportions[i];
@@ -121,9 +121,10 @@ namespace AdminPanel
         public int PostId { get; set; }
         public int EmployerId { get; set; }
         public string Title { get; set; }
+        public string Category { get; set; }    
+        public string Location { get; set; }    
         public string Content { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public int Likes { get; set; }
+        public DateTime? CreatedAt { get; set; }        
         public Employer Employer { get; set; }
     }
 

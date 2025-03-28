@@ -72,11 +72,13 @@ namespace AdminPanel
                         return;
                     }
 
-                    // Step 3: Create employer
+                    // Step 3: Create employer with updated properties
                     var createEmployerDto = new CreateEmployerDto
                     {
                         CompanyName = request.CompanyName,
                         CompanyAddress = request.CompanyAddress,
+                        CompanyEmail = request.CompanyEmail, // Added new property
+                        CompanyPhoneNumber = request.CompanyPhoneNumber, // Added new property
                         Industry = request.Industry,
                         CompanyWebsite = request.CompanyWebsite,
                         CompanyDescription = request.CompanyDescription,
@@ -173,6 +175,8 @@ namespace AdminPanel
         public int UserID { get; set; }
         public string CompanyName { get; set; }
         public string CompanyAddress { get; set; }
+        public string CompanyEmail { get; set; }
+        public int? CompanyPhoneNumber { get; set; }
         public string Industry { get; set; }
         public string CompanyWebsite { get; set; }
         public string CompanyDescription { get; set; }
@@ -183,6 +187,8 @@ namespace AdminPanel
     {
         public string CompanyName { get; set; }
         public string CompanyAddress { get; set; }
+        public string CompanyEmail { get; set; }
+        public int? CompanyPhoneNumber { get; set; }
         public string Industry { get; set; }
         public string CompanyWebsite { get; set; }
         public string CompanyDescription { get; set; }

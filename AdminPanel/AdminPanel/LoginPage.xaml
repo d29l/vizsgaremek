@@ -129,7 +129,7 @@
                           Unchecked="ShowPassword_Unchecked"/>
 
                 <!-- Login Button -->
-                <Button Grid.Row="4" 
+                <Button Grid.Row="5" 
                         Content="Sign In" 
                         Click="SignIn_Click"
                         Background="#CBA6F7"

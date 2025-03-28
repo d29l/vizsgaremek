@@ -19,6 +19,8 @@ namespace AdminPanel
         private void LoadPostData()
         {
             TitleTextBox.Text = _post.Title;
+            CategoryTextBox.Text = _post.Category;
+            LocationTextBox.Text = _post.Location;
             ContentTextBox.Text = _post.Content;
         }
 
@@ -27,6 +29,8 @@ namespace AdminPanel
             var updatePostDto = new UpdatePostDto
             {
                 Title = TitleTextBox.Text,
+                Category = CategoryTextBox.Text,
+                Location = LocationTextBox.Text,
                 Content = ContentTextBox.Text
             };
 
@@ -67,6 +71,8 @@ namespace AdminPanel
     public class UpdatePostDto
     {
         public string Title { get; set; }
+        public string Category { get; set; }
+        public string Location { get; set; }
         public string Content { get; set; }
     }
 }
