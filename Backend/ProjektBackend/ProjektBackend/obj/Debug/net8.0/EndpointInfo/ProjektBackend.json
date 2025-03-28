@@ -862,6 +862,45 @@
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "Banner": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "Bio": {
+                    "type": "string"
+                  },
+                  "Location": {
+                    "type": "string"
+                  },
+                  "ProfilePicture": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "Banner": {
+                  "style": "form"
+                },
+                "Bio": {
+                  "style": "form"
+                },
+                "Location": {
+                  "style": "form"
+                },
+                "ProfilePicture": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Success",
@@ -907,8 +946,9 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "Headline": {
-                    "type": "string"
+                  "Banner": {
+                    "type": "string",
+                    "format": "binary"
                   },
                   "Bio": {
                     "type": "string"
@@ -923,7 +963,7 @@
                 }
               },
               "encoding": {
-                "Headline": {
+                "Banner": {
                   "style": "form"
                 },
                 "Bio": {
@@ -1374,6 +1414,25 @@
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteUserRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteUserRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteUserRequestDto"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Success"
@@ -1403,9 +1462,6 @@
         "additionalProperties": false
       },
       "Connection": {
-        "required": [
-          "status"
-        ],
         "type": "object",
         "properties": {
           "connectionId": {
@@ -1421,14 +1477,19 @@
             "format": "int32"
           },
           "status": {
-            "minLength": 1,
-            "pattern": "^(Accepted|Rejected|Pending)$",
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "createdAt": {
             "type": "string",
             "format": "date-time",
             "nullable": true
+          },
+          "receiver": {
+            "$ref": "#/components/schemas/User"
+          },
+          "requester": {
+            "$ref": "#/components/schemas/User"
           }
         },
         "additionalProperties": false
@@ -1453,6 +1514,14 @@
           "companyAddress": {
             "type": "string",
             "nullable": true
+          },
+          "companyEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "companyPhoneNumber": {
+            "type": "integer",
+            "format": "int32"
           },
           "industry": {
             "type": "string",
@@ -1483,6 +1552,14 @@
           "content": {
             "type": "string",
             "nullable": true
+          },
+          "category": {
+            "type": "string",
+            "nullable": true
+          },
+          "location": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -1497,6 +1574,14 @@
           "companyAddress": {
             "type": "string",
             "nullable": true
+          },
+          "companyEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "companyPhoneNumber": {
+            "type": "integer",
+            "format": "int32"
           },
           "industry": {
             "type": "string",
@@ -1513,6 +1598,16 @@
           "estabilishedYear": {
             "type": "integer",
             "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeleteUserRequestDto": {
+        "type": "object",
+        "properties": {
+          "password": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -1535,6 +1630,14 @@
           "companyAddress": {
             "type": "string",
             "nullable": true
+          },
+          "companyEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "companyPhoneNumber": {
+            "type": "integer",
+            "format": "int32"
           },
           "industry": {
             "type": "string",
@@ -1583,6 +1686,15 @@
           },
           "companyAddress": {
             "type": "string",
+            "nullable": true
+          },
+          "companyEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "companyPhoneNumber": {
+            "type": "integer",
+            "format": "int32",
             "nullable": true
           },
           "industry": {
@@ -1683,6 +1795,14 @@
             "type": "string",
             "nullable": true
           },
+          "category": {
+            "type": "string",
+            "nullable": true
+          },
+          "location": {
+            "type": "string",
+            "nullable": true
+          },
           "content": {
             "type": "string",
             "nullable": true
@@ -1690,11 +1810,6 @@
           "createdAt": {
             "type": "string",
             "format": "date-time",
-            "nullable": true
-          },
-          "likes": {
-            "type": "integer",
-            "format": "int32",
             "nullable": true
           },
           "employer": {
@@ -1714,7 +1829,7 @@
             "type": "integer",
             "format": "int32"
           },
-          "headline": {
+          "banner": {
             "type": "string",
             "nullable": true
           },
@@ -1799,6 +1914,15 @@
             "type": "string",
             "nullable": true
           },
+          "companyEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "companyPhoneNumber": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
           "industry": {
             "type": "string",
             "nullable": true
@@ -1826,6 +1950,14 @@
             "nullable": true
           },
           "content": {
+            "type": "string",
+            "nullable": true
+          },
+          "category": {
+            "type": "string",
+            "nullable": true
+          },
+          "location": {
             "type": "string",
             "nullable": true
           }
@@ -1907,15 +2039,11 @@
             },
             "nullable": true
           },
+          "employers": {
+            "$ref": "#/components/schemas/Employer"
+          },
           "employerrequest": {
             "$ref": "#/components/schemas/Employerrequest"
-          },
-          "employers": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Employer"
-            },
-            "nullable": true
           },
           "messageReceivers": {
             "type": "array",

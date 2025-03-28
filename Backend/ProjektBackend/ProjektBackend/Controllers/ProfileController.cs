@@ -87,7 +87,7 @@ namespace ProjektBackend.Controllers
 
         [Authorize(Policy = "SelfOrAdmin")]
         [HttpPost("createProfile")]
-        public async Task<ActionResult<Profile>> CreateProfile( int? userId = null)
+        public async Task<ActionResult<Profile>> CreateProfile([FromForm] CreateProfileDto createProfileDto, int? userId = null)
         {
             try
             {
@@ -122,10 +122,18 @@ namespace ProjektBackend.Controllers
                 {
                     UserId = targetUserId,
                     Banner = BannerUrl,
-                    Bio = string.Empty,
-                    Location =  string.Empty,
+                    Bio = createProfileDto.Bio ?? string.Empty,
+                    Location = createProfileDto.Location ?? string.Empty,
                     ProfilePicture = profilePictureUrl
                 };
+                if (createProfileDto.ProfilePicture != null)
+                {
+                    profile.ProfilePicture = await SaveImageAsync(createProfileDto.ProfilePicture);
+                }
+                if (createProfileDto.Banner != null)
+                {
+                    profile.Banner = await SaveImageAsync(createProfileDto.Banner);
+                }
 
                 _context.Add(profile);
                 await _context.SaveChangesAsync();

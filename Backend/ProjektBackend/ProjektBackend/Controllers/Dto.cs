@@ -42,12 +42,25 @@ namespace ProjektBackend.Controllers
         string Email
         );
 
+    public record DeleteUserRequestDto
+        (
+        string Password
+        );
+
+    public record CreateProfileDto
+        (
+        IFormFile? Banner,
+        string? Bio,
+        string? Location,
+        IFormFile? ProfilePicture
+        );
+
     public record UpdateProfileDto
         (
-        IFormFile Banner,
-        string Bio,
-        string Location,
-        IFormFile ProfilePicture
+        IFormFile? Banner,
+        string? Bio,
+        string? Location,
+        IFormFile? ProfilePicture
         );
 
     public record CreateEmployerDto

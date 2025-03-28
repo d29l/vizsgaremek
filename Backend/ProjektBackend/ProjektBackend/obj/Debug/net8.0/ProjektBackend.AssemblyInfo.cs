@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ProjektBackend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7e89e941239a350f6178fd87fbf38e3f9129048d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+135df32fcd9b40e6ab4aea1bab9134285235452d")]
 [assembly: System.Reflection.AssemblyProductAttribute("ProjektBackend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ProjektBackend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
