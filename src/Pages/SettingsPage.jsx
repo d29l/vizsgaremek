@@ -414,6 +414,8 @@ const PasswordPopout = ({ onClose }) => {
 
 const AccountDeletionPopout = ({ onClose }) => {
   const [secondStage, setSecondStage] = useState(false);
+  const [thirdStage, setThridStage] = useState(false);
+  const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
 
@@ -424,10 +426,11 @@ const AccountDeletionPopout = ({ onClose }) => {
       const response = await axios.delete(
         `https://localhost:7077/api/users/deleteUser`,
         {
+          data: { password },
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-        },
+        }
       );
 
       if (response.status === 200) {
@@ -455,10 +458,9 @@ const AccountDeletionPopout = ({ onClose }) => {
         </button>
         <h2 className="mb-4 text-2xl font-bold text-text">Delete Account</h2>
 
-        <form className="flex flex-col space-y-4" onSubmit={handleDeletion}>
-          {!secondStage && (
+        <form className="flex flex-col space-y-4">
+          {!secondStage && !thirdStage && (
             <button
-              type="submit"
               className="w-full rounded-lg border-[2px] border-red py-2 font-bold text-red hover:bg-red hover:text-mantle"
               onClick={() => setSecondStage(true)}
             >
@@ -479,20 +481,39 @@ const AccountDeletionPopout = ({ onClose }) => {
 
               <div class="flex flex-row items-center justify-between px-12">
                 <button
-                  type="submit"
                   className="w-[8rem] rounded-lg border-[2px] border-red py-2 font-bold text-red hover:bg-red hover:text-mantle"
-                  onClick={handleDeletion}
+                  onClick={() => {
+                    setSecondStage(false);
+                    setThridStage(true);
+                  }}
                 >
                   Confirm
                 </button>
                 <button
-                  type="submit"
                   className="w-[8rem] rounded-lg bg-lavender py-2 font-bold text-mantle hover:bg-lavender/90"
                   onClick={handleStageTwoCancel}
                 >
                   Cancel
                 </button>
               </div>
+            </div>
+          )}
+
+          {thirdStage && (
+            <div>
+              <label className="mb-2 block text-text">Enter password</label>
+              <input
+                type="password"
+                onChange={(e) => setPassword(e.target.value)}
+                className="h-8 w-full rounded-lg bg-mantle px-2 text-subtext0 placeholder-surface2 focus:border-2 focus:border-lavender focus:outline-none"
+              />
+              <button
+                type="submit"
+                className="w-full rounded-lg mt-4 border-[2px] border-red py-2 font-bold text-red hover:bg-red hover:text-mantle"
+                onClick={handleDeletion}
+              >
+                Delete account
+              </button>
             </div>
           )}
         </form>
@@ -536,7 +557,7 @@ const EmployerPopout = ({ onClose }) => {
           params: { userId },
         },
       );
-      
+
       if (response.status === 201) {
         window.location.reload();
       }
