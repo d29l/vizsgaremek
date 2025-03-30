@@ -21,7 +21,7 @@ namespace ProjektBackend.Controllers
             _context = context;
         }
 
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize]
         [HttpGet("fetchEmployers")]
         public async Task<ActionResult<Employer>> FetchEmployers()
         {

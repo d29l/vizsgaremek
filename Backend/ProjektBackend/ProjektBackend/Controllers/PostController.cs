@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using ProjektBackend.Models;
 using System.Configuration;
 using System.Security.Claims;
-using static Google.Protobuf.Reflection.SourceCodeInfo.Types;
 
 #pragma warning disable CS0168
 
@@ -28,7 +27,7 @@ namespace ProjektBackend.Controllers
         {
             try
             {
-                var posts = await _context.Posts.ToListAsync();
+                var posts = await _context.Posts.Include(x => x.Employer).ToListAsync();
                 if (posts != null && posts.Any())
                 {
                     return StatusCode(200, posts);
