@@ -25,6 +25,8 @@ namespace ProjektBackend
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            var contentRootPath = builder.Environment.ContentRootPath;
+
             builder.Services.AddDbContext<ProjektContext>(option =>
             {
                 var connectionString = builder.Configuration.GetConnectionString("MySql");
@@ -214,6 +216,22 @@ namespace ProjektBackend
                 });
             });
 
+            app.UseStaticFiles();
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+        Path.Combine(contentRootPath, "Storage", "Images")),
+                RequestPath = "/Storage/Images"
+            });
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(contentRootPath, "Storage", "Banners")),
+                RequestPath = "/Storage/Banners"
+            });
+
             app.MapHealthChecks("/health");
 
             app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
@@ -230,21 +248,7 @@ namespace ProjektBackend
 
             app.MapControllers();
 
-            app.UseStaticFiles();
-
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider(
-                    Path.Combine(Directory.GetCurrentDirectory(), "Storage", "Images")),
-                RequestPath = "/Storage/Images"
-            });
-
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider(
-                    Path.Combine(Directory.GetCurrentDirectory(), "Storage", "Banners")),
-                RequestPath = "/Storage/Banners"
-            });
+            
 
             app.Run();
 

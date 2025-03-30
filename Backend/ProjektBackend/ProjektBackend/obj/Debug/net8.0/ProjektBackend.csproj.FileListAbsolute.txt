@@ -831,3 +831,5 @@ C:\Users\pozsgaim\Desktop\Projekt\backend\Backend\ProjektBackend\ProjektBackend\
 C:\Users\pozsgaim\Desktop\Projekt\backend\Backend\ProjektBackend\ProjektBackend\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions.dll
 C:\Users\pozsgaim\Desktop\Projekt\backend\Backend\ProjektBackend\ProjektBackend\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore.dll
 C:\Users\pozsgaim\Desktop\Projekt\backend\Backend\ProjektBackend\ProjektBackend\bin\Debug\net8.0\Microsoft.Extensions.Hosting.Abstractions.dll
+C:\vizsgaremek\backend\Backend\ProjektBackend\ProjektBackend\bin\Debug\net8.0\Storage\Banners\default_banner.png
+C:\vizsgaremek\backend\Backend\ProjektBackend\ProjektBackend\bin\Debug\net8.0\Storage\Images\default.png
