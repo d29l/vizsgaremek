@@ -8,17 +8,17 @@ import { getRole } from "../getRole";
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
-
+  const [filteredPosts, setFilteredPosts] = useState([]);
   const [locationToggled, setLocationToggled] = useState(false);
   const [categoryToggled, setCategoryToggled] = useState(false);
-
+  const [searchQuery, setSearchQuery] = useState("");
+  const [locationFilter, setLocationFilter] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState("");
   const [showNewPostPopout, setShowNewPostPopout] = useState(false);
-
   const [isEmployer, setIsEmployer] = useState(false);
 
   const checkEmployer = () => {
     const role = getRole();
-
     if (role === "Employer" || role === "Admin") {
       setIsEmployer(true);
     } else {
@@ -36,19 +36,17 @@ export default function Home() {
 
   const getPostData = async () => {
     try {
-      const postsResponse = await axios.get(
-        "/api/posts/fetchPosts",
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
+      const postsResponse = await axios.get("/api/posts/fetchPosts", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-      );
-       
+      });
       if (postsResponse.status === 200) {
         setPosts(postsResponse.data);
       }
-    } catch (err) {}
+    } catch (err) {
+      console.error("Failed to fetch posts:", err);
+    }
   };
 
   useEffect(() => {
@@ -56,106 +54,141 @@ export default function Home() {
     checkEmployer();
   }, []);
 
-  return (
-    <div class="h-screen">
-      <Navbar />
+  useEffect(() => {
+    let currentFilteredPosts = [...posts];
 
-      <div class="flex h-[10%] w-full flex-col items-center justify-center">
+    if (searchQuery) {
+      currentFilteredPosts = currentFilteredPosts.filter((post) =>
+        post.title.toLowerCase().includes(searchQuery.toLowerCase()),
+      );
+    }
+
+    if (locationToggled && locationFilter) {
+      currentFilteredPosts = currentFilteredPosts.filter(
+        (post) =>
+          post.location &&
+          typeof post.location === "string" &&
+          post.location.toLowerCase().includes(locationFilter.toLowerCase()),
+      );
+    }
+
+    if (categoryToggled && categoryFilter) {
+      currentFilteredPosts = currentFilteredPosts.filter(
+        (post) =>
+          post.category &&
+          typeof post.category === "string" &&
+          post.category.toLowerCase().includes(categoryFilter.toLowerCase()),
+      );
+    }
+
+    setFilteredPosts(currentFilteredPosts);
+  }, [
+    posts,
+    searchQuery,
+    locationFilter,
+    categoryFilter,
+    locationToggled,
+    categoryToggled,
+  ]);
+
+  return (
+    <div className="flex h-screen flex-col bg-base">
+      <div className="flex-shrink-0">
+        <Navbar />
+      </div>
+      <div className="flex h-[10%] flex-shrink-0 items-center justify-center bg-mantle">
         <input
           type="text"
           placeholder="Search for a job"
-          class="w-1/2 max-w-lg rounded-lg bg-crust p-3 text-text placeholder-subtext0 focus:border-2 focus:border-lavender focus:outline-none"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="w-1/2 max-w-lg rounded-lg bg-crust p-3 text-text placeholder-subtext0 focus:border-2 focus:border-lavender focus:outline-none"
         />
       </div>
-
-      <div className="flex h-full w-full flex-row overflow-hidden bg-base">
-        {/* sidebar */}
-        <div className="flex h-screen w-1/6 min-w-[8rem] flex-col bg-base px-3 pt-3 shadow-xl shadow-crust">
+      <div className="flex flex-grow flex-row overflow-hidden">
+        <div className="flex w-1/6 min-w-[8rem] flex-col overflow-y-auto bg-base px-3 pt-3 shadow-xl shadow-crust">
           <p className="text-center font-bold text-text">Search Filters</p>
-          {/* filter option box */}
-          <div class="mt-2 grid h-[4.75rem] w-full grid-cols-2 justify-center rounded-lg bg-mantle pl-5 pt-5 shadow-sm shadow-crust">
-            <div class="h-[2.5rem] w-[5.25rem] justify-center">
+          <div className="mt-2 grid h-auto w-full grid-cols-1 justify-center gap-2 rounded-lg bg-mantle p-3 shadow-sm shadow-crust md:grid-cols-2">
+            <div className="flex justify-center">
               <button
-                class={`rounded-lg border-2 border-lavender px-2 py-1 font-bold ${locationToggled ? "bg-lavender text-mantle" : "text-lavender"}`}
+                className={`h-auto w-full overflow-hidden whitespace-normal rounded-lg border-2 border-lavender px-2 py-1 text-xs font-semibold transition-colors duration-200 ease-in-out md:px-3 md:py-1.5 md:text-sm ${locationToggled ? "bg-lavender text-mantle hover:bg-opacity-90" : "text-lavender hover:bg-lavender/10"}`}
                 onClick={handleLocationToggle}
               >
                 Location
               </button>
             </div>
-
-            <div class="h-[2.5rem] w-[5.25rem] justify-center">
+            <div className="flex justify-center">
               <button
-                class={`rounded-lg border-2 border-lavender px-2 py-1 font-bold ${categoryToggled ? "bg-lavender text-mantle" : "text-lavender"}`}
+                className={`h-auto w-full overflow-hidden whitespace-normal rounded-lg border-2 border-lavender px-2 py-1 text-xs font-semibold transition-colors duration-200 ease-in-out md:px-3 md:py-1.5 md:text-sm ${categoryToggled ? "bg-lavender text-mantle hover:bg-opacity-90" : "text-lavender hover:bg-lavender/10"}`}
                 onClick={handleCategoryToggle}
               >
                 Category
               </button>
             </div>
           </div>
-
-          <form class="mt-4">
+          <form className="mt-4 flex-grow">
             {locationToggled && (
-              <div class="mt-4">
-                <label class="ml-1 font-bold text-text">Location</label>
+              <div className="mb-4">
+                <label className="ml-1 font-bold text-text">Location</label>
                 <input
-                  placeholder="Location"
+                  placeholder="Filter by location"
+                  value={locationFilter}
+                  onChange={(e) => setLocationFilter(e.target.value)}
                   className="mt-1 h-8 w-full rounded-lg bg-mantle px-2 text-subtext0 placeholder-surface2 focus:border-2 focus:border-lavender focus:outline-none"
                 />
               </div>
             )}
-
             {categoryToggled && (
-              <div class="mt-4">
-                <label class="ml-1 font-bold text-text">Category</label>
+              <div className="mb-4">
+                <label className="ml-1 font-bold text-text">Category</label>
                 <input
-                  placeholder="Category"
+                  placeholder="Filter by category"
+                  value={categoryFilter}
+                  onChange={(e) => setCategoryFilter(e.target.value)}
                   className="mt-1 h-8 w-full rounded-lg bg-mantle px-2 text-subtext0 placeholder-surface2 focus:border-2 focus:border-lavender focus:outline-none"
                 />
               </div>
             )}
           </form>
         </div>
-
-        <div className="flex w-full flex-col rounded-lg">
-          <div class="flex h-[50px] items-center justify-between bg-base">
-            <h2 class="ml-2 text-lg font-bold text-text">Jobs</h2>
-
+        <div className="flex w-5/6 flex-col overflow-hidden">
+          <div className="flex h-[50px] flex-shrink-0 items-center justify-between bg-base px-4">
+            <h2 className="text-lg font-bold text-text">Jobs</h2>
             {isEmployer && (
-              <div class="flex flex-row">
-                <h2 class="ml-2 text-subtext1">New Post</h2>
+              <div className="flex flex-row items-center">
+                <h2 className="ml-2 text-subtext1">New Post</h2>
                 <FaCirclePlus
-                  class="ml-2 mr-4 cursor-pointer text-2xl text-text hover:text-lavender"
-                  onClick={() => {
-                    setShowNewPostPopout(true);
-                  }}
+                  className="ml-2 mr-2 cursor-pointer text-2xl text-text hover:text-lavender"
+                  onClick={() => setShowNewPostPopout(true)}
                 />
               </div>
             )}
           </div>
-
-          <div className="h-full overflow-y-auto rounded-xl bg-mantle p-4">
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
-              {posts.map((job) => (
-                <PostCard
-                  key={job.postId}
-                  postId={job.postId}
-                  title={job.title}
-                  companyName={job.employer.companyName}
-                  location={job.location}
-                  category={job.category}
-                  description={job.content}
-                />
-              ))}
+          <div className="flex-grow overflow-y-auto rounded-xl bg-mantle p-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
+              {filteredPosts.length > 0 ? (
+                filteredPosts.map((job) => (
+                  <PostCard
+                    key={job.postId}
+                    postId={job.postId}
+                    title={job.title}
+                    companyName={job.employer?.companyName || "N/A"}
+                    location={job.location}
+                    category={job.category}
+                    description={job.content}
+                  />
+                ))
+              ) : (
+                <p className="col-span-full text-center text-subtext0">
+                  No jobs match your criteria.
+                </p>
+              )}
             </div>
           </div>
         </div>
       </div>
       {showNewPostPopout && (
-        <NewPostPopout
-          onClose={() => {
-            setShowNewPostPopout(false);
-          }}
-        />
+        <NewPostPopout onClose={() => setShowNewPostPopout(false)} />
       )}
     </div>
   );
@@ -169,15 +202,12 @@ const NewPostPopout = ({ onClose }) => {
 
   const getEmployerId = async (userId) => {
     try {
-      const response = await axios.get(
-        "/api/employers/fetchEmployer",
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-          params: { userId },
+      const response = await axios.get("/api/employers/fetchEmployer", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-      );
+        params: { userId },
+      });
 
       if (response.status === 200) {
         const employerId = await response.data.employerId;
@@ -192,8 +222,16 @@ const NewPostPopout = ({ onClose }) => {
     e.preventDefault();
 
     const userId = getUserId();
+    if (!userId) {
+      console.error("User ID not found");
+      return;
+    }
 
     const employerId = await getEmployerId(userId);
+    if (!employerId) {
+      console.error("Employer ID not found");
+      return;
+    }
 
     try {
       const response = await axios.post(
@@ -213,6 +251,7 @@ const NewPostPopout = ({ onClose }) => {
       );
 
       if (response.status === 201) {
+        onClose();
         window.location.reload();
       }
     } catch (err) {
@@ -227,44 +266,64 @@ const NewPostPopout = ({ onClose }) => {
           onClick={onClose}
           className="absolute right-4 top-4 text-3xl text-lavender"
         >
-          ×
+          &times;
         </button>
         <h2 className="mb-4 text-2xl font-bold text-text">Create New Post</h2>
 
         <form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
           <div>
-            <label className="mb-2 block text-text">Title</label>
+            <label className="mb-1 block text-sm font-medium text-text">
+              Title
+            </label>
             <input
+              type="text"
+              value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Post title"
-              className="h-8 w-full rounded-lg bg-mantle px-2 text-subtext0 placeholder-surface2 focus:border-2 focus:border-lavender focus:outline-none"
+              required
+              className="h-10 w-full rounded-lg bg-mantle px-3 text-subtext0 placeholder-surface2 focus:border-2 focus:border-lavender focus:outline-none"
             />
           </div>
 
           <div>
-            <label className="mb-2 block text-text">Category</label>
+            <label className="mb-1 block text-sm font-medium text-text">
+              Category
+            </label>
             <input
+              type="text"
+              value={category}
               onChange={(e) => setCategory(e.target.value)}
               placeholder="Category"
-              className="h-8 w-full rounded-lg bg-mantle px-2 text-subtext0 placeholder-surface2 focus:border-2 focus:border-lavender focus:outline-none"
+              required
+              className="h-10 w-full rounded-lg bg-mantle px-3 text-subtext0 placeholder-surface2 focus:border-2 focus:border-lavender focus:outline-none"
             />
           </div>
 
           <div>
-            <label className="mb-2 block text-text">Location</label>
+            <label className="mb-1 block text-sm font-medium text-text">
+              Location
+            </label>
             <input
+              type="text"
+              value={location}
               onChange={(e) => setLocation(e.target.value)}
               placeholder="Location"
-              className="h-8 w-full rounded-lg bg-mantle px-2 text-subtext0 placeholder-surface2 focus:border-2 focus:border-lavender focus:outline-none"
+              required
+              className="h-10 w-full rounded-lg bg-mantle px-3 text-subtext0 placeholder-surface2 focus:border-2 focus:border-lavender focus:outline-none"
             />
           </div>
 
           <div>
-            <label className="mb-2 block text-text">Content</label>
+            <label className="mb-1 block text-sm font-medium text-text">
+              Content
+            </label>
             <textarea
+              value={content}
               onChange={(e) => setContent(e.target.value)}
               placeholder="Post content"
-              className="h-[12rem] w-full rounded-lg bg-mantle px-2 text-subtext0 placeholder-surface2 focus:border-2 focus:border-lavender focus:outline-none"
+              required
+              rows={6}
+              className="w-full rounded-lg bg-mantle px-3 py-2 text-subtext0 placeholder-surface2 focus:border-2 focus:border-lavender focus:outline-none"
             />
           </div>
 
