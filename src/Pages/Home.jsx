@@ -46,25 +46,11 @@ export default function Home() {
       );
        
       if (postsResponse.status === 200) {
-        try {
-          const employersResponse = await axios.get(
-            "/api/employers/fetchEmployers",
-            {
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-              },
-            },
-          );
-
-          postsResponse.data.forEach((e) => {
-            console.log(e);
-          });
-        } catch (err) {}
+        setPosts(postsResponse.data);
       }
     } catch (err) {}
   };
 
-  // useEffect(() => {}, [posts]);
   useEffect(() => {
     getPostData();
     checkEmployer();
@@ -154,6 +140,10 @@ export default function Home() {
                   key={job.postId}
                   postId={job.postId}
                   title={job.title}
+                  companyName={job.employer.companyName}
+                  location={job.location}
+                  category={job.category}
+                  description={job.content}
                 />
               ))}
             </div>

@@ -14,7 +14,7 @@ export default function Navbar() {
   useEffect(() => {
     const userId = getUserId();
     fetchProfile(userId);
-  });
+  }, []);
 
   const fetchProfile = async (userId) => {
     const response = await axios.get(
