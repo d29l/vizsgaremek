@@ -40,7 +40,7 @@ export default function LoginPage() {
 
     try {
       const response = await axios.post(
-        "https://localhost:7077/api/users/loginUser",
+        "/api/users/loginUser",
         { email, password },
       );
 
@@ -67,7 +67,7 @@ export default function LoginPage() {
   const fetchUserProfile = async (userId) => {
     try {
       const response = await axios.get(
-        `https://localhost:7077/api/profiles/fetchProfile`,
+        `/api/profiles/fetchProfile`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -82,7 +82,7 @@ export default function LoginPage() {
         try {
 
           const createResponse = await axios.post(
-            `https://localhost:7077/api/profiles/createProfile`,
+            `/api/profiles/createProfile`,
             {
               banner,
               bio: "Bio not filled in yet",

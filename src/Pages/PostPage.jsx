@@ -10,7 +10,7 @@ export default function PostPage() {
   useEffect(() => {
     const fetchPost = async () => {
       const response = await axios.get(
-        `https://localhost:7077/api/posts/fetchPost/${postId}`,
+        `/api/posts/fetchPost/${postId}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,

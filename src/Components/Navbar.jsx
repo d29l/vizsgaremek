@@ -18,7 +18,7 @@ export default function Navbar() {
 
   const fetchProfile = async (userId) => {
     const response = await axios.get(
-      `https://localhost:7077/api/profiles/fetchProfile?`,
+      `/api/profiles/fetchProfile?`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -27,7 +27,7 @@ export default function Navbar() {
       },
     );
 
-    setProfilePicture("https://localhost:7077" + response.data.profilePicture);
+    setProfilePicture(response.data.profilePicture);
   };
 
   const handleLogout = () => {

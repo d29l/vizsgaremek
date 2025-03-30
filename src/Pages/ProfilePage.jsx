@@ -23,7 +23,7 @@ export default function ProfilePage() {
     const fetchProfile = async (userId) => {
       try {
         const response = await axios.get(
-          `https://localhost:7077/api/profiles/fetchProfile`,
+          `/api/profiles/fetchProfile`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -35,10 +35,8 @@ export default function ProfilePage() {
         const date = response.data.createdAt.split("T")[0];
         const [year, month, day] = date.split("-");
 
-        setProfilePicture(
-          "https://localhost:7077" + response.data.profilePicture,
-        );
-        setBanner("https://localhost:7077" + response.data.banner)
+        setProfilePicture(response.data.profilePicture);
+        setBanner(response.data.banner);
         setBio(response.data.bio);
         setLocation(response.data.location);
         setFirstName(response.data.firstName);
@@ -150,7 +148,7 @@ const ProfileEditPopout = ({ onClose, location, bio, profilePicture }) => {
       }
 
       const response = await axios.put(
-        "https://localhost:7077/api/profiles/updateProfile",
+        "/api/profiles/updateProfile",
         formDataToSend,
         {
           headers: {

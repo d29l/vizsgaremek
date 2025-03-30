@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PostCard from "../Components/PostCard";
 import Navbar from "../Components/Navbar";
-import { fetchPosts } from "../fetchPosts";
 import { FaCirclePlus } from "react-icons/fa6";
 import axios from "axios";
 import { getUserId } from "../getUserId";
@@ -17,7 +16,6 @@ export default function Home() {
 
   const [isEmployer, setIsEmployer] = useState(false);
 
-  
   const checkEmployer = () => {
     const role = getRole();
 
@@ -36,14 +34,39 @@ export default function Home() {
     setCategoryToggled(!categoryToggled);
   };
 
-  async function getPosts() {
-    const data = await fetchPosts();
-    setPosts(data.data);
-  }
+  const getPostData = async () => {
+    try {
+      const postsResponse = await axios.get(
+        "/api/posts/fetchPosts",
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        },
+      );
+       
+      if (postsResponse.status === 200) {
+        try {
+          const employersResponse = await axios.get(
+            "/api/employers/fetchEmployers",
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+            },
+          );
 
-  useEffect(() => {}, [posts]);
+          postsResponse.data.forEach((e) => {
+            console.log(e);
+          });
+        } catch (err) {}
+      }
+    } catch (err) {}
+  };
+
+  // useEffect(() => {}, [posts]);
   useEffect(() => {
-    getPosts();
+    getPostData();
     checkEmployer();
   }, []);
 
@@ -131,7 +154,6 @@ export default function Home() {
                   key={job.postId}
                   postId={job.postId}
                   title={job.title}
-                  description={job.content}
                 />
               ))}
             </div>
@@ -158,7 +180,7 @@ const NewPostPopout = ({ onClose }) => {
   const getEmployerId = async (userId) => {
     try {
       const response = await axios.get(
-        "https://localhost:7077/api/employers/fetchEmployer",
+        "/api/employers/fetchEmployer",
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -185,7 +207,7 @@ const NewPostPopout = ({ onClose }) => {
 
     try {
       const response = await axios.post(
-        "https://localhost:7077/api/posts/newPost",
+        "/api/posts/newPost",
         {
           title: title,
           content: content,

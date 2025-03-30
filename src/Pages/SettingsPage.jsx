@@ -62,7 +62,7 @@ const AccountSettings = () => {
     const fetchUser = async () => {
       try {
         const response = await axios.get(
-          `https://localhost:7077/api/users/fetchUser`,
+          `/api/users/fetchUser`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -233,7 +233,7 @@ const AccountDetailsPopout = ({ onClose, firstName, lastName, email }) => {
 
     try {
       const response = await axios.put(
-        `https://localhost:7077/api/users/updateUser`,
+        `/api/users/updateUser`,
         {
           firstName: formData.firstName,
           lastName: formData.lastName,
@@ -324,7 +324,7 @@ const PasswordPopout = ({ onClose }) => {
     e.preventDefault();
     try {
       const response = await axios.put(
-        `https://localhost:7077/api/users/changePassword`,
+        `/api/users/changePassword`,
         {
           currentPassword,
           newPassword,
@@ -424,7 +424,7 @@ const AccountDeletionPopout = ({ onClose }) => {
 
     try {
       const response = await axios.delete(
-        `https://localhost:7077/api/users/deleteUser`,
+        `/api/users/deleteUser`,
         {
           data: { password },
           headers: {
@@ -539,7 +539,7 @@ const EmployerPopout = ({ onClose }) => {
 
     try {
       const response = await axios.post(
-        "https://localhost:7077/api/employerrequests/postRequest",
+        "/api/employerrequests/postRequest",
         {
           companyName,
           companyAddress,
@@ -558,7 +558,7 @@ const EmployerPopout = ({ onClose }) => {
         },
       );
 
-      if (response.status === 201) {
+      if (response.status === 201 && response.status === 200) {
         window.location.reload();
       }
     } catch (err) {

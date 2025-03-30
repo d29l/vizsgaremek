@@ -97,7 +97,7 @@ export default function RegisterPage() {
 
     try {
       const response = await axios.post(
-        "https://localhost:7077/api/users/registerUser",
+        "/api/users/registerUser",
         {
           firstName,
           lastName,
