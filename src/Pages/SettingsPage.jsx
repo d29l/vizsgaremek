@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getUserId } from "../getUserId";
 import Navbar from "../Components/Navbar";
-import axios from "axios";
+import api from "../utils/api";
 import { getRole } from "../getRole";
 
 export default function SettingsPage() {
@@ -61,14 +61,7 @@ const AccountSettings = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get(
-          `/api/users/fetchUser`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          },
-        );
+        const response = await api.get(`/users/fetchUser`);
 
         if (response.status === 200) {
           setFirstName(response.data.firstName);
@@ -232,19 +225,11 @@ const AccountDetailsPopout = ({ onClose, firstName, lastName, email }) => {
     e.preventDefault();
 
     try {
-      const response = await axios.put(
-        `/api/users/updateUser`,
-        {
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-          email: formData.email,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        },
-      );
+      const response = await api.put(`/users/updateUser`, {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+      });
 
       if (response.status === 200) {
         window.location.reload();
@@ -323,19 +308,11 @@ const PasswordPopout = ({ onClose }) => {
   const handleSave = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put(
-        `/api/users/changePassword`,
-        {
-          currentPassword,
-          newPassword,
-          confirmNewPassword,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        },
-      );
+      const response = await api.put(`/users/changePassword`, {
+        currentPassword,
+        newPassword,
+        confirmNewPassword,
+      });
 
       if (response.status === 200) {
         window.location.reload();
@@ -423,15 +400,9 @@ const AccountDeletionPopout = ({ onClose }) => {
     e.preventDefault();
 
     try {
-      const response = await axios.delete(
-        `/api/users/deleteUser`,
-        {
-          data: { password },
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      const response = await api.delete(`/users/deleteUser`, {
+        data: { password },
+      });
 
       if (response.status === 200) {
         localStorage.clear();
@@ -509,7 +480,7 @@ const AccountDeletionPopout = ({ onClose }) => {
               />
               <button
                 type="submit"
-                className="w-full rounded-lg mt-4 border-[2px] border-red py-2 font-bold text-red hover:bg-red hover:text-mantle"
+                className="mt-4 w-full rounded-lg border-[2px] border-red py-2 font-bold text-red hover:bg-red hover:text-mantle"
                 onClick={handleDeletion}
               >
                 Delete account
@@ -538,8 +509,8 @@ const EmployerPopout = ({ onClose }) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
-        "/api/employerrequests/postRequest",
+      const response = await api.post(
+        "/employerrequests/postRequest",
         {
           companyName,
           companyAddress,
@@ -551,9 +522,6 @@ const EmployerPopout = ({ onClose }) => {
           establishedYear,
         },
         {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
           params: { userId },
         },
       );

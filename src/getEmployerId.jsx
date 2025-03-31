@@ -1,14 +1,7 @@
-import axios from "axios";
+import api from "./utils/api";
 
 export const getEmployerId = async (userId) => {
-  const response = axios.get(
-    `/api/employers/fetchEmployer?UserId=${userId}`,
-    {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    },
-  );
+  const response = api.get(`/employers/fetchEmployer?UserId=${userId}`);
 
   const employerId = (await response).data.employerId;
   return employerId;

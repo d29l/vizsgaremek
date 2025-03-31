@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { getUserId } from "../getUserId";
+import { getUserId } from '../getUserId';
+import api from '../utils/api';
 import axios from "axios";
 
 export default function LoginPage() {
@@ -11,13 +12,6 @@ export default function LoginPage() {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
-  const [banner, setBanner] = useState("");
-  const [bio, setBio] = useState("");
-  const [location, setLocation] = useState("");
-  const [profilePicture, setProfilePicture] = useState("");
-
-  const [userId, setUserId] = useState(null);
-
   const navigate = useNavigate();
 
   const validateField = (value, fieldName) => {
@@ -26,6 +20,49 @@ export default function LoginPage() {
     }
     return "";
   };
+
+  const fetchUserProfile = async (userId) => {
+     if (!userId) {
+         console.error("fetchUserProfile: No userId provided.");
+         return;
+     }
+     console.log(`LoginPage: Checking profile for user ID: ${userId}`);
+    try {
+      const response = await api.get(`/profiles/fetchProfile`, {
+        params: { userId },
+      });
+      console.log("LoginPage: Profile exists.", response.data);
+
+    } catch (err) {
+      if (err.response?.status === 404) {
+        console.warn(`LoginPage: Profile not found for user ID: ${userId}. Attempting to create.`);
+        try {
+          const defaultProfileData = {
+            banner: "",
+            bio: "Bio not filled in yet",
+            location: "Location not filled in yet",
+            profilePicture: ""
+          };
+
+          const createResponse = await api.post(
+            `/profiles/createProfile`,
+            defaultProfileData,
+            { params: { userId } }
+          );
+          console.log("LoginPage: Profile created successfully.", createResponse.data);
+
+        } catch (createErr) {
+            console.error("LoginPage: Error auto-creating profile:", createErr);
+        }
+
+      } else if (err.response?.status === 401) {
+          console.error("LoginPage: Unauthorized during profile check (interceptor issue?).");
+      } else {
+          console.error("LoginPage: Error checking profile:", err);
+      }
+    }
+  };
+
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -44,63 +81,37 @@ export default function LoginPage() {
         { email, password },
       );
 
-      if (response.status === 200) {
+      if (
+        response.status === 200 &&
+        response.data.accessToken &&
+        response.data.refreshToken
+      ) {
         localStorage.setItem("token", response.data.accessToken);
+        localStorage.setItem("refreshToken", response.data.refreshToken);
 
-        const userId_temp = getUserId();
-        setUserId(userId_temp);
+        const currentUserId = getUserId();
 
-        console.log("User ID after login:", userId_temp);
-
-        await fetchUserProfile(userId_temp);
+        if(currentUserId) {
+            await fetchUserProfile(currentUserId);
+        } else {
+            console.error("LoginPage: Could not get user ID after login to check profile.");
+        }
 
         navigate("/");
+
+      } else {
+        console.error(
+          "Login successful but tokens missing in response",
+          response.data,
+        );
+        setIncorrect(true);
       }
     } catch (err) {
       if (err.response?.status === 401) {
         setIncorrect(true);
-      }
-      console.error("Login error:", err);
-    }
-  };
-
-  const fetchUserProfile = async (userId) => {
-    try {
-      const response = await axios.get(
-        `/api/profiles/fetchProfile`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-          params: { userId }
-        },
-      );
-    } catch (err) {
-      if (err.response?.status === 404) {
-        console.error("Profile doesn't exist");
-        console.log("Attempting to create profile");
-        try {
-
-          const createResponse = await axios.post(
-            `/api/profiles/createProfile`,
-            {
-              banner,
-              bio: "Bio not filled in yet",
-              location: "Location not filled in yet",
-              profilePicture
-            },
-            {
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-              },
-              params: { userId: userId }
-            },
-          );
-        } catch (err) {
-          console.error("Error creating profile: ", err);
-        }
       } else {
-        console.error("Profile fetch error:", err);
+         console.error("Login error:", err);
+         setIncorrect(true);
       }
     }
   };
@@ -160,7 +171,7 @@ export default function LoginPage() {
             </div>
 
             <div className="mt-6 flex justify-center">
-              <button className="w-1/2 rounded-lg bg-lavender p-1 font-bold text-mantle">
+              <button type="submit" className="w-1/2 rounded-lg bg-lavender p-1 font-bold text-mantle">
                 Sign in
               </button>
             </div>

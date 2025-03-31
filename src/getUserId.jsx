@@ -1,16 +1,25 @@
-export const getUserId = () => {
-  function decodeToken(token) {
-    const [header, payload, signature] = token.split(".");
+import { jwtDecode } from "jwt-decode";
 
-    const decodedPayload = atob(payload.replace(/-/g, "+").replace(/_/g, "/"));
-    return JSON.parse(decodedPayload);
+export const getUserId = () => {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    return null;
   }
 
-  if (localStorage.getItem("token") !== null) {
-    const token = localStorage.getItem("token");
-    const decodedToken = decodeToken(token);
-    if (Date.now() < decodedToken.exp * 1000) {
-      return decodedToken.nameid;
+  try {
+    const decodedToken = jwtDecode(token);
+    const userId = decodedToken.nameid || decodedToken.sub || decodedToken.id;
+
+    if (!userId) {
+        console.error("getUserId: User ID claim (nameid, sub, id) not found in decoded token:", decodedToken);
+        return null;
     }
+
+    return userId;
+
+  } catch (error) {
+    console.error("getUserId: Error decoding token:", error);
+    return null;
   }
 };
