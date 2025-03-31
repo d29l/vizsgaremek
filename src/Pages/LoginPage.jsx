@@ -38,10 +38,8 @@ export default function LoginPage() {
         console.warn(`LoginPage: Profile not found for user ID: ${userId}. Attempting to create.`);
         try {
           const defaultProfileData = {
-            banner: "",
             bio: "Bio not filled in yet",
             location: "Location not filled in yet",
-            profilePicture: ""
           };
 
           const createResponse = await api.post(
