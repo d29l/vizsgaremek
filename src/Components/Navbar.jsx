@@ -19,7 +19,7 @@ export default function Navbar() {
     setIsLoadingProfile(true);
     console.log(`Navbar: Fetching profile for userId: ${id}`);
     try {
-      const response = await api.get(`/profiles/fetchProfile`, { // Removed stray '?'
+      const response = await api.get(`/profiles/fetchProfile`, {
         params: { userId: id },
       });
       setProfilePicture(response.data.profilePicture);
@@ -40,8 +40,6 @@ export default function Navbar() {
 
   useEffect(() => {
     const userId = getUserId();
-    // --- IMPORTANT FIX ---
-    // Only fetch if userId is available
     if (userId) {
       fetchProfile(userId);
     } else {
@@ -123,32 +121,30 @@ export default function Navbar() {
             )}
           </div>
 
-          {/* --- Dropdown Menu Styling Reverted --- */}
           {profileClicked && (
-            <div className="absolute right-0 z-50 mt-[9rem] w-48 rounded-lg bg-surface0"> {/* Reverted classes */}
-              <div className="p-4"> {/* Reverted classes */}
+            <div className="absolute right-0 z-50 mt-[9rem] w-48 rounded-lg bg-surface0">
+              <div className="p-4">
                 <div
                   onClick={handleProfileLink}
-                  className="cursor-pointer text-text hover:text-lavender" // Reverted classes
+                  className="cursor-pointer text-text hover:text-lavender"
                 >
                   Profile
                 </div>
                 <div
                   onClick={handleSettingsClick}
-                  className="cursor-pointer text-text hover:text-lavender" // Reverted classes
+                  className="cursor-pointer text-text hover:text-lavender"
                 >
                   Settings
                 </div>
                 <div
                   onClick={handleLogout}
-                  className="cursor-pointer text-text hover:text-lavender" // Reverted classes
+                  className="cursor-pointer text-text hover:text-lavender"
                 >
                   Logout
                 </div>
               </div>
             </div>
           )}
-          {/* --- End Reverted Dropdown --- */}
 
         </div>
       </div>
