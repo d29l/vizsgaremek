@@ -39,7 +39,6 @@ export default function PostCard({
 
         <p
           class="w-2/3 flex-grow overflow-hidden text-ellipsis whitespace-nowrap text-sm text-subtext1"
-          title="Seeking a highly motivated engineer to join our dynamic team, focusing on building scalable cloud solutions using AWS, Kubernetes, and microservices. This is a long description designed to test the line clamping functionality and see how it truncates the text after two lines."
         >
           {description}
         </p>
