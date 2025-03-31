@@ -199,9 +199,44 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "createRequestDto",
-        "Type": "ProjektBackend.Controllers.CreateRequestDto",
-        "IsRequired": true
+        "Name": "CompanyName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "CompanyAddress",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "CompanyEmail",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "CompanyPhoneNumber",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "Industry",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "CompanyWebsite",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "CompanyDescription",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "EstabilishedYear",
+        "Type": "System.Int32",
+        "IsRequired": false
       },
       {
         "Name": "userId",
@@ -473,24 +508,9 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "Banner",
-        "Type": "Microsoft.AspNetCore.Http.IFormFile",
-        "IsRequired": false
-      },
-      {
-        "Name": "Bio",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Location",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "ProfilePicture",
-        "Type": "Microsoft.AspNetCore.Http.IFormFile",
-        "IsRequired": false
+        "Name": "createProfileDto",
+        "Type": "ProjektBackend.Controllers.CreateProfileDto",
+        "IsRequired": true
       },
       {
         "Name": "userId",
@@ -658,17 +678,7 @@
         "IsRequired": false
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "ProjektBackend.Models.User",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "ProjektBackend.Controllers.UserController",

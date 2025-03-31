@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ProjektBackend.Models;
 
+#pragma warning disable
+
 public partial class ProjektContext : DbContext
 {
     public ProjektContext()
@@ -211,12 +213,12 @@ public partial class ProjektContext : DbContext
             entity.Property(e => e.ProfileId)
                 .HasColumnType("int(11)")
                 .HasColumnName("ProfileID");
-            entity.Property(e => e.Bio)
-                .HasDefaultValueSql("'NULL'")
-                .HasColumnType("text");
             entity.Property(e => e.Banner)
                 .HasMaxLength(255)
                 .HasDefaultValueSql("'NULL'");
+            entity.Property(e => e.Bio)
+                .HasDefaultValueSql("'NULL'")
+                .HasColumnType("text");
             entity.Property(e => e.Location)
                 .HasMaxLength(255)
                 .HasDefaultValueSql("'NULL'");

@@ -41,7 +41,16 @@ namespace ProjektBackend.Controllers
         {
             try
             {
-                var users = await _context.Users.ToListAsync();
+                var users = await _context.Users
+                    .Select(p => new
+                    {
+                        p.FirstName,
+                        p.LastName,
+                        p.Role,
+                        p.CreatedAt,
+                        p.IsVerified,
+                        p.IsActive
+                    }).ToListAsync();
                 if (users != null && users.Any())
                 {
                     return StatusCode(200, users);
@@ -56,7 +65,7 @@ namespace ProjektBackend.Controllers
 
         [Authorize(Policy = "SelfOrAdmin")]
         [HttpGet("fetchUser")]
-        public async Task<ActionResult<User>> FetchUser(int? userId = null)
+        public async Task<ActionResult<object>> FetchUser(int? userId = null)
         {
             try
             {
@@ -78,7 +87,29 @@ namespace ProjektBackend.Controllers
 
                 var user = await _context.Users
                     .Include(p => p.Employers)
-                    .FirstOrDefaultAsync(p => p.UserId == targetUserId);
+                    .Where(p => p.UserId == targetUserId)
+                    .Select(p => new
+                    {
+                        p.UserId,
+                        p.FirstName,
+                        p.LastName,
+                        p.Role,
+                        p.Email,
+                        p.CreatedAt,
+                        p.IsVerified,
+                        p.IsActive,
+                        Employers = p.Employers != null ? new
+                        {
+                            p.Employers.CompanyAddress,
+                            p.Employers.CompanyPhoneNumber,
+                            p.Employers.CompanyName,
+                            p.Employers.CompanyDescription,
+                            p.Employers.Industry,
+                            p.Employers.CompanyEmail,
+                            p.Employers.CompanyWebsite,
+                        } : null
+                    })
+                    .FirstOrDefaultAsync();
 
                 if (user != null)
                 {
@@ -117,7 +148,9 @@ namespace ProjektBackend.Controllers
                     Email = registerUserDto.Email,
                     Password = Convert.ToBase64String(hashBytes),
                     Role = "Employee",
-                    RefreshToken = string.Empty
+                    RefreshToken = string.Empty,
+                    IsVerified = false,
+                    IsActive = true,
                 };
 
                 if (newUser != null)
@@ -256,6 +289,7 @@ namespace ProjektBackend.Controllers
                     new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
                     new Claim(ClaimTypes.Role, user.Role),
                     new Claim("status", user.IsActive.ToString()),
+                    new Claim("verified", user.IsVerified.ToString()),
                     new Claim(ClaimTypes.Email, user.Email)
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(Convert.ToDouble(_configuration["Jwt:ExpiryInMinutes"])),

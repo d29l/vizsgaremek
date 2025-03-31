@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using ProjektBackend.Cleanup;
+using ProjektBackend.Controllers;
 using ProjektBackend.Models;
 using System.Security.Claims;
 using System.Text;
@@ -15,6 +17,9 @@ using System.Text.Json.Serialization;
 using System.Threading.RateLimiting;
 
 #pragma warning disable CS8604
+#pragma warning disable CS8621
+#pragma warning disable CS8634
+#pragma warning disable CS8631
 
 namespace ProjektBackend
 {
@@ -51,6 +56,11 @@ namespace ProjektBackend
                     ValidateLifetime = true,
                     ClockSkew = TimeSpan.Zero
                 };
+            });
+
+            builder.WebHost.ConfigureKestrel(options =>
+            {
+                options.Limits.MaxRequestBodySize = 10485760;
             });
 
             builder.Services.AddRateLimiter(options =>
@@ -144,6 +154,15 @@ namespace ProjektBackend
                     
             });
             builder.Services.AddSingleton<IAuthorizationHandler, MultiPolicyAuthorizationHandler>();
+
+            builder.Services.AddScoped<FileCleanupService>();
+            builder.Services.AddHostedService(provider => {
+                var scopeFactory = provider.GetRequiredService<IServiceScopeFactory>();
+                using (var scope = scopeFactory.CreateScope())
+                {
+                    return scope.ServiceProvider.GetRequiredService<FileCleanupService>();
+                }
+            });
 
             builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
             

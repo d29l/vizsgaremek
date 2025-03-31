@@ -15,7 +15,7 @@ public partial class Employerrequest
 
     public string CompanyEmail { get; set; } = null!;
 
-    public int? CompanyPhoneNumber { get; set; } = null!;
+    public int CompanyPhoneNumber { get; set; }
 
     public string Industry { get; set; } = null!;
 

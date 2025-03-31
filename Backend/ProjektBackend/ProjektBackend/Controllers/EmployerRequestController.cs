@@ -64,7 +64,7 @@ namespace ProjektBackend.Controllers
 
         [Authorize(Policy = "EmployeeSelfOrAdmin")]
         [HttpPost("postRequest")]
-        public async Task<ActionResult> PostRequest(CreateRequestDto createRequestDto, int? userId = null)
+        public async Task<ActionResult> PostRequest([FromForm]CreateRequestDto createRequestDto, int? userId = null)
         {
             try
             {

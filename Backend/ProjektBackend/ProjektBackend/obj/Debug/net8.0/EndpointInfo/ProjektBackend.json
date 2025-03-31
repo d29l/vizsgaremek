@@ -486,19 +486,63 @@
         ],
         "requestBody": {
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/CreateRequestDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateRequestDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateRequestDto"
+                "type": "object",
+                "properties": {
+                  "CompanyName": {
+                    "type": "string"
+                  },
+                  "CompanyAddress": {
+                    "type": "string"
+                  },
+                  "CompanyEmail": {
+                    "type": "string"
+                  },
+                  "CompanyPhoneNumber": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "Industry": {
+                    "type": "string"
+                  },
+                  "CompanyWebsite": {
+                    "type": "string"
+                  },
+                  "CompanyDescription": {
+                    "type": "string"
+                  },
+                  "EstabilishedYear": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                }
+              },
+              "encoding": {
+                "CompanyName": {
+                  "style": "form"
+                },
+                "CompanyAddress": {
+                  "style": "form"
+                },
+                "CompanyEmail": {
+                  "style": "form"
+                },
+                "CompanyPhoneNumber": {
+                  "style": "form"
+                },
+                "Industry": {
+                  "style": "form"
+                },
+                "CompanyWebsite": {
+                  "style": "form"
+                },
+                "CompanyDescription": {
+                  "style": "form"
+                },
+                "EstabilishedYear": {
+                  "style": "form"
+                }
               }
             }
           }
@@ -864,39 +908,19 @@
         ],
         "requestBody": {
           "content": {
-            "multipart/form-data": {
+            "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "Banner": {
-                    "type": "string",
-                    "format": "binary"
-                  },
-                  "Bio": {
-                    "type": "string"
-                  },
-                  "Location": {
-                    "type": "string"
-                  },
-                  "ProfilePicture": {
-                    "type": "string",
-                    "format": "binary"
-                  }
-                }
-              },
-              "encoding": {
-                "Banner": {
-                  "style": "form"
-                },
-                "Bio": {
-                  "style": "form"
-                },
-                "Location": {
-                  "style": "form"
-                },
-                "ProfilePicture": {
-                  "style": "form"
-                }
+                "$ref": "#/components/schemas/CreateProfileDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProfileDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProfileDto"
               }
             }
           }
@@ -1049,24 +1073,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              }
-            }
+            "description": "Success"
           }
         }
       }
@@ -1564,40 +1571,26 @@
         },
         "additionalProperties": false
       },
-      "CreateRequestDto": {
+      "CreateProfileDto": {
         "type": "object",
         "properties": {
-          "companyName": {
+          "banner": {
+            "type": "string",
+            "format": "binary",
+            "nullable": true
+          },
+          "bio": {
             "type": "string",
             "nullable": true
           },
-          "companyAddress": {
+          "location": {
             "type": "string",
             "nullable": true
           },
-          "companyEmail": {
+          "profilePicture": {
             "type": "string",
+            "format": "binary",
             "nullable": true
-          },
-          "companyPhoneNumber": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "industry": {
-            "type": "string",
-            "nullable": true
-          },
-          "companyWebsite": {
-            "type": "string",
-            "nullable": true
-          },
-          "companyDescription": {
-            "type": "string",
-            "nullable": true
-          },
-          "estabilishedYear": {
-            "type": "integer",
-            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -1694,8 +1687,7 @@
           },
           "companyPhoneNumber": {
             "type": "integer",
-            "format": "int32",
-            "nullable": true
+            "format": "int32"
           },
           "industry": {
             "type": "string",
@@ -2012,7 +2004,6 @@
             "nullable": true
           },
           "role": {
-            "pattern": "^(Employee|Employer|Admin)$",
             "type": "string",
             "nullable": true
           },
@@ -2020,6 +2011,9 @@
             "type": "string",
             "format": "date-time",
             "nullable": true
+          },
+          "isVerified": {
+            "type": "boolean"
           },
           "isActive": {
             "type": "boolean",
