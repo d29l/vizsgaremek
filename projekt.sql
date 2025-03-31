@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Már 27. 22:03
+-- Létrehozás ideje: 2025. Már 31. 19:39
 -- Kiszolgáló verziója: 10.4.25-MariaDB
 -- PHP verzió: 8.1.10
 
@@ -80,13 +80,11 @@ CREATE TABLE `employers` (
 --
 
 INSERT INTO `employers` (`EmployerID`, `UserID`, `CompanyName`, `CompanyAddress`, `CompanyEmail`, `CompanyPhoneNumber`, `Industry`, `CompanyWebsite`, `CompanyDescription`, `EstablishedYear`) VALUES
-(1, 1, 'Voomm', '8061 Weeping Birch Street', '', 0, 'n/a', 'http://people.com.cn/massa.json?neque=in&libero=felis&convallis=eu', 'Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum.', 2006),
-(2, 2, 'Ntags', '8709 Moulton Place', '', 0, 'Business Services', 'https://lycos.com/sed/sagittis/nam/congue.aspx?nulla=quam&suspendisse=nec&potenti=dui&cras=luctus&in=rutrum&purus=nulla&eu=tellus&magna=in&vulputate=sagittis&luctus=dui&cum=vel&sociis=nisl&natoque=duis&penatibus=ac&et=nibh&magnis=fusce&dis=lacus&parturien', 'Fusce consequat. Nulla nisl. Nunc nisl.', 2007),
-(3, 3, 'Youfeed', '62 Esch Junction', '', 0, 'n/a', 'https://patch.com/a/suscipit/nulla/elit/ac.js?vel=porta&augue=volutpat&vestibulum=quam&ante=pede&ipsum=lobortis&primis=ligula&in=sit&faucibus=amet&orci=eleifend&luctus=pede&et=libero&ultrices=quis&posuere=orci&cubilia=nullam&curae=molestie&donec=nibh&phar', 'Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus.', 2012),
-(4, 4, 'Bubblemix', '61305 7th Point', '', 0, 'Major Pharmaceuticals', 'https://ebay.com/elit/ac.aspx?justo=nisl&eu=duis&massa=bibendum&donec=felis&dapibus=sed&duis=interdum&at=venenatis&velit=turpis&eu=enim&est=blandit&congue=mi&elementum=in&in=porttitor&hac=pede&habitasse=justo&platea=eu&dictumst=massa&morbi=donec&vestibulu', 'Nulla ut erat id mauris vulputate elementum. Nullam varius. Nulla facilisi.', 1990),
-(5, 5, 'Ooba', '4 Hintze Alley', '', 0, 'Major Chemicals', 'https://liveinternet.ru/dui/maecenas/tristique/est/et/tempus.aspx?enim=felis&blandit=ut&mi=at&in=dolor&porttitor=quis&pede=odio&justo=consequat&eu=varius&massa=integer&donec=ac&dapibus=leo&duis=pellentesque&at=ultrices&velit=mattis&eu=odio&est=donec&congu', 'In congue. Etiam justo. Etiam pretium iaculis justo.', 1978),
-(6, 6, 'Torol', 'Miskolc Buza Ter', '', 0, 'n/a', 'https://youtube.com', 'Lorem Ipsum', 2002),
-(11, 11, 'Temp', 'Temp', '', 0, 'Temp', 'Temp', 'Temp', 2000);
+(14, 29, 'Acme Corporation', '123 Innovation Drive, San Jose, CA 95112', 'info@acmecorp.com', 5551234, 'Technology', 'www.acmecorp.com', 'A leading provider of cutting-edge technology solutions.', 0000),
+(15, 30, 'Global Industries', '456 World Trade Center, New York, NY 10007', 'contact@globalind.net', 5555678, 'Manufacturing', 'www.globalindustries.com', 'A global leader in manufacturing and distribution.', 1950),
+(16, 31, 'Innovate Solutions', '789 Tech Park, Berlin, 10117, Germany', 'hello@innovatesol.de', 49301234, 'Consulting', 'www.innovatesol.com', 'A consulting firm specializing in innovative business strategies.', 2005),
+(17, 32, 'Tech Forward', '101 Silicon Avenue, Palo Alto, CA 94303', 'hr@techfwd.com', 5559012, 'Software Development', 'www.techfwd.io', 'A dynamic software development company focused on the future.', 2010),
+(18, 33, 'Bright Horizons', '22 Market Street, Manchester, M1 1PT, UK', 'enquiries@brighthorizons.co.uk', 44161234, 'Education', 'www.brighthorizons.co.uk', 'A leading provider of education and childcare services.', 1988);
 
 -- --------------------------------------------------------
 
@@ -124,16 +122,16 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`PostID`, `EmployerID`, `UserID`, `Title`, `Category`, `Location`, `Content`, `CreatedAt`) VALUES
-(1, 1, 1, 'Nurse Practicioner', '', '', 'In congue. Etiam justo. Etiam pretium iaculis justo.', '2025-01-14 10:00:00'),
-(2, 2, 2, 'Senior Editor', '', '', 'Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.', '2024-12-25 08:30:15'),
-(3, 3, 3, 'Senior Sales Associate', '', '', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus.', '2023-07-04 14:45:30'),
-(4, 4, 4, 'Food Chemist', '', '', 'Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus.', '2022-11-01 16:00:00'),
-(5, 5, 5, 'Media Manager I', '', '', 'Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.', '2021-05-20 09:15:45'),
-(9, 11, 11, 'string34', '', '', 'string', '2025-03-20 10:05:59'),
-(10, 11, 14, 'string', '', '', 'string', '2025-03-21 15:15:41'),
-(13, 11, 11, 'string', '', '', 'string', '2025-03-21 15:44:36'),
-(14, 11, 11, 'Test', '', '', 'Test', '2025-03-21 15:44:44'),
-(15, 11, 11, 'string', '', '', 'string', '2025-03-23 19:05:13');
+(16, 14, 29, 'Software Engineer - Full Stack', 'Software Development', 'San Jose, CA', 'Join our team at Acme Corporation and work on cutting-edge web applications. We are looking for experienced full-stack developers with a passion for innovation.', '2025-03-31 19:34:56'),
+(17, 14, 29, 'Senior Project Manager', 'Project Management', 'San Jose, CA', 'Acme Corporation is seeking a senior project manager to lead complex technology projects. Must have experience with Agile methodologies and a proven track record of successful project delivery.', '2025-03-31 19:35:03'),
+(18, 15, 30, 'Manufacturing Engineer', 'Manufacturing', 'New York, NY', 'Global Industries is hiring a manufacturing engineer to optimize production processes and improve efficiency. Experience in a fast-paced manufacturing environment is essential.', '2025-03-31 19:35:16'),
+(19, 15, 30, 'Supply Chain Analyst', 'Supply Chain', 'New York, NY', 'Join our team as a supply chain analyst and help us streamline our global supply chain operations. Strong analytical and problem-solving skills are required.', '2025-03-31 19:35:22'),
+(20, 16, 31, 'Business Strategy Consultant', 'Consulting', 'Berlin, Germany', 'Innovate Solutions is looking for a business strategy consultant to work with clients on developing and implementing innovative business strategies. Strong analytical and communication skills are a must.', '2025-03-31 19:35:34'),
+(21, 16, 31, 'Data Analyst (Junior)', 'Data Analysis', 'Berlin, Germany', 'Join our dynamic team at Innovate Solutions, as a junior data analyst, and help our clients to make informed, data driven decisions.', '2025-03-31 19:35:41'),
+(22, 17, 32, 'Front-End Developer (React)', 'Front-End Development', 'Palo Alto, CA', 'Tech Forward is seeking a skilled front-end developer with expertise in React. Join us and work on building modern and user-friendly web interfaces.', '2025-03-31 19:35:53'),
+(23, 17, 32, 'DevOps Engineer', 'DevOps', 'Palo Alto, CA', 'We are looking for a DevOps engineer to help us automate our deployment processes and improve our infrastructure. Experience with AWS and Docker is highly desirable.', '2025-03-31 19:36:00'),
+(24, 18, 33, 'Early Childhood Educator', 'Education', 'Manchester, UK', 'Bright Horizons is hiring passionate early childhood educators to join our team. Help us create a nurturing and stimulating learning environment for young children.', '2025-03-31 19:36:11'),
+(25, 18, 33, 'Education Administrator', 'Education Administration', 'Manchester, UK', 'We are seeking an organized and detail-oriented education administrator to manage our administrative tasks. Experience in an educational setting is preferred.', '2025-03-31 19:36:17');
 
 -- --------------------------------------------------------
 
@@ -155,7 +153,21 @@ CREATE TABLE `profiles` (
 --
 
 INSERT INTO `profiles` (`ProfileID`, `UserID`, `Banner`, `Bio`, `Location`, `ProfilePicture`) VALUES
-(1, 10, 'John Admin', 'Lorem Ipsum', 'Miskolc', 'https://i.pinimg.com/736x/d0/cb/d1/d0cbd1380c72ddf3750c896433b2dea1.jpg');
+(7, 19, '/Storage/Banners/default_banner.png', 'Software developer passionate about clean code.', 'San Francisco, CA', '/Storage/Images/default.png'),
+(8, 20, '/Storage/Banners/default_banner.png', 'Marketing professional with a focus on digital strategy.', 'New York, NY', '/Storage/Images/default.png'),
+(9, 21, '/Storage/Banners/default_banner.png', 'Data scientist exploring the world of AI.', 'Seattle, WA', '/Storage/Images/default.png'),
+(10, 22, '/Storage/Banners/default_banner.png', 'Graphic designer with a love for minimalist design.', 'Austin, TX', '/Storage/Images/default.png'),
+(11, 23, '/Storage/Banners/default_banner.png', 'Project manager specializing in agile methodologies.', 'Chicago, IL', '/Storage/Images/default.png'),
+(12, 24, '/Storage/Banners/default_banner.png', 'Financial analyst with expertise in market trends.', 'Boston, MA', '/Storage/Images/default.png'),
+(13, 25, '/Storage/Banners/default_banner.png', 'Content writer creating engaging stories.', 'Portland, OR', '/Storage/Images/default.png'),
+(14, 26, '/Storage/Banners/default_banner.png', 'HR specialist focusing on employee satisfaction.', 'Denver, CO', '/Storage/Images/default.png'),
+(15, 27, '/Storage/Banners/default_banner.png', 'Sales representative with a strong customer focus.', 'Miami, FL', '/Storage/Images/default.png'),
+(16, 28, '/Storage/Banners/default_banner.png', 'Systems administrator maintaining network infrastructure.', 'Los Angeles, CA', '/Storage/Images/default.png'),
+(17, 29, '/Storage/Banners/default_banner.png', 'Acme Corporation: Leading the way in innovative solutions.', 'Headquarters: San Jose, CA', '/Storage/Images/default.png'),
+(18, 30, '/Storage/Banners/default_banner.png', 'Global Industries: Connecting the world through technology.', 'Global presence: New York, London, Tokyo', '/Storage/Images/default.png'),
+(19, 31, '/Storage/Banners/default_banner.png', 'Innovate Solutions: Transforming ideas into reality.', 'Innovation Hub: Berlin, Germany', '/Storage/Images/default.png'),
+(20, 32, '/Storage/Banners/default_banner.png', 'Tech Forward: Building the future, one line of code at a time.', 'Silicon Valley: Palo Alto, CA', '/Storage/Images/default.png'),
+(21, 33, '/Storage/Banners/default_banner.png', 'Bright Horizons: Creating opportunities, inspiring growth.', 'European Office: Manchester, UK', '/Storage/Images/default.png');
 
 -- --------------------------------------------------------
 
@@ -172,6 +184,7 @@ CREATE TABLE `users` (
   `RefreshToken` varchar(255) COLLATE utf8_hungarian_ci NOT NULL,
   `Role` enum('Employee','Employer','Admin') COLLATE utf8_hungarian_ci DEFAULT 'Employee',
   `CreatedAt` datetime DEFAULT current_timestamp(),
+  `IsVerified` tinyint(1) NOT NULL DEFAULT 0,
   `IsActive` tinyint(1) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
@@ -179,16 +192,23 @@ CREATE TABLE `users` (
 -- A tábla adatainak kiíratása `users`
 --
 
-INSERT INTO `users` (`UserID`, `FirstName`, `LastName`, `Email`, `Password`, `RefreshToken`, `Role`, `CreatedAt`, `IsActive`) VALUES
-(1, '', '', 'iayrs0@g.co', 'QCMhWNTszTuPsiK8FEZqi3EBU/o1gnwq6e0h89Z8VQu/Id6N6kLtbmPyXp1+WXrx', '', 'Employer', '2025-02-01 20:45:36', 1),
-(2, '', '', 'cewbach1@printfriendly.com', 'QCMhWNTszTuPsiK8FEZqi3EBU/o1gnwq6e0h89Z8VQu/Id6N6kLtbmPyXp1+WXrx', '', 'Employer', '2024-03-30 20:45:49', 0),
-(3, '', '', 'ssparkwill2@myspace.com', 'QCMhWNTszTuPsiK8FEZqi3EBU/o1gnwq6e0h89Z8VQu/Id6N6kLtbmPyXp1+WXrx', '', 'Employee', '2023-01-28 20:46:02', 0),
-(4, '', '', 'ctapply3@topsy.com', 'QCMhWNTszTuPsiK8FEZqi3EBU/o1gnwq6e0h89Z8VQu/Id6N6kLtbmPyXp1+WXrx', '', 'Employer', '2024-12-17 20:46:16', 1),
-(5, '', '', 'iferbrache4@china.com.cn', 'QCMhWNTszTuPsiK8FEZqi3EBU/o1gnwq6e0h89Z8VQu/Id6N6kLtbmPyXp1+WXrx', '', 'Employee', '2023-05-12 11:46:26', 1),
-(6, '', '', 'torol@gmail.com', 'QCMhWNTszTuPsiK8FEZqi3EBU/o1gnwq6e0h89Z8VQu/Id6N6kLtbmPyXp1+WXrx', '', 'Employer', '2024-12-01 12:10:40', 1),
-(8, 'Bodi', 'Gusztika', 'utalomazadofizetest@gmail.com', 'QCMhWNTszTuPsiK8FEZqi3EBU/o1gnwq6e0h89Z8VQu/Id6N6kLtbmPyXp1+WXrx', '', 'Employee', '2025-02-18 21:04:44', 1),
-(10, 'admin', 'admin', 'admin', 'UMpb+AnYxJl3A22rnZE3nvomoYp1Khg3FwAjGAu31GaSxkoT5J5+k6fc0FEun/AX', 'UIbDvVJYLa9+iBHMHTOG9PBTVsS52v1a7XIbSD6xPyR6tXaYbSyMZVLMoEdelQuHTwi1H5+D04zl13vtqMwjzw==', 'Admin', '2025-02-19 23:00:08', 1),
-(11, 'admin', 'admin', 'admin2', 'X0bSYAMcD5utwSGpSYTLXiTz5INqbVFoDUpmVicNktqAkOuOjSbGdjNcoQ0lo/wI', 'CtmCpxCYDNsdsHZOydLJsxQBL4k33hSj9SzC2VPWZ2ljlWmXaJDA5qF4yGVT+fmW6d9YXZF0tXfCyXeblNbcsA==', 'Employer', '2025-02-19 23:02:26', 1);
+INSERT INTO `users` (`UserID`, `FirstName`, `LastName`, `Email`, `Password`, `RefreshToken`, `Role`, `CreatedAt`, `IsVerified`, `IsActive`) VALUES
+(18, 'System', 'Admin', 'systemadmin@jobplatform.hu', 'a45s8WxvOFlh3xjrlWwt7TLF7Ew4cKjqUkEFvk0fnf/trQ7AZOTfLqgatG9bEnbn', 'kkwBucT2gKIKMeYkY28E9aqM/AADTlNQpucYnwnJ8c7HOrivYsaJ7v4N2JLcn+QVBX1vC5tXpWiqLirV5ZG+7g==', 'Admin', '2025-03-31 18:10:56', 1, 1),
+(19, 'Alice', 'Johnson', 'alice.johnson@example.com', 'lK9myKOTERJU9naeIa69zHOx2TXubX5Ak8rsKd4aRubPonFQ/HKolzJH0IgVWdJA', '', 'Employee', '2025-03-31 18:48:29', 0, 1),
+(20, 'Bob', 'Smith', 'bob.smith@example.com', 'ADtFCOjMgE95gr1WXhCfYvnx9gZNjC3TGX4FJpXcbrINP8sCeiOCW1pwD3uhQrzU', '', 'Employee', '2025-03-31 18:48:38', 0, 1),
+(21, 'Charlie', 'Williams', 'charlie.williams@example.com', '6yXeZ9z6A8elhSPA2ogQJQkl7ydI6LnZqI7iWGCRsQMDtrEYdEcv82pmAT800vvx', '', 'Employee', '2025-03-31 18:48:46', 0, 1),
+(22, 'David', 'Brown', 'david.brown@example.com', 'Vjwnn9CE7+J5izZ1V8aupAr+WYWGahP8SbTxt5jXG7UP6KoaCfrn129VO9S3wnnx', '', 'Employee', '2025-03-31 18:48:53', 0, 1),
+(23, 'Emily', 'Davis', 'emily.davis@example.com', 'qOiJ5IoJSA8YqccH4D69RCqU4JIrbSoohAYpKfSqameCQRV9ClOhdZIrl0SPSbi3', '', 'Employee', '2025-03-31 18:49:00', 0, 1),
+(24, 'Frank', 'Miller', 'frank.miller@example.com', 'mweP7z9G+jd8w1VJYBDvzP5ArwKVXMo+PGEXCErIGKSTUUgFW+sOfUrYrM/ImQOa', '', 'Employee', '2025-03-31 18:49:06', 0, 1),
+(25, 'Grace', 'Wilson', 'grace.wilson@example.com', 'TUs28Bl9D3k5lxZDDTHhKG9xh3XS/lHWzp9posJ9x2+j9yludaz4Ar1DAcsGWwMG', '', 'Employee', '2025-03-31 18:49:12', 0, 1),
+(26, 'Henry', 'Moore', 'henry.moore@example.com', 'CCMvMoQSa/+O7AB5vTwj5N0quuGZjxpjwBwAUaVjcrH/0gBx61aeZuVQYHY9i96p', '', 'Employee', '2025-03-31 18:49:17', 0, 1),
+(27, 'Isabella', 'Taylor', 'isabella.taylor@example.com', 'W1nb7xYRtxZEmfmulAVseHBtYOXbyAwVADKxDCa/FOI2grBD2sXmgpLD7jgkQB+a', '', 'Employee', '2025-03-31 18:49:23', 0, 1),
+(28, 'Jack', 'Anderson', 'jack.anderson@example.com', 'm29wYUZBdqxgUdmI8tjOHYsEwBq99jbAPLU77eef4LqZjcFmh1I1yJSYnA+9KRth', '', 'Employee', '2025-03-31 18:49:30', 0, 1),
+(29, 'Acme', 'Corporation', 'hr@acmecorp.com', 'hBk1womJAguE2EA+hwxvdBoEHXKdJfGV6iIX2mf4X8Reo6cu6yw3cibDmzfgxfBX', '', 'Employer', '2025-03-31 19:25:54', 0, 1),
+(30, 'Global', 'Industries', 'jobs@globalind.net', 'e07PA31kPwmyKJbUHbnzYvVJ5u8ozj8S5fZkeNt+Nu9rhtYAi9PnOvaraHlzDDg5', '', 'Employer', '2025-03-31 19:26:12', 0, 1),
+(31, 'Innovate', 'Solutions', 'careers@innovatesol.org', 'V8Pqzesmb2Loqw0Lviwlx0z5PqyT0IibnVt1B/gwZqiMEthgM1rmO5bbJBuGZOaP', '', 'Employer', '2025-03-31 19:26:17', 0, 1),
+(32, 'Tech', 'Forward', 'talent@techfwd.io', 'eRiIM62aIs8K2K5blfH6Yxvwc4KXt2c9vKFqkeEd3z+ccPyPvj1YBIYE5z4tBzb7', '', 'Employer', '2025-03-31 19:26:22', 0, 1),
+(33, 'Bright', 'Horizons', 'apply@brighthorizons.co.uk', 'QkwvVhYKk4lszq88istrLGyKtp9IaLZcL81DDaDE3eVK5ZeTggX5o6HyGSFlEGvM', '', 'Employer', '2025-03-31 19:26:27', 0, 1);
 
 --
 -- Indexek a kiírt táblákhoz
@@ -268,7 +288,7 @@ ALTER TABLE `employerrequest`
 -- AUTO_INCREMENT a táblához `employers`
 --
 ALTER TABLE `employers`
-  MODIFY `EmployerID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `EmployerID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT a táblához `messages`
@@ -280,19 +300,19 @@ ALTER TABLE `messages`
 -- AUTO_INCREMENT a táblához `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `PostID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `PostID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT a táblához `profiles`
 --
 ALTER TABLE `profiles`
-  MODIFY `ProfileID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ProfileID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT a táblához `users`
 --
 ALTER TABLE `users`
-  MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- Megkötések a kiírt táblákhoz
