@@ -139,4 +139,10 @@ namespace ProjektBackend.Controllers
         string NewPassword,
         string ConfirmNewPassword
     );
+
+    public record CreateMessageDto
+        (
+        int ReceiverId,
+        string Content
+        );
 }

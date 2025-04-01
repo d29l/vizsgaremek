@@ -62,6 +62,13 @@ namespace ProjektBackend
             {
                 options.Limits.MaxRequestBodySize = 10485760;
             });
+            builder.Services.AddDistributedMemoryCache();
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(20);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
 
             builder.Services.AddRateLimiter(options =>
             {
@@ -251,6 +258,7 @@ namespace ProjektBackend
                 RequestPath = "/Storage/Banners"
             });
 
+
             app.MapHealthChecks("/health");
 
             app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
@@ -258,6 +266,8 @@ namespace ProjektBackend
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseSession();
 
             app.UseRateLimiter();
             

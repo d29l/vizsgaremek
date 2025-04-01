@@ -12,6 +12,8 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Net.Mail;
+using System.Net;
 
 #pragma warning disable CS8604
 #pragma warning disable CS8602
@@ -377,6 +379,245 @@ namespace ProjektBackend.Controllers
             }
         }
 
+        [HttpPost("sendVerificationCode")]
+        public async Task<ActionResult> SendVerificationCode(string email)
+        {
+            try
+            {
+                var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+
+                if (user == null)
+                {
+                    return StatusCode(404, "User not found.");
+                }
+
+                if (user.IsVerified)
+                {
+                    return StatusCode(400, "User is already verified.");
+                }
+
+                string verificationCode = GenerateVerificationCode();
+
+                HttpContext.Session.SetString($"VerificationCode_{email}", verificationCode);
+                HttpContext.Session.SetString($"VerificationCodeExpiry_{email}",
+                    DateTime.UtcNow.AddMinutes(15).ToString("o"));
+
+                await SendVerificationEmail(email, verificationCode);
+
+                return StatusCode(200, "Verification code sent.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while sending verification code.");
+            }
+        }
+
+        [HttpPost("verifyEmail")]
+        public async Task<ActionResult> VerifyEmail(string email, string verificationCode)
+        {
+            try
+            {
+                var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+
+                if (user == null)
+                {
+                    return StatusCode(404, "User not found.");
+                }
+
+                if (user.IsVerified)
+                {
+                    return StatusCode(400, "User is already verified.");
+                }
+
+                string storedCode = HttpContext.Session.GetString($"VerificationCode_{email}");
+                string expiryString = HttpContext.Session.GetString($"VerificationCodeExpiry_{email}");
+
+                if (string.IsNullOrEmpty(storedCode) || string.IsNullOrEmpty(expiryString))
+                {
+                    return StatusCode(400, "No verification code found or it has expired. Please request a new one.");
+                }
+
+                DateTime expiry = DateTime.Parse(expiryString);
+                if (DateTime.UtcNow > expiry)
+                {
+                    return StatusCode(400, "Verification code has expired. Please request a new one.");
+                }
+
+                if (storedCode != verificationCode)
+                {
+                    return StatusCode(400, "Invalid verification code.");
+                }
+
+                //Commented for testing purposes
+                //user.IsVerified = true;
+                await _context.SaveChangesAsync();
+
+                HttpContext.Session.Remove($"VerificationCode_{email}");
+                HttpContext.Session.Remove($"VerificationCodeExpiry_{email}");
+
+                return StatusCode(200, "Email verified successfully.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while verifying email.");
+            }
+        }
+
+        private async Task SendVerificationEmail(string email, string verificationCode)
+        {
+            var smtpSettings = _configuration.GetSection("SmtpSettings");
+
+            using var message = new MailMessage();
+            message.From = new MailAddress("noreply@jobplatform.hu");
+            message.To.Add(email);
+            message.Subject = "Email Verification";
+            var emailBody = @"<!DOCTYPE html>
+            <html lang=""en"">
+            <head>
+                <meta charset=""UTF-8"">
+                <meta name=""viewport"" content=""width=device-width, initial-scale=1.0"">
+                <meta http-equiv=""X-UA-Compatible"" content=""ie=edge"">
+                <title>Your Job Platform Verification Code</title>
+                <style type=""text/css"">
+                    body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+                    table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+                    img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+                    table { border-collapse: collapse !important; }
+                    body { height: 100% !important; margin: 0 !important; padding: 0 !important; width: 100% !important; background-color: #1e2030; }
+
+                    .email-container {
+                        max-width: 600px;
+                        margin: 0 auto;
+                    }
+                    .content-block {
+                        background-color: #363a4f;
+                        border-radius: 8px;
+                        padding: 30px 40px;
+                        color: #cad3f5;
+                        font-family: Arial, Helvetica, sans-serif;
+                        font-size: 16px;
+                        line-height: 1.6;
+                    }
+                    .code-display-container {
+                        background-color: #494d64;
+                        border-radius: 4px;
+                        padding: 15px 20px;
+                        text-align: center;
+                        margin: 25px 0;
+                    }
+                    .verification-code {
+                        font-size: 32px;
+                        font-weight: bold;
+                        color: #b7bdf8;
+                        letter-spacing: 5px;
+                        font-family: 'Courier New', Courier, monospace;
+                        display: inline-block;
+                    }
+                    .expiry-info {
+                        font-size: 14px;
+                        color: #b8c0e0;
+                        text-align: center;
+                        margin-top: 10px;
+                    }
+                    .footer-text {
+                        font-size: 12px;
+                        color: #a5adcb;
+                        text-align: center;
+                        padding-top: 20px;
+                        font-family: Arial, Helvetica, sans-serif;
+                    }
+                    .footer-text a {
+                        color: #b7bdf8;
+                        text-decoration: none;
+                    }
+                    h1 {
+                        color: #cad3f5;
+                        font-size: 24px;
+                        margin-bottom: 20px;
+                        text-align: center;
+                    }
+                    p {
+                        margin-bottom: 15px;
+                    }
+
+                    @media screen and (max-width: 600px) {
+                        .content-block {
+                            padding: 20px !important;
+                        }
+                        .verification-code {
+                            font-size: 28px !important;
+                            letter-spacing: 3px !important;
+                        }
+                        h1 {
+                            font-size: 20px !important;
+                        }
+                    }
+                </style>
+            </head>
+            <body style=""margin: 0 !important; padding: 0 !important; background-color: #1e2030;"">
+                <table border=""0"" cellpadding=""0"" cellspacing=""0"" width=""100%"" style=""background-color: #1e2030;"">
+                    <tr>
+                        <td align=""center"" valign=""top"" style=""padding: 20px 10px;"">
+                            <table border=""0"" cellpadding=""0"" cellspacing=""0"" width=""100%"" class=""email-container"">
+                                <tr>
+                                    <td align=""center"" valign=""top"" class=""content-block"">
+
+                                        <h1 style=""color: #b7bdf8; font-size: 24px; margin-bottom: 5px; text-align: center;"">Job Platform</h1>
+                                        <h1>Your Verification Code</h1>
+
+                                        <p style=""text-align: center;"">Please use the following code to complete your verification. This code is required to ensure your account's security.</p>
+
+                                        <div class=""code-display-container"">
+                                            <span class=""verification-code"">
+                                                {{CODE}}
+                                            </span>
+                                            <div class=""expiry-info"">
+                                                This code expires in 10 minutes.
+                                            </div>
+                                        </div>
+
+                                        <p style=""text-align: center;"">Enter this code in the verification field on the Job Platform website or app.</p>
+                                        <p style=""text-align: center; font-size: 14px; color: #b8c0e0;"">If you did not request this code, please ignore this email or contact our support if you suspect suspicious activity.</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align=""center"" class=""footer-text"">
+                                        You received this email because a verification attempt was made for your account.
+                                        <br><br>
+                                        &copy; 2025 Job Platform. All rights reserved.
+                                        <br>
+                                        <a href=""https://jobplatform.hu"">jobplatform.hu</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </body>
+</html>";
+            emailBody = emailBody.Replace("{{CODE}}", verificationCode);
+            message.Body = emailBody;
+            message.IsBodyHtml = true;
+
+            using var client = new SmtpClient(smtpSettings["Server"])
+            {
+                Port = int.Parse(smtpSettings["Port"]),
+                Credentials = new NetworkCredential(smtpSettings["User"], smtpSettings["Password"]),
+                EnableSsl = bool.Parse(smtpSettings["EnableSsl"])
+            };
+
+            await client.SendMailAsync(message);
+        }
+
+
+        private string GenerateVerificationCode()
+        {
+            Random random = new Random();
+            return random.Next(100000, 999999).ToString();
+        }
+
+
 
         [Authorize(Policy = "AdminOnly")]
         [HttpPut("updateUserRole/{userId}")]
@@ -618,10 +859,10 @@ namespace ProjektBackend.Controllers
                         return StatusCode(401, "Incorrect password.");
                     }
                 }
-                    _context.Users.Remove(user);
-                    await _context.SaveChangesAsync();
-                    return StatusCode(200, "User successfully deleted.");
-                
+                _context.Users.Remove(user);
+                await _context.SaveChangesAsync();
+                return StatusCode(200, "User successfully deleted.");
+
             }
             catch (DbUpdateException dbEx)
             {

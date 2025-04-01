@@ -1,2 +1,4 @@
 .vs/
-.ProjektBackend/obj/
+ProjektBackend/obj/
+ProjektBackend/bin/
+ProjektBackend/Storage/
