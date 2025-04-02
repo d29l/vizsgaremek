@@ -9,8 +9,7 @@ namespace AdminPanel
 {
     public class User
     {
-        [JsonPropertyName("userId")]
-        public int UserID { get; set; }
+        
 
         [JsonPropertyName("firstName")]
         public string FirstName { get; set; }
@@ -18,17 +17,23 @@ namespace AdminPanel
         [JsonPropertyName("lastName")]
         public string LastName { get; set; }
 
-        [JsonPropertyName("email")]
-        public string Email { get; set; }
+        [JsonPropertyName("password")]
+        public string Password { get; set; }
+
+        [JsonPropertyName("refreshToken")]
+        public string RefreshToken { get; set; } 
 
         [JsonPropertyName("role")]
-        public string Role { get; set; }
+        public string Role { get; set; } 
 
         [JsonPropertyName("createdAt")]
-        public DateTime CreatedAt { get; set; }
+        public DateTime? CreatedAt { get; set; } 
+
+        [JsonPropertyName("isVerified")]
+        public bool IsVerified { get; set; }
 
         [JsonPropertyName("isActive")]
-        public bool IsActive { get; set; }
+        public bool? IsActive { get; set; } 
     }
-   
+
 }

@@ -110,11 +110,36 @@
                                 Margin="5" 
                                 Padding="10">
                             <StackPanel>
+                                <!-- Primary Details -->
                                 <TextBlock Text="{Binding CompanyName}" 
                                            Foreground="#CDD6F4" 
                                            FontSize="16"/>
-                                <TextBlock Text="{Binding ApplicantId}" 
-                                           Foreground="#BAC2DE"/>
+                                <TextBlock Text="{Binding ApplicantId, StringFormat='Applicant ID: {0}'}" 
+                                           Foreground="#BAC2DE" 
+                                           FontSize="12"/>
+                                <!-- Additional Details -->
+                                <TextBlock Text="{Binding CompanyAddress, StringFormat='Address: {0}'}" 
+                                           Foreground="#BAC2DE" 
+                                           FontSize="12" Margin="0,5,0,0"/>
+                                <TextBlock Text="{Binding CompanyEmail, StringFormat='Email: {0}'}" 
+                                           Foreground="#BAC2DE" 
+                                           FontSize="12" Margin="0,5,0,0"/>
+                                <TextBlock Text="{Binding CompanyPhoneNumber, StringFormat='Phone: {0}'}" 
+                                           Foreground="#BAC2DE" 
+                                           FontSize="12" Margin="0,5,0,0"/>
+                                <TextBlock Text="{Binding Industry, StringFormat='Industry: {0}'}" 
+                                           Foreground="#BAC2DE" 
+                                           FontSize="12" Margin="0,5,0,0"/>
+                                <TextBlock Text="{Binding CompanyWebsite, StringFormat='Website: {0}'}" 
+                                           Foreground="#BAC2DE" 
+                                           FontSize="12" Margin="0,5,0,0"/>
+                                <TextBlock Text="{Binding EstablishedYear, StringFormat='Established: {0}'}" 
+                                           Foreground="#BAC2DE" 
+                                           FontSize="12" Margin="0,5,0,0"/>
+                                <TextBlock Text="{Binding CompanyDescription, StringFormat='Description: {0}'}" 
+                                           Foreground="#BAC2DE" 
+                                           FontSize="12" Margin="0,5,0,0" TextWrapping="Wrap"/>
+                                <!-- Action Buttons -->
                                 <StackPanel Orientation="Horizontal" 
                                             HorizontalAlignment="Right" 
                                             Margin="0,10,0,0">

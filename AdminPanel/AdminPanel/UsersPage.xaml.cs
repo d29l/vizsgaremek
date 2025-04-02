@@ -1,12 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Json;
+using System.Text;
+using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
-using System.Net.Http.Json;
-using System.Text.Json;
-using System.Collections.Generic;
 
 namespace AdminPanel
 {
+    public class DeleteUserRequestDto
+    {
+        public string Password { get; set; }
+        public string FirstName { get; set; } // Added for identification
+        public string LastName { get; set; }  // Added for identification
+    }
+
     public partial class UsersPage : Page
     {
         public UsersPage()
@@ -19,6 +29,7 @@ namespace AdminPanel
         {
             Application.Current.Shutdown();
         }
+
         private async void LoadUsers()
         {
             try
@@ -52,62 +63,76 @@ namespace AdminPanel
 
         private async void Delete_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is Button button)
+            if (sender is Button button && button.DataContext is User user)
             {
-                var user = button.DataContext as User;
-                if (user != null)
+                var confirmResult = MessageBox.Show(
+                    $"Are you sure you want to delete {user.FirstName} {user.LastName}?",
+                    "Confirm Delete",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Warning
+                );
+
+                if (confirmResult == MessageBoxResult.Yes)
                 {
-                    // Optional: Check if the current user is logged in (adjust as needed)
-                    if (CurrentUser.UserId == 0) // Assuming CurrentUser is a static class
+                    try
                     {
-                        MessageBox.Show("User not logged in.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        return;
+                        // Create the delete request DTO (empty password since admin)
+                        var deleteRequest = new DeleteUserRequestDto
+                        {
+                            Password = "", // Empty password for admin
+                            FirstName = user.FirstName,
+                            LastName = user.LastName
+                        };
+
+                        // Create the URL with query parameters
+                        string deleteUrl = $"users/deleteUser?FirstName={Uri.EscapeDataString(user.FirstName)}&LastName={Uri.EscapeDataString(user.LastName)}";
+
+                        // Create the request message
+                        var request = new HttpRequestMessage(HttpMethod.Delete, deleteUrl)
+                        {
+                            Content = JsonContent.Create(deleteRequest)
+                        };
+
+                        var response = await ApiClient.httpClient.SendAsync(request);
+
+                        if (response.IsSuccessStatusCode)
+                        {
+                            LoadUsers();
+                            MessageBox.Show("User deleted successfully!",
+                                "Success",
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Information);
+                        }
+                        else
+                        {
+                            var errorContent = await response.Content.ReadAsStringAsync();
+                            MessageBox.Show($"Failed to delete user: {errorContent}",
+                                "Error",
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Error);
+                        }
                     }
-
-                    var result = MessageBox.Show("Are you sure you want to delete this user?", "Confirm Delete", MessageBoxButton.YesNo, MessageBoxImage.Warning);
-                    if (result == MessageBoxResult.Yes)
+                    catch (Exception ex)
                     {
-                        string deleteUrl = $"users/deleteUser?UserId={user.UserID}";
-                        try
-                        {
-                            var response = await ApiClient.httpClient.DeleteAsync(deleteUrl);
-
-                            if (response.IsSuccessStatusCode)
-                            {
-                                LoadUsers(); // Refresh the list
-                                MessageBox.Show("User deleted successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                            }
-                            else if (response.StatusCode == System.Net.HttpStatusCode.Forbidden)
-                            {
-                                MessageBox.Show("You do not have permission to delete this user.", "Permission Denied", MessageBoxButton.OK, MessageBoxImage.Warning);
-                            }
-                            else
-                            {
-                                var errorContent = await response.Content.ReadAsStringAsync();
-                                MessageBox.Show($"Failed to delete user: {response.StatusCode}\n{errorContent}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        }
+                        MessageBox.Show($"Error: {ex.Message}",
+                            "Error",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Error);
                     }
                 }
-                else
-                {
-                    MessageBox.Show("No user selected.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
             }
-            }
+        }
+
         private void UsersListView_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             var gridView = UsersListView.View as GridView;
             if (gridView != null)
             {
                 double totalWidth = UsersListView.ActualWidth - SystemParameters.VerticalScrollBarWidth;
-                double availableWidth = totalWidth - 20; 
+                double availableWidth = totalWidth - 20;
 
-                double[] proportions = { 0.05, 0.15, 0.15, 0.25, 0.1, 0.1, 0.05, 0.15 };
+                // Adjusted proportions for 6 columns: First Name, Last Name, Role, Created At, Active, Actions
+                double[] proportions = { 0.20, 0.20, 0.15, 0.20, 0.10, 0.15 };
                 for (int i = 0; i < gridView.Columns.Count; i++)
                 {
                     gridView.Columns[i].Width = availableWidth * proportions[i];

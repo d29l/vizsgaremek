@@ -97,17 +97,15 @@
                   SizeChanged="UsersListView_SizeChanged">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding UserID}"/>
                     <GridViewColumn Header="First Name" DisplayMemberBinding="{Binding FirstName}"/>
                     <GridViewColumn Header="Last Name" DisplayMemberBinding="{Binding LastName}"/>
-                    <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Email}"/>
                     <GridViewColumn Header="Role" DisplayMemberBinding="{Binding Role}"/>
                     <GridViewColumn Header="Created At" DisplayMemberBinding="{Binding CreatedAt, StringFormat=yyyy-MM-dd}"/>
                     <GridViewColumn Header="Active" DisplayMemberBinding="{Binding IsActive}"/>
                     <GridViewColumn Header="Actions">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Content="Delete" Click="Delete_Click" Tag="{Binding UserID}" Margin="2,0,2,0" Padding="5,2" Background="#F38BA8" Foreground="#1E1E2E" BorderThickness="0">
+                                <Button Content="Delete" Click="Delete_Click" Margin="2,0,2,0" Padding="5,2" Background="#F38BA8" Foreground="#1E1E2E" BorderThickness="0">
                                     <Button.Style>
                                         <Style TargetType="Button">
                                             <Setter Property="Background" Value="#F38BA8"/>

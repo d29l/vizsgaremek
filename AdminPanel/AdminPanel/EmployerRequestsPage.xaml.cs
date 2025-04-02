@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -72,13 +73,13 @@ namespace AdminPanel
                         return;
                     }
 
-                    // Step 3: Create employer with updated properties
+                    // Step 3: Create employer
                     var createEmployerDto = new CreateEmployerDto
                     {
                         CompanyName = request.CompanyName,
                         CompanyAddress = request.CompanyAddress,
-                        CompanyEmail = request.CompanyEmail, // Added new property
-                        CompanyPhoneNumber = request.CompanyPhoneNumber, // Added new property
+                        CompanyEmail = request.CompanyEmail,
+                        CompanyPhoneNumber = request.CompanyPhoneNumber,
                         Industry = request.Industry,
                         CompanyWebsite = request.CompanyWebsite,
                         CompanyDescription = request.CompanyDescription,
@@ -133,10 +134,12 @@ namespace AdminPanel
                                "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }
+
         private async void Delete_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button button && button.Tag is int applicantId)
