@@ -13,8 +13,8 @@ namespace AdminPanel
     public class DeleteUserRequestDto
     {
         public string Password { get; set; }
-        public string FirstName { get; set; } // Added for identification
-        public string LastName { get; set; }  // Added for identification
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
     }
 
     public partial class UsersPage : Page
@@ -76,18 +76,15 @@ namespace AdminPanel
                 {
                     try
                     {
-                        // Create the delete request DTO (empty password since admin)
                         var deleteRequest = new DeleteUserRequestDto
                         {
-                            Password = "", // Empty password for admin
+                            Password = "",
                             FirstName = user.FirstName,
                             LastName = user.LastName
                         };
 
-                        // Create the URL with query parameters
-                        string deleteUrl = $"users/deleteUser?FirstName={Uri.EscapeDataString(user.FirstName)}&LastName={Uri.EscapeDataString(user.LastName)}";
+                        string deleteUrl = $"users/deleteUser?userId={user.UserId}&FirstName={Uri.EscapeDataString(user.FirstName)}&LastName={Uri.EscapeDataString(user.LastName)}";
 
-                        // Create the request message
                         var request = new HttpRequestMessage(HttpMethod.Delete, deleteUrl)
                         {
                             Content = JsonContent.Create(deleteRequest)
@@ -131,8 +128,7 @@ namespace AdminPanel
                 double totalWidth = UsersListView.ActualWidth - SystemParameters.VerticalScrollBarWidth;
                 double availableWidth = totalWidth - 20;
 
-                // Adjusted proportions for 6 columns: First Name, Last Name, Role, Created At, Active, Actions
-                double[] proportions = { 0.20, 0.20, 0.15, 0.20, 0.10, 0.15 };
+                double[] proportions = { 0.08, 0.20, 0.20, 0.15, 0.20, 0.10, 0.07 };
                 for (int i = 0; i < gridView.Columns.Count; i++)
                 {
                     gridView.Columns[i].Width = availableWidth * proportions[i];

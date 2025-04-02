@@ -88,9 +88,6 @@ namespace AdminPanel
                 InlineMessage.Text = $"An unexpected error occurred: {ex.Message}";
             }
         }
-        private void Exit_Click(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown();
-        }
+        
     }
 }

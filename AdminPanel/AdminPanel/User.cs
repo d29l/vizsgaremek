@@ -9,8 +9,8 @@ namespace AdminPanel
 {
     public class User
     {
-        
-
+        [JsonPropertyName("userId")]
+        public int UserId { get; set; }
         [JsonPropertyName("firstName")]
         public string FirstName { get; set; }
 

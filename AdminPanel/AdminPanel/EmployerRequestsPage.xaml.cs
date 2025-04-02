@@ -135,10 +135,7 @@ namespace AdminPanel
             }
         }
 
-        private void Exit_Click(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown();
-        }
+        
 
         private async void Delete_Click(object sender, RoutedEventArgs e)
         {

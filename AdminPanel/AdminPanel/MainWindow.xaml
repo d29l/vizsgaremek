@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:AdminPanel"
         mc:Ignorable="d"
         Background="#1E1E2E"
-        WindowStyle="ToolWindow"
+        WindowStyle="SingleBorderWindow"
         Title="Admin Panel" Height="450" Width="800">
 
     <Grid>

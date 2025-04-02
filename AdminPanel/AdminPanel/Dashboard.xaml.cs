@@ -122,10 +122,7 @@ namespace AdminPanel
                                 "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        private void Exit_Click(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown();
-        }
+        
         private void ManageRequests_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new EmployerRequestsPage());
@@ -139,6 +136,16 @@ namespace AdminPanel
         private void ViewPosts_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new PostsPage());
+        }
+        private void Logout_Click(object sender, RoutedEventArgs e)
+        {
+            
+            App.CurrentUserAccessToken = null;
+            App.CurrentUserRefreshToken = null;
+            CurrentUser.UserId = 0;
+
+            
+            this.NavigationService.Navigate(new LoginPage()); 
         }
     }
 }

@@ -9,7 +9,6 @@
       Background="#2A2A3F">
 
     <Page.Resources>
-        <!-- Button Style for Dashboard Buttons -->
         <Style x:Key="DashboardButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="#CBA6F7"/>
             <Setter Property="Foreground" Value="#1E1E2E"/>
@@ -18,7 +17,6 @@
             <Setter Property="Padding" Value="16,12"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="Height" Value="50"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -34,14 +32,14 @@
                                         <Storyboard>
                                             <ColorAnimation Storyboard.TargetName="border"
                                                             Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
-                                                            To="#B493F4" Duration="0:0:0.3"/>
+                                                            To="#B493F4" Duration="0:0:0.2"/>
                                         </Storyboard>
                                     </VisualState>
                                     <VisualState x:Name="Pressed">
                                         <Storyboard>
                                             <ColorAnimation Storyboard.TargetName="border"
                                                             Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
-                                                            To="#9D7BEF" Duration="0:0:0"/>
+                                                            To="#9D7BEF" Duration="0:0:0.1"/>
                                         </Storyboard>
                                     </VisualState>
                                 </VisualStateGroup>
@@ -53,7 +51,6 @@
             </Setter>
         </Style>
 
-        <!-- Responsive Arrow Icon Style -->
         <Style x:Key="ArrowIconStyle" TargetType="Path">
             <Setter Property="Fill" Value="#1E1E2E"/>
             <Setter Property="RenderTransform">
@@ -72,7 +69,6 @@
             </Style.Triggers>
         </Style>
 
-        <!-- Style for Quick Stats Cells -->
         <Style x:Key="StatsCellStyle" TargetType="Border">
             <Setter Property="Background" Value="#1E1E2E"/>
             <Setter Property="CornerRadius" Value="8"/>
@@ -84,73 +80,82 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+
+        <Style x:Key="LogoutButtonStyle" TargetType="Button" BasedOn="{StaticResource DashboardButtonStyle}">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Padding" Value="16,12"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="MinHeight" Value="40"/>
+            <Setter Property="MinWidth" Value="100"/>
+            <Setter Property="Foreground" Value="#1E1E2E"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="8">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="MouseOver">
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetName="border"
+                                                            Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
+                                                            To="#B493F4" Duration="0:0:0.2"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetName="border"
+                                                            Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
+                                                            To="#9D7BEF" Duration="0:0:0.1"/>
+                                            <DoubleAnimation Storyboard.TargetName="border"
+                                                             Storyboard.TargetProperty="Opacity"
+                                                             To="0.8" Duration="0:0:0.1"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Page.Resources>
 
     <Grid Background="#2A2A3F">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <!-- For the exit button -->
             <RowDefinition Height="*"/>
-            <!-- For the main content -->
         </Grid.RowDefinitions>
 
-        <!-- Exit Button -->
-        <Button x:Name="ExitButton" 
+        <Button Content="Logout"
+                Style="{StaticResource LogoutButtonStyle}"
                 Grid.Row="0"
-                Content="✖"
-                Click="Exit_Click"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Top"
-                Width="30"
-                Height="30"
-                Background="#CBA6F7"
-                Foreground="#1E1E2E"
-                BorderThickness="0"
-                Cursor="Hand"
-                Margin="10">
-            <Button.Template>
-                <ControlTemplate TargetType="Button">
-                    <Border CornerRadius="8" Background="{TemplateBinding Background}">
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Border>
-                </ControlTemplate>
-            </Button.Template>
-            <Button.Style>
-                <Style TargetType="Button">
-                    <Setter Property="Background" Value="#CBA6F7"/>
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="#B493F4"/>
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Background" Value="#9D7BEF"/>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </Button.Style>
-        </Button>
+                Click="Logout_Click" />
 
-        <ScrollViewer Grid.Row="1" 
-                      VerticalScrollBarVisibility="Auto" 
+        <ScrollViewer Grid.Row="1"
+                      VerticalScrollBarVisibility="Auto"
                       Padding="20">
-            <StackPanel Orientation="Vertical" 
-                        HorizontalAlignment="Center" 
+            <StackPanel Orientation="Vertical"
+                        HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         MaxWidth="800"
                         Margin="0,20,0,20">
-                <!-- Header: Now displays "Welcome [username]" -->
-                <TextBlock x:Name="WelcomeText" 
-                           Text="Welcome" 
-                           HorizontalAlignment="Center" 
+                <TextBlock x:Name="WelcomeText"
+                           Text="Welcome"
+                           HorizontalAlignment="Center"
                            FontSize="24"
                            FontWeight="SemiBold"
                            Foreground="#CDD6F4"
                            Margin="0,0,0,30"/>
 
-                <!-- Buttons - Now in a uniform grid for better scaling -->
                 <UniformGrid Columns="1" HorizontalAlignment="Stretch" Margin="0,0,0,30">
-                    <!-- View Users Button -->
-                    <Button Style="{StaticResource DashboardButtonStyle}" 
+                    <Button Style="{StaticResource DashboardButtonStyle}"
                             Click="ViewUsers_Click"
                             Margin="0,0,0,15">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -161,8 +166,7 @@
                         </StackPanel>
                     </Button>
 
-                    <!-- Manage Employer Requests Button -->
-                    <Button Style="{StaticResource DashboardButtonStyle}" 
+                    <Button Style="{StaticResource DashboardButtonStyle}"
                             Click="ManageRequests_Click"
                             Margin="0,0,0,15">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -173,8 +177,7 @@
                         </StackPanel>
                     </Button>
 
-                    <!-- View Posts Button -->
-                    <Button Style="{StaticResource DashboardButtonStyle}" 
+                    <Button Style="{StaticResource DashboardButtonStyle}"
                             Click="ViewPosts_Click">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <TextBlock Text="View Posts" Margin="0,0,10,0"/>
@@ -183,11 +186,11 @@
                                   Width="16" Height="16" Stretch="Uniform"/>
                         </StackPanel>
                     </Button>
+
                 </UniformGrid>
 
-                <!-- Quick Stats -->
-                <Border Background="#313244" 
-                        CornerRadius="12" 
+                <Border Background="#313244"
+                        CornerRadius="12"
                         Padding="20"
                         HorizontalAlignment="Stretch">
                     <Grid>
@@ -195,54 +198,51 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <TextBlock Text="Stats" 
-                                   FontSize="18" 
+                        <TextBlock Text="Stats"
+                                   FontSize="18"
                                    FontWeight="Medium"
-                                   Foreground="#CBA6F7" 
+                                   Foreground="#CBA6F7"
                                    Margin="0,0,0,15"
                                    HorizontalAlignment="Center"/>
 
                         <UniformGrid Grid.Row="1" Columns="3" HorizontalAlignment="Stretch">
-                            <!-- Users -->
                             <Border Style="{StaticResource StatsCellStyle}">
                                 <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
-                                    <TextBlock Text="{Binding userCount}" 
-                                               FontSize="20" 
-                                               FontWeight="SemiBold" 
+                                    <TextBlock Text="{Binding userCount}"
+                                               FontSize="20"
+                                               FontWeight="SemiBold"
                                                Foreground="#CDD6F4"
                                                HorizontalAlignment="Center"/>
-                                    <TextBlock Text="Users" 
-                                               FontSize="12" 
+                                    <TextBlock Text="Users"
+                                               FontSize="12"
                                                Foreground="#A6ADC8"
                                                HorizontalAlignment="Center"/>
                                 </StackPanel>
                             </Border>
 
-                            <!-- Requests -->
                             <Border Style="{StaticResource StatsCellStyle}">
                                 <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
-                                    <TextBlock Text="{Binding requestCount}" 
-                                               FontSize="20" 
-                                               FontWeight="SemiBold" 
+                                    <TextBlock Text="{Binding requestCount}"
+                                               FontSize="20"
+                                               FontWeight="SemiBold"
                                                Foreground="#CDD6F4"
                                                HorizontalAlignment="Center"/>
-                                    <TextBlock Text="Requests" 
-                                               FontSize="12" 
+                                    <TextBlock Text="Requests"
+                                               FontSize="12"
                                                Foreground="#A6ADC8"
                                                HorizontalAlignment="Center"/>
                                 </StackPanel>
                             </Border>
 
-                            <!-- Posts -->
                             <Border Style="{StaticResource StatsCellStyle}">
                                 <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
-                                    <TextBlock Text="{Binding postCount}" 
-                                               FontSize="20" 
-                                               FontWeight="SemiBold" 
+                                    <TextBlock Text="{Binding postCount}"
+                                               FontSize="20"
+                                               FontWeight="SemiBold"
                                                Foreground="#CDD6F4"
                                                HorizontalAlignment="Center"/>
-                                    <TextBlock Text="Posts" 
-                                               FontSize="12" 
+                                    <TextBlock Text="Posts"
+                                               FontSize="12"
                                                Foreground="#A6ADC8"
                                                HorizontalAlignment="Center"/>
                                 </StackPanel>

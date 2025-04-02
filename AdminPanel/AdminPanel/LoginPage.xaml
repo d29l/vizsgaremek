@@ -8,40 +8,7 @@
       Title="LoginPage">
 
     <Grid Background="#313244">
-        <!-- Exit Button at top-right of the screen -->
-        <Button x:Name="ExitButton" 
-                Content="✖"
-                Click="Exit_Click"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Top"
-                Width="30"
-                Height="30"
-                Background="#CBA6F7"
-                Foreground="#1E1E2E"
-                BorderThickness="0"
-                Cursor="Hand"
-                Margin="10">
-            <Button.Template>
-                <ControlTemplate TargetType="Button">
-                    <Border CornerRadius="8" Background="{TemplateBinding Background}">
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Border>
-                </ControlTemplate>
-            </Button.Template>
-            <Button.Style>
-                <Style TargetType="Button">
-                    <Setter Property="Background" Value="#CBA6F7"/>
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="#B493F4"/>
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Background" Value="#9D7BEF"/>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </Button.Style>
-        </Button>
+
 
         <!-- Main layout for the login panel -->
         <Grid>
