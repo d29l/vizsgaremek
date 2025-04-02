@@ -46,6 +46,7 @@ namespace ProjektBackend.Controllers
                 var users = await _context.Users
                     .Select(p => new
                     {
+                        p.UserId,
                         p.FirstName,
                         p.LastName,
                         p.Role,

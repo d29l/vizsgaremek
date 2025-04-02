@@ -59,8 +59,9 @@ namespace ProjektBackend.Controllers
                 {
                     var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
                     if (userIdClaim == null)
+                    {
                         return StatusCode(401, "User ID not found in token.");
-
+                    }
                     targetUserId = int.Parse(userIdClaim.Value);
                 }
 
@@ -97,8 +98,9 @@ namespace ProjektBackend.Controllers
                 {
                     var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
                     if (userIdClaim == null)
+                    {
                         return StatusCode(401, "User ID not found in token.");
-
+                    }
                     targetUserId = int.Parse(userIdClaim.Value);
                 }
 
@@ -145,8 +147,9 @@ namespace ProjektBackend.Controllers
                 {
                     var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
                     if (userIdClaim == null)
+                    {
                         return StatusCode(401, "User ID not found in token.");
-
+                    }
                     targetUserId = int.Parse(userIdClaim.Value);
                 }
 
