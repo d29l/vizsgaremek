@@ -1,0 +1,76 @@
+﻿<Window x:Class="AdminPanel.RoleInputDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        Title="Select User Role" Height="200" Width="300"
+        WindowStartupLocation="CenterScreen"
+        Background="#1E1E2E"
+        Foreground="#CDD6F4"
+        BorderBrush="#585B70"
+        BorderThickness="1">
+
+    <Window.Resources>
+        <local:SelectedItemToForegroundConverter x:Key="SelectedItemToForegroundConverter" xmlns:local="clr-namespace:AdminPanel" />
+    </Window.Resources>
+
+    <StackPanel Margin="20">
+        <TextBlock Text="Select Role:" Margin="0,0,0,10" FontSize="14" FontWeight="SemiBold"/>
+        <ComboBox x:Name="RoleComboBox" Margin="0,0,0,20" FontSize="12"
+                  Background="#313244" BorderBrush="#585B70" BorderThickness="1"
+                  Foreground="{Binding SelectedItem, RelativeSource={RelativeSource Self}, Converter={StaticResource SelectedItemToForegroundConverter}}">
+            <ComboBox.ItemContainerStyle>
+                <Style TargetType="ComboBoxItem">
+                    <Setter Property="Background" Value="#313244"/>
+                    <Setter Property="Foreground" Value="#CDD6F4"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#4C566A"/>
+                            <Setter Property="Foreground" Value="#ECEFF4"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="#5E81AC"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ComboBox.ItemContainerStyle>
+            <ComboBoxItem Content="Employee"/>
+            <ComboBoxItem Content="Employer"/>
+            <ComboBoxItem Content="Admin"/>
+        </ComboBox>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="OK" IsDefault="True" Click="OkButton_Click" Margin="0,0,5,0" Width="70" Padding="8,4"
+                    Background="#CBA6F7" Foreground="#1E1E2E" BorderThickness="0">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="#CBA6F7"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#B493F4"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#9D7BEF"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button Content="Cancel" IsCancel="True" Width="70" Padding="8,4"
+                    Background="#F38BA8" Foreground="#1E1E2E" BorderThickness="0">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="#F38BA8"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#E87094"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#D75A7D"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </StackPanel>
+    </StackPanel>
+</Window>
