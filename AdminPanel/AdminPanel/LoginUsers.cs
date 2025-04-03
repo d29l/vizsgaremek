@@ -28,6 +28,10 @@ namespace AdminPanel
                         ApiClient.httpClient.DefaultRequestHeaders.Authorization =
                             new AuthenticationHeaderValue("Bearer", result.AccessToken);
 
+
+
+
+
                         // Store tokens in the app
                         App.CurrentUserAccessToken = result.AccessToken;
                         App.CurrentUserRefreshToken = result.RefreshToken;
